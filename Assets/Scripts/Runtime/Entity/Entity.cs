@@ -175,6 +175,5 @@ namespace DC2025
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.SetY(_facing.GetFacing()));
             _gridPos = GameManager.GetMonoSystem<IGridMonoSystem>().WorldToGrid(transform.position);
         }
-
     }
 }
