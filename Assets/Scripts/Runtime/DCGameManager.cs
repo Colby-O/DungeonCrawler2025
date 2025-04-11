@@ -10,10 +10,12 @@ namespace DC2025
 
         [Header("MonoSystems")]
         [SerializeField] private AnimationMonoSystem _animSystem;
+        [SerializeField] private GridMonoSystem _gridSystem;
 
         private void AttachMonoSystems()
         {
             AddMonoSystem<AnimationMonoSystem, IAnimationMonoSystem>(_animSystem);
+            AddMonoSystem<GridMonoSystem, IGridMonoSystem>(_gridSystem);
         }
 
         public override string GetApplicationName()
