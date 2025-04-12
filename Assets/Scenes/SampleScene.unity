@@ -6606,7 +6606,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveSpeed: 0.3
-  _turnSpeed: 0.2
+  _turnSpeed: 0.15
   _facing: 0
   _gridPos: {x: 0, y: 0}
   _currentActtion: 0
