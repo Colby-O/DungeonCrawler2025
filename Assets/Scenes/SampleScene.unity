@@ -786,68 +786,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccb85a9fa7686e546bc6fcc7e01eaa7a, type: 3}
---- !u!1001 &84102496
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1674023650}
-    m_Modifications:
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 6.0000134
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 15.999983
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.50000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.50000006
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -90.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 8483441302298858399, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_Name
-      value: Floor_NoWalls (46)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
---- !u!4 &84102497 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-  m_PrefabInstance: {fileID: 84102496}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &87348360
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1223,6 +1161,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1591442207}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4
@@ -1262,10 +1204,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1575,6 +1513,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (5)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.9999743
@@ -1614,10 +1556,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (5)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1823,6 +1761,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (11)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.0000134
@@ -1862,10 +1804,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (11)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -3008,7 +2946,7 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.1
   far clip plane: 1000
   field of view: 100
   orthographic: 0
@@ -3812,6 +3750,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -3851,10 +3793,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5412,7 +5350,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2834666145394893167, guid: ccb85a9fa7686e546bc6fcc7e01eaa7a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 6.000023
+      value: 6.000046
       objectReference: {fileID: 0}
     - target: {fileID: 2834666145394893167, guid: ccb85a9fa7686e546bc6fcc7e01eaa7a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -5529,6 +5467,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.000034
@@ -5568,10 +5510,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6235,68 +6173,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
   m_PrefabInstance: {fileID: 956854560}
   m_PrefabAsset: {fileID: 0}
---- !u!1001 &994265679
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 1674023650}
-    m_Modifications:
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -1.9999913
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 16.000025
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.5000013
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.5000013
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0.49999875
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.49999875
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8483441302298858399, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-      propertyPath: m_Name
-      value: Floor_NoWalls (41)
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
---- !u!4 &994265680 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7325637693334359199, guid: 7fa32435567caff4c9e3e5a72757ef3b, type: 3}
-  m_PrefabInstance: {fileID: 994265679}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &997498289 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8543568168651893885, guid: edb23b860e3449447a77280d8912efe4, type: 3}
@@ -6491,6 +6367,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.0000057
@@ -6530,10 +6410,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6820,7 +6696,7 @@ Transform:
   m_GameObject: {fileID: 1074653696}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.613, z: 0}
+  m_LocalPosition: {x: 14, y: 0.613, z: 30}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -7305,6 +7181,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1591442207}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -7344,10 +7224,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8374,6 +8250,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1591442207}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.0000076293945
@@ -8414,10 +8294,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
       objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (2)
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -8448,7 +8324,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2834666145394893167, guid: ccb85a9fa7686e546bc6fcc7e01eaa7a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.9999644
+      value: -1.9999529
       objectReference: {fileID: 0}
     - target: {fileID: 2834666145394893167, guid: ccb85a9fa7686e546bc6fcc7e01eaa7a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9009,6 +8885,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (10)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 6.000019
@@ -9048,10 +8928,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (10)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -10927,10 +10803,8 @@ Transform:
   - {fileID: 1417169165}
   - {fileID: 2010807639}
   - {fileID: 615802891}
-  - {fileID: 994265680}
   - {fileID: 1281223579}
   - {fileID: 601754743}
-  - {fileID: 84102497}
   - {fileID: 1587886496}
   - {fileID: 1771098009}
   - {fileID: 1479527069}
@@ -11450,6 +11324,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (6)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.000040650368
@@ -11489,10 +11367,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (6)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -11814,6 +11688,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (7)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 4.0000286
@@ -11854,10 +11732,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (7)
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -11871,6 +11745,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (9)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.9999855
@@ -11910,10 +11788,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 269.999
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (9)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12191,6 +12065,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (8)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.9999517
@@ -12230,10 +12108,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (8)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12454,6 +12328,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: 10.000034
@@ -12493,10 +12371,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -12645,6 +12519,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1674023650}
     m_Modifications:
+    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
+      propertyPath: m_Name
+      value: Floor_CornerPillar (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5.99998
@@ -12684,10 +12562,6 @@ PrefabInstance:
     - target: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 291748466640278616, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
-      propertyPath: m_Name
-      value: Floor_CornerPillar (4)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
