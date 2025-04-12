@@ -24,6 +24,19 @@ namespace DC2025
 
 		public Vector2 GetTileSize() => _tileSize;
 
+        public List<EntityData> GetEntitesOnTile(Vector2Int pos)
+        {
+            return _entities.Where(e => e.loc == pos).ToList();
+        }
+
+        public void SetTileEnemySeen(Vector2Int pos)
+        {
+            if (_tiles.ContainsKey(pos))
+            {
+                _tiles[pos].SetEnemySeen();
+            }
+        }
+
 		public Vector2Int WorldToGrid(Vector3 worldPos)
 		{
 			Vector3 clamped = new Vector3(Mathf.Round(worldPos.x) / _tileSize.x, 0, Mathf.Round(worldPos.z) / _tileSize.y);

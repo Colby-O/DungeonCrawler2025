@@ -8,9 +8,13 @@ using System.Security.Cryptography;
 namespace DC2025
 {
 	public class Tile : MonoBehaviour
-	{
+    {
+        private MeshRenderer _renderer;
+        
 		[SerializeField] private SerializableDictionary<Direction, bool> _walls;
 		[SerializeField, ReadOnly] private Vector3 _globalPosition;
+
+        private float _enemySeenTimer;
 
         private List<IInteractable> _interactables;
 
@@ -97,9 +101,16 @@ namespace DC2025
             }
         }
 
+        private void Start()
+        {
+            _renderer = GetComponent<MeshRenderer>();
+        }
+
         private void FixedUpdate()
         {
             _globalPosition = transform.position;
+            _enemySeenTimer -= Time.fixedDeltaTime * 5f;
+            _renderer.material.color = Color.Lerp(Color.white, Color.yellow, _enemySeenTimer);
         }
 
         private void Update()
@@ -119,5 +130,11 @@ namespace DC2025
             _lastAdjancentState = OnPlayerAdjancentRequest;
             _lastEnterState = OnPlayerEnterRequest;
         }
+
+        public void SetEnemySeen()
+        {
+            _enemySeenTimer = 1;
+        }
+
     }
 }
