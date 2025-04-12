@@ -14,8 +14,6 @@ namespace DC2025
         {
             base.Show();
             DCGameManager.IsPaused = true;
-            Cursor.lockState = CursorLockMode.Confined;
-            Cursor.visible = true;
         }
     }
 }

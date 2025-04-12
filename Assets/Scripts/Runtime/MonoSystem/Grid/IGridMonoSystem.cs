@@ -13,5 +13,6 @@ namespace DC2025
         public void Sync(Entity entity, Vector2Int loc);
         public List<EntityData> GetEntitesOnTile(Vector2Int pos);
         public void SetTileEnemySeen(Vector2Int pos);
+        public void RemoveEntity(Entity entity);
     }
 }

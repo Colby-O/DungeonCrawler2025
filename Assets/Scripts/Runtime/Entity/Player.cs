@@ -7,6 +7,8 @@ namespace DC2025
 {
     public class Player : Entity
     {
+        public static bool stopMovement = false;
+        
         [Header("Input System")]
         [SerializeField] private PlayerInput _input;
         [SerializeField, ReadOnly] private Vector2 _rawMovement;
@@ -14,7 +16,7 @@ namespace DC2025
 
         private void HandleMovementAction(InputAction.CallbackContext e)
         {
-            if (DCGameManager.IsPaused) return;
+            if (DCGameManager.IsPaused || Player.stopMovement) return;
             _rawMovement = e.ReadValue<Vector2>();
             ProcessMovement();
         }
@@ -26,7 +28,7 @@ namespace DC2025
 
         private void HandleTurnAction(InputAction.CallbackContext e)
         {
-            if (DCGameManager.IsPaused) return;
+            if (DCGameManager.IsPaused || Player.stopMovement) return;
             _rawTurn = e.ReadValue<float>();
             ProcessTurn();
         }

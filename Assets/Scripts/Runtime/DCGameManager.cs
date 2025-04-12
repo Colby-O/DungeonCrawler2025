@@ -13,6 +13,7 @@ namespace DC2025
         [SerializeField] private UIMonoSystem _uiSystem;
         [SerializeField] private AnimationMonoSystem _animSystem;
         [SerializeField] private GridMonoSystem _gridSystem;
+        [SerializeField] private FightMonoSystem _fightSystem;
 
         public static bool IsPaused;
         public static Interactor Player;
@@ -22,6 +23,7 @@ namespace DC2025
             AddMonoSystem<UIMonoSystem, IUIMonoSystem>(_uiSystem);
             AddMonoSystem<AnimationMonoSystem, IAnimationMonoSystem>(_animSystem);
             AddMonoSystem<GridMonoSystem, IGridMonoSystem>(_gridSystem);
+            AddMonoSystem<FightMonoSystem, IFightMonoSystem>(_fightSystem);
         }
 
         public override string GetApplicationName()

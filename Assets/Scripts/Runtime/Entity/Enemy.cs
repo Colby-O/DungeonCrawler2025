@@ -8,6 +8,8 @@ namespace DC2025
 {
 	public class Enemy : Entity
     {
+        public static bool pause = false;
+        
         private IGridMonoSystem _grid;
 		[SerializeField] List<Transform> _path;
 		[SerializeField] bool _loop;
@@ -21,7 +23,9 @@ namespace DC2025
         }
 
 		void FixedUpdate()
-		{
+        {
+            if (Enemy.pause) return;
+            
             if (CurrentAction() == Action.None)
             {
                 Transform next = TryNextPathPosition();
@@ -58,7 +62,7 @@ namespace DC2025
 
             if (vision.Any(p => _grid.GetEntitesOnTile(p).Any(e => e.entity.transform.GetComponent<Player>())))
             {
-                Debug.Log("I SEE YOU!");
+                GameManager.GetMonoSystem<IFightMonoSystem>().StartFight(this);
             }
         }
 

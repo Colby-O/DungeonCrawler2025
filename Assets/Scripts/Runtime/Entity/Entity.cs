@@ -47,7 +47,7 @@ namespace DC2025
 	{
 		public static Action GetMovement(this Direction dir, Direction facing)
 		{
-			return (Action)((((int)dir - (int)facing)) % 4);
+			return (Action)((((int)dir - (int)facing + 4)) % 4);
 		}
 
 		public static Vector2Int GetGridOffset(this Direction dir)

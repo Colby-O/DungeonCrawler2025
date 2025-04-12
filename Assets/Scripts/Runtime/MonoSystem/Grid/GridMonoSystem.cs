@@ -37,6 +37,12 @@ namespace DC2025
             }
         }
 
+        public void RemoveEntity(Entity entity)
+        {
+            int idx = _entities.FindIndex(e => e.entity == entity);
+            if (idx >= 0) _entities.RemoveAt(idx);
+        }
+
 		public Vector2Int WorldToGrid(Vector3 worldPos)
 		{
 			Vector3 clamped = new Vector3(Mathf.Round(worldPos.x) / _tileSize.x, 0, Mathf.Round(worldPos.z) / _tileSize.y);
