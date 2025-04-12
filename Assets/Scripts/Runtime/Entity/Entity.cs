@@ -95,6 +95,17 @@ namespace DC2025
         {
             return (Direction)(((int)dir + Mathf.RoundToInt((Math.NormalizeAngle(angle) + 180f) / 90f)) % 4);
         }
+
+        public static Vector3 ToVector3(this Direction dir)
+        {
+            return dir switch
+            {
+                Direction.North => new Vector3(0, 0, 1),
+                Direction.South => new Vector3(0, 0, -1),
+                Direction.East => new Vector3(1, 0, 0),
+                Direction.West => new Vector3(-1, 0, 0),
+            };
+        }
     }
 
     public abstract class Entity : MonoBehaviour
@@ -131,8 +142,8 @@ namespace DC2025
             if (!action.IsMove()) return;
 
             Vector3 startPos = GameManager.GetMonoSystem<IGridMonoSystem>().GridToWorld(_gridPos).SetY(transform.position.y);
-
             Vector2Int newGridPos = _gridPos + action.GetDirection(_facing).GetGridOffset();
+            Vector3 endPos = GameManager.GetMonoSystem<IGridMonoSystem>().GridToWorld(newGridPos).SetY(transform.position.y);
 
             if (
                 !GameManager.GetMonoSystem<IGridMonoSystem>().CanMoveTo(_gridPos, action.GetDirection(_facing).Opposite()) ||
@@ -141,19 +152,34 @@ namespace DC2025
             {
                 Debug.Log("Can't Move Here");
                 //OnMoveComplete();
-                _currentActtion = Action.None;
-                return;
+                //_currentActtion = Action.None;
+                endPos = startPos + _facing.ToVector3() * GameManager.GetMonoSystem<IGridMonoSystem>().GetTileSize().x / 4.0f;
+                GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                    this,
+                    _moveSpeed / 2.0f,
+                    (float t) => MovementStep(t, startPos, endPos),
+                    () => 
+                    {
+                        GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                            this,
+                            _moveSpeed / 2.0f,
+                            (float t) => MovementStep(t, endPos, startPos),
+                            OnMoveComplete
+                        );
+                    }
+                );
             }
+            else
+            {
+                _gridPos = newGridPos;
 
-            _gridPos = newGridPos;
-            Vector3 endPos = GameManager.GetMonoSystem<IGridMonoSystem>().GridToWorld(_gridPos).SetY(transform.position.y);
-
-            GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
-                this,
-                _moveSpeed,
-                (float t) => MovementStep(t, startPos, endPos),
-                OnMoveComplete
-            );
+                GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                    this,
+                    _moveSpeed,
+                    (float t) => MovementStep(t, startPos, endPos),
+                    OnMoveComplete
+                );
+            }
         }
 
         private void ProcessTurn(Action action)
