@@ -24,8 +24,24 @@ namespace DC2025
         private bool _lastEnterState = false;
         private bool _lastAdjancentState = false;
 
+        public bool HasItemWithCollider()
+        {
+            bool hasCollider = false;
+
+            if (_interactables == null) return hasCollider;
+
+            foreach (IInteractable interactable in _interactables)
+            {
+                hasCollider |= interactable.HasCollider;
+            }
+
+            return hasCollider;
+        }
+
         public bool HasWallAt(Direction dir)
 		{
+            if (HasItemWithCollider()) return true;
+
 			dir = dir.GetFacingDirection(-transform.rotation.eulerAngles.y);
 			if (_walls.ContainsKey(dir)) return _walls[dir];
 			return false;

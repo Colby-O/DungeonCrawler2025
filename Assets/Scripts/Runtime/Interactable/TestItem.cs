@@ -7,6 +7,7 @@ namespace DC2025
     {
         public bool IsAdjancent { get; set; }
         public bool IsEntered { get; set; }
+        public bool HasCollider { get { return false; } }
 
         [SerializeField, ReadOnly] bool _isEntered;
         [SerializeField, ReadOnly] bool _isAdjancent;

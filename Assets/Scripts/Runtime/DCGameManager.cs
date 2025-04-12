@@ -1,5 +1,6 @@
 using PlazmaGames.Animation;
 using PlazmaGames.Core;
+using PlazmaGames.UI;
 using UnityEngine;
 
 namespace DC2025
@@ -9,11 +10,16 @@ namespace DC2025
         [SerializeField] GameObject _monoSystemHolder;
 
         [Header("MonoSystems")]
+        [SerializeField] private UIMonoSystem _uiSystem;
         [SerializeField] private AnimationMonoSystem _animSystem;
         [SerializeField] private GridMonoSystem _gridSystem;
 
+        public static bool IsPaused;
+        public static Interactor Player;
+
         private void AttachMonoSystems()
         {
+            AddMonoSystem<UIMonoSystem, IUIMonoSystem>(_uiSystem);
             AddMonoSystem<AnimationMonoSystem, IAnimationMonoSystem>(_animSystem);
             AddMonoSystem<GridMonoSystem, IGridMonoSystem>(_gridSystem);
         }
@@ -33,6 +39,11 @@ namespace DC2025
             AttachMonoSystems();
 
             _monoSystemHolder.SetActive(true);
+        }
+
+        private void Start()
+        {
+            Player = FindAnyObjectByType<Interactor>();
         }
     }
 }
