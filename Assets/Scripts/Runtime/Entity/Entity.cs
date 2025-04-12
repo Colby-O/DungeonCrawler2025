@@ -224,7 +224,8 @@ namespace DC2025
 			if (_currentActtion != Action.None)
 			{
 				if (_queuedAction == Action.None && _currentActtion != action) _queuedAction = action;
-				return;
+                //if (_queuedAction == Action.None || _currentActtion == _queuedAction) _queuedAction = action;
+                return;
 			}
 
 			if (_queuedAction != Action.None)
