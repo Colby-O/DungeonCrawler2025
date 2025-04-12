@@ -59,6 +59,18 @@ namespace DC2025
             else return Vector2Int.zero;
         }
 
+        public static Direction Opposite(this Direction dir)
+        {
+            return dir switch
+            {
+                Direction.North => Direction.South,
+                Direction.South => Direction.North,
+                Direction.East => Direction.West,
+                Direction.West => Direction.East,
+                _ => default
+            };
+        }
+
         public static Direction Turn(this Direction dir, Action action)
         {
             if (!action.IsTurn()) return dir;
@@ -77,6 +89,11 @@ namespace DC2025
                 Direction.West => 270,
                 _ => 0
             };
+        }
+
+        public static Direction GetFacingDirection(this Direction dir, float angle)
+        {
+            return (Direction)(((int)dir + Mathf.RoundToInt((Math.NormalizeAngle(angle) + 180f) / 90f)) % 4);
         }
     }
 
@@ -115,8 +132,20 @@ namespace DC2025
 
             Vector3 startPos = GameManager.GetMonoSystem<IGridMonoSystem>().GridToWorld(_gridPos).SetY(transform.position.y);
 
-            _gridPos = _gridPos + action.GetDirection(_facing).GetGridOffset();
-            
+            Vector2Int newGridPos = _gridPos + action.GetDirection(_facing).GetGridOffset();
+
+            if (
+                !GameManager.GetMonoSystem<IGridMonoSystem>().CanMoveTo(_gridPos, action.GetDirection(_facing).Opposite()) ||
+                !GameManager.GetMonoSystem<IGridMonoSystem>().CanMoveTo(newGridPos, action.GetDirection(_facing))
+            )
+            {
+                Debug.Log("Can't Move Here");
+                //OnMoveComplete();
+                _currentActtion = Action.None;
+                return;
+            }
+
+            _gridPos = newGridPos;
             Vector3 endPos = GameManager.GetMonoSystem<IGridMonoSystem>().GridToWorld(_gridPos).SetY(transform.position.y);
 
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(

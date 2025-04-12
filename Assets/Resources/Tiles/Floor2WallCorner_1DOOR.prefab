@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7161351169786822860}
   - component: {fileID: 4973948472957381237}
   - component: {fileID: 576385547619923209}
+  - component: {fileID: -3244068658615202564}
   m_Layer: 0
   m_Name: Floor2WallCorner_1DOOR
   m_TagString: Untagged
@@ -88,3 +89,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-3244068658615202564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3668097102652286627}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0080dcc6f456ea46b11cb579b51dd99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walls:
+    list:
+    - Key: 2
+      Value: 1
+    keyCollision: 0

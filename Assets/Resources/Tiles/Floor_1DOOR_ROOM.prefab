@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1191232671889829663}
   - component: {fileID: 3282792727232218591}
   - component: {fileID: 8786440808729923753}
+  - component: {fileID: -6808384474992444895}
   m_Layer: 0
   m_Name: Floor_1DOOR_ROOM
   m_TagString: Untagged
@@ -88,3 +89,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &-6808384474992444895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7552308642988286424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0080dcc6f456ea46b11cb579b51dd99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _walls:
+    list:
+    - Key: 0
+      Value: 1
+    - Key: 1
+      Value: 1
+    - Key: 3
+      Value: 1
+    keyCollision: 0
