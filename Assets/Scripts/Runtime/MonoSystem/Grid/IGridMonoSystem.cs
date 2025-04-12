@@ -9,5 +9,6 @@ namespace DC2025
         public Vector2Int WorldToGrid(Vector3 worldPos);
         public Vector3 GridToWorld(Vector2Int gridPos);
         public bool CanMoveTo(Vector2Int gridPos, Direction from);
+        public void Sync(Entity entity, Vector2Int loc);
     }
 }

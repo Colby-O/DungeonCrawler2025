@@ -104,6 +104,7 @@ namespace DC2025
 				Direction.South => new Vector3(0, 0, -1),
 				Direction.East => new Vector3(1, 0, 0),
 				Direction.West => new Vector3(-1, 0, 0),
+				_ => Vector3.zero
 			};
 		}
 	}
@@ -112,8 +113,9 @@ namespace DC2025
 	{
 		[Header("Movement Settings")]
 		[SerializeField] protected float _moveSpeed;
+        [SerializeField] protected float _turnSpeed;
 
-		[Header("Postional Data")]
+        [Header("Postional Data")]
 		[SerializeField, ReadOnly] private Direction _facing;
 		[SerializeField, ReadOnly] private Vector2Int _gridPos;
 
@@ -121,7 +123,11 @@ namespace DC2025
 		[SerializeField, ReadOnly] private Action _currentActtion;
 		[SerializeField, ReadOnly] private Action _queuedAction;
 
-		private void MovementStep(float t, Vector3 startPos, Vector3 endPos)
+        [Header("Sync")]
+        [SerializeField,] private float _syncInterval;
+        [SerializeField, ReadOnly] private float _timeSinceLastSync;
+
+        private void MovementStep(float t, Vector3 startPos, Vector3 endPos)
 		{
 			transform.position = Vector3.Lerp(startPos, endPos, t);
 		}
@@ -133,11 +139,51 @@ namespace DC2025
 
 		protected virtual void OnMoveComplete()
 		{
-			_currentActtion = Action.None;
+			Sync();
+            _currentActtion = Action.None;
 			RequestAction(Action.None);
 		}
 
-		private void ProcessMove(Action action)
+		private void AnimateMove(Vector3 startPos, Vector3 endPos)
+		{
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+				this,
+				_moveSpeed,
+				(float t) => MovementStep(t, startPos, endPos),
+				OnMoveComplete
+			);
+        }
+
+        private void AnimateTurn(Quaternion startRot, Quaternion endRot)
+        {
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                this,
+                _turnSpeed,
+                (float t) => RotationStep(t, startRot, endRot),
+                OnMoveComplete
+            );
+        }
+
+
+        private void AnimateInvaildMove(Vector3 startPos, Vector3 endPos)
+        {
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                this,
+                _moveSpeed / 2.0f,
+                (float t) => MovementStep(t, startPos, endPos),
+                () =>
+                {
+                    GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                        this,
+                        _moveSpeed / 2.0f,
+                        (float t) => MovementStep(t, endPos, startPos),
+                        OnMoveComplete
+                    );
+                }
+            );
+        }
+
+        private void ProcessMove(Action action)
 		{
 			if (!action.IsMove()) return;
 
@@ -150,36 +196,14 @@ namespace DC2025
 				!GameManager.GetMonoSystem<IGridMonoSystem>().CanMoveTo(newGridPos, action.GetDirection(_facing))
 			)
 			{
-				Debug.Log("Can't Move Here");
-				//OnMoveComplete();
-				//_currentActtion = Action.None;
 				endPos = startPos + action.GetDirection(_facing).ToVector3() * GameManager.GetMonoSystem<IGridMonoSystem>().GetTileSize().x / 4.0f;
-				GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
-					this,
-					_moveSpeed / 2.0f,
-					(float t) => MovementStep(t, startPos, endPos),
-					() => 
-					{
-						GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
-							this,
-							_moveSpeed / 2.0f,
-							(float t) => MovementStep(t, endPos, startPos),
-							OnMoveComplete
-						);
-					}
-				);
-			}
+				AnimateInvaildMove(startPos, endPos);
+            }
 			else
 			{
-				_gridPos = newGridPos;
-
-				GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
-					this,
-					_moveSpeed,
-					(float t) => MovementStep(t, startPos, endPos),
-					OnMoveComplete
-				);
-			}
+                _gridPos = newGridPos;;
+                AnimateMove(startPos, endPos);
+            }
 		}
 
 		private void ProcessTurn(Action action)
@@ -192,13 +216,8 @@ namespace DC2025
 
 			Quaternion endRot = Quaternion.Euler(transform.rotation.eulerAngles.SetY(_facing.GetFacing()));
 
-			GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
-				this,
-				_moveSpeed,
-				(float t) => RotationStep(t, startRot, endRot),
-				OnMoveComplete
-			);
-		}
+			AnimateTurn(startRot, endRot);
+        }
 
 		public void RequestAction(Action action)
 		{
@@ -222,13 +241,29 @@ namespace DC2025
 			else if (_currentActtion.IsTurn()) ProcessTurn(_currentActtion);
 		}
 
+		public void Sync()
+		{
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.SetY(_facing.GetFacing()));
+            _gridPos = GameManager.GetMonoSystem<IGridMonoSystem>().WorldToGrid(transform.position);
+            GameManager.GetMonoSystem<IGridMonoSystem>().Sync(this, _gridPos);
+            _timeSinceLastSync = 0;
+        }
+
 		protected virtual void Start()
 		{
 			_queuedAction = Action.None;
 			_currentActtion = Action.None;
 
-			transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.SetY(_facing.GetFacing()));
-			_gridPos = GameManager.GetMonoSystem<IGridMonoSystem>().WorldToGrid(transform.position);
-		}
-	}
+			_timeSinceLastSync= 0;
+
+			Sync();
+        }
+
+        protected virtual void Update()
+        {
+			_timeSinceLastSync += Time.deltaTime;
+
+			if (_timeSinceLastSync > _syncInterval) Sync();
+        }
+    }
 }
