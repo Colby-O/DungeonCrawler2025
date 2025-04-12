@@ -14,6 +14,7 @@ namespace DC2025
 
         private void HandleMovementAction(InputAction.CallbackContext e)
         {
+            if (DCGameManager.IsPaused) return;
             _rawMovement = e.ReadValue<Vector2>();
             ProcessMovement();
         }
@@ -25,6 +26,7 @@ namespace DC2025
 
         private void HandleTurnAction(InputAction.CallbackContext e)
         {
+            if (DCGameManager.IsPaused) return;
             _rawTurn = e.ReadValue<float>();
             ProcessTurn();
         }

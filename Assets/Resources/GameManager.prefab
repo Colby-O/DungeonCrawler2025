@@ -48,6 +48,7 @@ MonoBehaviour:
   _debug: 0
   _verbose: 0
   _monoSystemHolder: {fileID: 8546225963435831069}
+  _uiSystem: {fileID: 5468754056259771447}
   _animSystem: {fileID: 8017931798619767606}
   _gridSystem: {fileID: 2401762275058683036}
 --- !u!1 &4278443217056552125
@@ -95,6 +96,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tileSize: {x: 2, y: 2}
+  _tiles:
+    list: []
+    keyCollision: 0
 --- !u!1 &5539176880174583709
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,6 +143,53 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: df4f200d6311caf4aaaab927e9b55bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &6332628165317884734
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6888951129072786568}
+  - component: {fileID: 5468754056259771447}
+  m_Layer: 0
+  m_Name: UIMonoSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6888951129072786568
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6332628165317884734}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2662004757442528137}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5468754056259771447
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6332628165317884734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d9da330e6435104dbd42dda19171608, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _startingView: DC2025.GameView, Assembly-CSharp
+  _views: []
+  _currentView: {fileID: 0}
 --- !u!1 &8546225963435831069
 GameObject:
   m_ObjectHideFlags: 0
@@ -170,5 +221,6 @@ Transform:
   m_Children:
   - {fileID: 6077764974094617820}
   - {fileID: 2863431905669087098}
+  - {fileID: 6888951129072786568}
   m_Father: {fileID: 4573325105231212099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
