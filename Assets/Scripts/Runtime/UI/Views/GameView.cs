@@ -15,7 +15,12 @@ namespace DC2025
 
         [Header("Health")]
         [SerializeField] private RectTransform _healthBar;
-        [SerializeField, ReadOnly] private Vector2 _rectRange;
+        [SerializeField, ReadOnly] private Vector2 _healthRectRange;
+
+        [Header("Stamina")]
+        [SerializeField] private RectTransform _staminaBar;
+        [SerializeField, ReadOnly] private Vector2 _staminaRectRange;
+
 
         [Header("Inventory")]
         [SerializeField] private GameObject _inv;
@@ -37,7 +42,14 @@ namespace DC2025
         {
             if (_playerManager == null) _playerManager = DCGameManager.Player.GetComponent<PlayerManager>();
 
-            _healthBar.sizeDelta = new Vector2(_healthBar.sizeDelta.x, Math.Map(_playerManager.GetHealth(), 0, _playerManager.GetMaxHealth(), _rectRange.x, _rectRange.y));
+            _healthBar.sizeDelta = new Vector2(_healthBar.sizeDelta.x, Math.Map(_playerManager.GetHealth(), 0, _playerManager.GetMaxHealth(), _healthRectRange.x, _healthRectRange.y));
+        }
+
+        public void UpdateStamina()
+        {
+            if (_playerManager == null) _playerManager = DCGameManager.Player.GetComponent<PlayerManager>();
+
+            _staminaBar.sizeDelta = new Vector2(_staminaBar.sizeDelta.x, Math.Map(_playerManager.GetStamina(), 0, _playerManager.GetMaxStamina(), _staminaRectRange.x, _staminaRectRange.y));
         }
 
         private void ApplyAction(Action action, bool state)
@@ -77,8 +89,11 @@ namespace DC2025
 
         public override void Init()
         {
-            _rectRange.y = 0;
-            _rectRange.y = _healthBar.sizeDelta.y;
+            _healthRectRange.y = 0;
+            _healthRectRange.y = _healthBar.sizeDelta.y;
+
+            _staminaRectRange.y = 0;
+            _staminaRectRange.y = _staminaBar.sizeDelta.y;
 
             if (_moveButtons != null) 
             { 
