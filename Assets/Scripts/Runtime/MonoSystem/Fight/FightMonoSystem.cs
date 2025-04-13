@@ -18,10 +18,12 @@ namespace DC2025
             PlayerTurnToEnemy,
             EnemyMoveToPlayer,
             EnemyTurnToPlayer,
-            PlayerTurnToEnemyReal
+            PlayerTurnToEnemyReal,
+            Fighting,
         }
-
+        
         private IGridMonoSystem _grid;
+        private TimingBar _playerAttackIndicator;
 
         private FightState _fightState;
         
@@ -32,7 +34,10 @@ namespace DC2025
         {
             _grid = GameManager.GetMonoSystem<IGridMonoSystem>();
             _player = FindFirstObjectByType<Player>();
+            _playerAttackIndicator = FindFirstObjectByType<TimingBar>();
         }
+
+        public bool InFight() => _fightState == FightState.Fighting;
 
         public void StartFight(Enemy enemy)
         {
@@ -41,6 +46,22 @@ namespace DC2025
             Player.stopMovement = true;
             _enemy = enemy;
             _fightState = FightState.PlayerTurnToEnemy;
+        }
+
+        public void PlayerAttack()
+        {
+            if (_playerAttackIndicator.IsStopped()) return;
+            
+            if (_playerAttackIndicator.IsGreen())
+            {
+                _playerAttackIndicator.Stop();
+                _player.DoAttackAnimation();
+            }
+        }
+
+        public void PlayerAttackDone()
+        {
+            _playerAttackIndicator.Reset();
         }
 
         bool EntityFaceEntity(Entity facer, Entity facee)
@@ -80,11 +101,8 @@ namespace DC2025
                     if (_player.CurrentAction() != Action.None) break;
                     if (EntityFaceEntity(_player, _enemy))
                     {
-                        _grid.RemoveEntity(_enemy);
-                        Destroy(_enemy.gameObject);
-                        _fightState = FightState.None;
-                        Enemy.pause = false;
-                        Player.stopMovement = false;
+                        _playerAttackIndicator.gameObject.SetActive(true);
+                        _fightState = FightState.Fighting;
                     }
                     break;
                 }
@@ -105,7 +123,6 @@ namespace DC2025
                     Vector2Int dir = playerPos - enemyPos;
                     if ((dir.x == 0 || dir.y == 0) && (Mathf.Abs(dir.x) == 1 || Mathf.Abs(dir.y) == 1))
                     {
-                        Debug.Log("Arrived");
                         _fightState = FightState.EnemyTurnToPlayer;
                         break;
                     }
@@ -138,6 +155,10 @@ namespace DC2025
                             _enemy.RequestAction(dirdir.GetMovement(_enemy.Facing()));
                         }
                     }
+                    break;
+                }
+                case FightState.Fighting:
+                {
                     break;
                 }
             }

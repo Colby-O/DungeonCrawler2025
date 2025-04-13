@@ -7,5 +7,8 @@ namespace DC2025
     public interface IFightMonoSystem : IMonoSystem
     {
         public void StartFight(Enemy enemy);
+        public bool InFight();
+        public void PlayerAttack();
+        public void PlayerAttackDone();
     }
 }
