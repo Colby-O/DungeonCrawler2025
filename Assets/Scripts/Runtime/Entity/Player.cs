@@ -16,6 +16,8 @@ namespace DC2025
 
         public void SetRawMovement(Vector2 rawMovement)
         {
+            if (DCGameManager.IsPaused) return;
+
             _rawMovement = rawMovement;
 
             if (_rawMovement != Vector2.zero) ProcessMovement();
@@ -23,6 +25,8 @@ namespace DC2025
 
         public void SetRawTurn(float rawTurn)
         {
+            if (DCGameManager.IsPaused) return;
+
             _rawTurn = rawTurn;
 
             if (rawTurn != 0) ProcessTurn();
@@ -30,7 +34,6 @@ namespace DC2025
 
         private void HandleMovementAction(InputAction.CallbackContext e)
         {
-            if (DCGameManager.IsPaused) return;
             SetRawMovement(e.ReadValue<Vector2>());
         }
 
@@ -41,7 +44,6 @@ namespace DC2025
 
         private void HandleTurnAction(InputAction.CallbackContext e)
         {
-            if (DCGameManager.IsPaused) return;
             SetRawTurn(e.ReadValue<float>());
            
         }
