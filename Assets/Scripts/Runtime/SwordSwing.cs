@@ -55,6 +55,21 @@ namespace DC2025
                 }
                 );
         }
+        
+        public void Stumble()
+        {
+            Quaternion startRot = _model.rotation;
+            Quaternion endRot = Quaternion.Euler(0, 20, 20) * startRot;
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                this,
+                _swingTime,
+                (t) =>
+                {
+                    if (t < 0.5) _model.rotation = Quaternion.Lerp(startRot, endRot, t * 2);
+                    else _model.rotation = Quaternion.Lerp(endRot, startRot, (t - 0.5f) * 2);
+                }
+            );
+        }
 
         private void Start()
         {
@@ -69,5 +84,6 @@ namespace DC2025
                 _swingPositions.Add(positions.GetChild(i));
             }
         }
+
     }
 }

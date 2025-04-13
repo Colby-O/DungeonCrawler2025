@@ -40,32 +40,6 @@ namespace DC2025
             _chatPrefab = Resources.Load<TMP_Text>("Prefabs/ChatElement");
 
             Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
-            Send("Welcome!", Color.blue);
         }
     }
 }

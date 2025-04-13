@@ -13,10 +13,13 @@ namespace DC2025
         [SerializeField] private float _maxHealth;
         [SerializeField] private float _maxStamina;
         [SerializeField] private float _StaminaRefillRate;
+        [SerializeField] private float _StaminaRefillDelay = 1.5f;
 
         [Header("Vitals")]
         [SerializeField, ReadOnly] private float _curHealth;
         [SerializeField, ReadOnly] private float _curStamina;
+
+        private float _staminaRefilCountdown = 0;
 
         public float GetHealth() => _curHealth;
 
@@ -28,6 +31,7 @@ namespace DC2025
 
         public void UseStamina (int amount)
         {
+            _staminaRefilCountdown = _StaminaRefillDelay;
             _curStamina = Mathf.Max(_curStamina - amount, 0);
 
             GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateStamina();
@@ -59,8 +63,14 @@ namespace DC2025
         private void RefillStamina()
         {
             if (DCGameManager.IsPaused) return;
-            _curStamina = Mathf.Min(_curStamina + _StaminaRefillRate * Time.deltaTime, _maxStamina);
-            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateStamina();
+
+            _staminaRefilCountdown -= Time.deltaTime;
+
+            if (_staminaRefilCountdown <= 0)
+            {
+                _curStamina = Mathf.Min(_curStamina + _StaminaRefillRate * Time.deltaTime, _maxStamina);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateStamina();
+            }
         }
 
         private void Awake()

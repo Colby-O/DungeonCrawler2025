@@ -23,7 +23,8 @@ namespace DC2025
             Fighting,
         }
         
-        private IGridMonoSystem _grid;
+        private IGridMonoSystem _gridMs;
+        private IChatWindowMonoSystem _chatMs;
 
         private FightState _fightState;
 
@@ -31,6 +32,8 @@ namespace DC2025
         private float _enemyBlockCountdown = 0;
         
         private Player _player;
+        private bool _playerAttackBlocked = false;
+        
         private Enemy _enemy;
         private float _enemyHealth = 0;
         private bool _enemyAttackBlocked = false;
@@ -39,7 +42,8 @@ namespace DC2025
         
         private void Start()
         {
-            _grid = GameManager.GetMonoSystem<IGridMonoSystem>();
+            _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
+            _chatMs = GameManager.GetMonoSystem<IChatWindowMonoSystem>();
             _player = FindFirstObjectByType<Player>();
         }
 
@@ -61,8 +65,8 @@ namespace DC2025
                 case FightState.EnemyMoveToPlayer:
                 {
                     if (_enemy.CurrentAction() != Action.None) break;
-                    Vector2Int playerPos = _grid.WorldToGrid(_player.transform.position);
-                    Vector2Int enemyPos = _grid.WorldToGrid(_enemy.transform.position);
+                    Vector2Int playerPos = _gridMs.WorldToGrid(_player.transform.position);
+                    Vector2Int enemyPos = _gridMs.WorldToGrid(_enemy.transform.position);
                     Vector2Int dir = playerPos - enemyPos;
                     if ((dir.x == 0 || dir.y == 0) && (Mathf.Abs(dir.x) == 1 || Mathf.Abs(dir.y) == 1))
                     {
@@ -123,6 +127,10 @@ namespace DC2025
                 }
                 case FightState.Fighting:
                 {
+                    if (_enemyBlockCountdown > 0 && _enemyBlockCountdown - Time.fixedDeltaTime <= 0)
+                    {
+                        _enemy.Sword().Lower();
+                    }
                     _enemyBlockCountdown -= Time.fixedDeltaTime;
                     if (_enemyBlockCountdown <= 0)
                     {
@@ -143,9 +151,11 @@ namespace DC2025
 
         private void EnemyQueueNextMove()
         {
-            if (UnityEngine.Random.Range(0, 100) < 17)
+            if (UnityEngine.Random.Range(0, 100) < 20)
             {
+                Debug.Log("ENEMY BLCOKING!!!!!!!!!!!!!!");
                 _enemyBlockCountdown = UnityEngine.Random.Range(1.5f, 2.5f);
+                _enemy.Sword().Block();
             }
             _enemyAttackBlocked = false;
             _enemyAttackCountdown = UnityEngine.Random.Range(1.5f, 3.0f);
@@ -160,13 +170,12 @@ namespace DC2025
         {
             if (_enemyAttackBlocked)
             {
-                Debug.Log("Attack blocked!");
+                _chatMs.Send("You block the enemy's attack.");
                 _player.Sword().Lower();
-                _player.manager.Damage(7);
             }
             else
             {
-                Debug.Log("Failed to block!");
+                _chatMs.Send($"The enemy strikes you dealing 25 damage.");
                 _player.manager.Damage(25);
             }
             EnemyQueueNextMove();
@@ -174,7 +183,7 @@ namespace DC2025
         
         public void StartFight(Enemy enemy)
         {
-            Debug.Log("Fight start");
+            _chatMs.Send("You encounter an enemy!");
             Enemy.pause = true;
             Player.stopMovement = true;
             _enemy = enemy;
@@ -184,42 +193,62 @@ namespace DC2025
 
         public void PlayerAttack()
         {
-            if (_player.IsAttacking() || _enemyAttackBlocked) return;
-            _player.DoAttackAnimation();
-        }
-
-        public bool PlayerBlock()
-        {
-            Debug.Log("Try Blocked");
-            if (!_enemyAttackBlocked && _enemyAttackCountdown > 0 && _enemyAttackCountdown < _enemy.AttackHintTime())
+            if (_player.IsAttacking() || _enemyAttackBlocked || _player.manager.GetStamina() < DCGameManager.settings.playerAttackStamina) return;
+            if (_enemyBlockCountdown > 0)
             {
-                _enemyAttackBlocked = true;
-                Debug.Log("Blocked Time Hit!");
-                _player.Sword().Block();
-                return true;
+                _player.manager.UseStamina(DCGameManager.settings.playerAttackFailStamina);
+                _playerAttackBlocked = true;
             }
-
-            return false;
+            else
+            {
+                _player.manager.UseStamina(DCGameManager.settings.playerAttackStamina);
+                _playerAttackBlocked = false;
+            }
+            _player.DoAttackAnimation();
         }
 
         public void PlayerAttackDone()
         {
-            if (_enemyBlockCountdown > 0)
+            if (_playerAttackBlocked)
             {
-                Debug.Log("Enemy Blocked");
+                _chatMs.Send("The enemy blocked your attack.");
             }
             else
             {
-                _enemyHealth -= 5;
+                _chatMs.Send("You strike the enemy dealing 10 damage.");
+                _enemyHealth -= 10;
                 if (_enemyHealth <= 0)
                 {
                     EnemyDie();
                 }
             }
         }
+        
+        public bool PlayerBlock()
+        {
+            if (_enemyAttackBlocked) return false;
+            if (_player.manager.GetStamina() < DCGameManager.settings.playerBlockStamina) return false;
+            if (_enemyAttackCountdown > 0 && _enemyAttackCountdown < _enemy.AttackHintTime())
+            {
+                _enemyAttackBlocked = true;
+                _player.Sword().Block();
+                _player.manager.UseStamina(DCGameManager.settings.playerBlockStamina);
+                return true;
+            }
+            else
+            {
+                _enemyAttackBlocked = false;
+                _chatMs.Send("You try to block the enemy but stumble.");
+                _player.manager.UseStamina(DCGameManager.settings.playerBlockFailStamina);
+                _player.Stumble();
+            }
+
+            return false;
+        }
 
         private void EnemyDie()
         {
+            _chatMs.Send("The enemy died!");
             _enemy.gameObject.SetActive(false);
             Enemy.pause = false;
             Player.stopMovement = false;

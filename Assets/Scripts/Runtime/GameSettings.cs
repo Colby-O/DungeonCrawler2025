@@ -6,5 +6,9 @@ namespace DC2025
     public class GameSettings : ScriptableObject
     {
         [ColorUsage(true, true)] public Color enemyVisionHighlightColor;
+        public int playerAttackStamina = 10;
+        public int playerAttackFailStamina = 20;
+        public int playerBlockStamina = 10;
+        public int playerBlockFailStamina = 35;
     }
 }

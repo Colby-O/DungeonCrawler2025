@@ -24,6 +24,7 @@ namespace DC2025
         [SerializeField, ReadOnly] private float _rawTurn;
         [SerializeField] private float _attackAniMagnitude = 0.7f;
         [SerializeField] private float _attackAniSpeed = 0.2f;
+        [SerializeField] private float _stumbleAniMagnitude = 0.5f;
 
         public SwordSwing Sword() => _sword;
         private bool _attacking = false;
@@ -174,9 +175,9 @@ namespace DC2025
 
         public void DoAttackAnimation()
         {
-            _sword.Swing();
             if (_attacking) return;
             _attacking = true;
+            _sword.Swing();
             Vector3 startPos = transform.position;
             Vector3 endPos = startPos + transform.forward * _attackAniMagnitude;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
@@ -191,6 +192,27 @@ namespace DC2025
                 {
                     _attacking = false;
                     _fightMs.PlayerAttackDone();
+                });
+        }
+
+        public void Stumble()
+        {
+            if (_attacking) return;
+            _attacking = true;
+            _sword.Stumble();
+            Vector3 startPos = transform.position;
+            Vector3 endPos = startPos + transform.right * _stumbleAniMagnitude;
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                this,
+                _attackAniSpeed,
+                (float t) =>
+                {
+                    if (t < 0.5f) transform.position = Vector3.Lerp(startPos, endPos, t * 2.0f);
+                    else transform.position = Vector3.Lerp(endPos, startPos, (t - 0.5f) * 2.0f);
+                },
+				() =>
+                {
+                    _attacking = false;
                 });
         }
     }
