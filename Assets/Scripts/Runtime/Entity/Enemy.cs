@@ -1,4 +1,5 @@
 using UnityEngine;
+using PlazmaGames.Animation;
 using System.Collections.Generic;
 using System.Linq;
 using DC2025.Utils;
@@ -9,17 +10,24 @@ namespace DC2025
 	public class Enemy : Entity
     {
         public static bool pause = false;
-        
-        private IGridMonoSystem _grid;
+
+        private IFightMonoSystem _fightMs;
+        private IGridMonoSystem _gridMs;
 		[SerializeField] List<Transform> _path;
 		[SerializeField] bool _loop;
 		[SerializeField] int _pathPosition;
 		[SerializeField] int _pathDirection;
+        private bool _attacking = false;
+        private SwordSwing _sword;
+
+        public SwordSwing Sword() => _sword;
 
         protected override void Start()
         {
             base.Start();
-            _grid = GameManager.GetMonoSystem<IGridMonoSystem>();
+            _sword = GetComponentInChildren<SwordSwing>();
+            _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
+            _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
         }
 
 		void FixedUpdate()
@@ -50,17 +58,17 @@ namespace DC2025
         {
             Vector2Int forward = Facing().ToVector2Int();
             Vector2Int right = Facing().Right().ToVector2Int();
-            Vector2Int pos = _grid.WorldToGrid(transform.position);
-            if (!_grid.CanMoveTo(pos, Facing())) return;
+            Vector2Int pos = _gridMs.WorldToGrid(transform.position);
+            if (!_gridMs.CanMoveTo(pos, Facing())) return;
             List<Vector2Int> vision = new List<Vector2Int>();
             vision.Add(pos);
             vision.Add(pos + 1 * forward + 0 * right);
             vision.Add(pos + 1 * forward + 1 * right);
             vision.Add(pos + 1 * forward - 1 * right);
             
-            vision.ForEach(p => _grid.SetTileEnemySeen(p));
+            vision.ForEach(p => _gridMs.SetTileEnemySeen(p));
 
-            if (vision.Any(p => _grid.GetEntitesOnTile(p).Any(e => e.entity.transform.GetComponent<Player>())))
+            if (vision.Any(p => _gridMs.GetEntitesOnTile(p).Any(e => e.entity.transform.GetComponent<Player>())))
             {
                 GameManager.GetMonoSystem<IFightMonoSystem>().StartFight(this);
             }
@@ -68,8 +76,8 @@ namespace DC2025
 
         private Transform TryNextPathPosition()
         {
-            Vector2Int gridPos = _grid.WorldToGrid(transform.position);
-            Vector2Int nextGridPos = _grid.WorldToGrid(_path[_pathPosition].position);
+            Vector2Int gridPos = _gridMs.WorldToGrid(transform.position);
+            Vector2Int nextGridPos = _gridMs.WorldToGrid(_path[_pathPosition].position);
             if (gridPos != nextGridPos) return _path[_pathPosition];
             
 			int nextPos = _pathPosition + _pathDirection;
@@ -89,5 +97,27 @@ namespace DC2025
 
 			return _path[_pathPosition];
 		}
-	}
+
+        public void DoAttackAnimation()
+        {
+            if (_attacking) return;
+            _sword.Swing();
+            _attacking = true;
+            Vector3 startPos = transform.position;
+            Vector3 endPos = startPos + transform.forward * 0.7f;
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                this,
+                0.2f,
+                (float t) =>
+                {
+                    if (t < 0.5f) transform.position = Vector3.Lerp(startPos, endPos, t * 2.0f);
+                    else transform.position = Vector3.Lerp(endPos, startPos, (t - 0.5f) * 2.0f);
+                },
+				() =>
+                {
+                    _attacking = false;
+                    _fightMs.EnemyAttackDone();
+                });
+        }
+    }
 }

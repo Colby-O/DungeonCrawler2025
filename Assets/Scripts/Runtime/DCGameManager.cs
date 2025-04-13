@@ -14,6 +14,7 @@ namespace DC2025
         [SerializeField] private AnimationMonoSystem _animSystem;
         [SerializeField] private GridMonoSystem _gridSystem;
         [SerializeField] private FightMonoSystem _fightSystem;
+        public static GameSettings settings;
 
         public static bool IsPaused;
         public static Interactor Player;
@@ -45,6 +46,7 @@ namespace DC2025
 
         private void Start()
         {
+            DCGameManager.settings = Resources.Load<GameSettings>("Settings/GameSettings");
             Player = FindAnyObjectByType<Interactor>();
         }
     }

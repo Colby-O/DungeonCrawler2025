@@ -7,6 +7,7 @@ using PlazmaGames.Core;
 using Unity.VisualScripting;
 using UnityEngine;
 using static UnityEditor.LightingExplorerTableColumn;
+using Random = System.Random;
 
 namespace DC2025
 {
@@ -23,64 +24,25 @@ namespace DC2025
         }
         
         private IGridMonoSystem _grid;
-        private TimingBar _playerAttackIndicator;
 
         private FightState _fightState;
+
+        private float _enemyAttackCountdown = 0;
+        private float _enemyBlockCountdown = 0;
         
         private Player _player;
         private Enemy _enemy;
+        private float _enemyHealth = 0;
+        private bool _enemyAttackBlocked = false;
+
+        public bool InFight() => _fightState == FightState.Fighting;
         
         private void Start()
         {
             _grid = GameManager.GetMonoSystem<IGridMonoSystem>();
             _player = FindFirstObjectByType<Player>();
-            _playerAttackIndicator = FindFirstObjectByType<TimingBar>();
         }
 
-        public bool InFight() => _fightState == FightState.Fighting;
-
-        public void StartFight(Enemy enemy)
-        {
-            Debug.Log("Fight start");
-            Enemy.pause = true;
-            Player.stopMovement = true;
-            _enemy = enemy;
-            _fightState = FightState.PlayerTurnToEnemy;
-        }
-
-        public void PlayerAttack()
-        {
-            if (_playerAttackIndicator.IsStopped()) return;
-            
-            if (_playerAttackIndicator.IsGreen())
-            {
-                _playerAttackIndicator.Stop();
-                _player.DoAttackAnimation();
-            }
-        }
-
-        public void PlayerAttackDone()
-        {
-            _playerAttackIndicator.Reset();
-        }
-
-        bool EntityFaceEntity(Entity facer, Entity facee)
-        {
-            if (facer.CurrentAction() != Action.None) return false;
-            Vector3 worldDir = (facee.transform.position - facer.transform.position).normalized;
-            float angle = Vector3.SignedAngle(Vector3.forward, worldDir, Vector3.up);
-            Direction dir = Direction.North.GetFacingDirection(angle);
-            if (dir != facer.Facing())
-            {
-                if (((int)facer.Facing() - (int)dir + 4) % 4 > 2) facer.RequestAction(Action.TurnRight);
-                else facer.RequestAction(Action.TurnLeft);
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
 
         private void FixedUpdate()
         {
@@ -93,25 +55,6 @@ namespace DC2025
                     if (EntityFaceEntity(_player, _enemy))
                     {
                         _fightState = FightState.EnemyMoveToPlayer;
-                    }
-                    break;
-                }
-                case FightState.PlayerTurnToEnemyReal:
-                {
-                    if (_player.CurrentAction() != Action.None) break;
-                    if (EntityFaceEntity(_player, _enemy))
-                    {
-                        _playerAttackIndicator.gameObject.SetActive(true);
-                        _fightState = FightState.Fighting;
-                    }
-                    break;
-                }
-                case FightState.EnemyTurnToPlayer:
-                {
-                    if (_player.CurrentAction() != Action.None) break;
-                    if (EntityFaceEntity(_enemy, _player))
-                    {
-                        _fightState = FightState.PlayerTurnToEnemyReal;
                     }
                     break;
                 }
@@ -131,6 +74,7 @@ namespace DC2025
                     dir.y = dir.y switch { > 0 => 1, < 0 => -1, _ => 0 };
                     if (_enemy.Facing() == Direction.North || _enemy.Facing() == Direction.South)
                     {
+                        if (dir.y == 0) dir.y = _enemy.Facing() == Direction.North ? -1 : 1;
                         if (enemyPos.y + dir.y != playerPos.y)
                         {
                             Direction dirdir = dir.y > 0 ? Direction.North : Direction.South;
@@ -144,6 +88,7 @@ namespace DC2025
                     }
                     else
                     {
+                        if (dir.x == 0) dir.x = _enemy.Facing() == Direction.East ? -1 : 1;
                         if (enemyPos.x + dir.x != playerPos.x)
                         {
                             Direction dirdir = dir.x > 0 ? Direction.East: Direction.West;
@@ -157,10 +102,143 @@ namespace DC2025
                     }
                     break;
                 }
-                case FightState.Fighting:
+                case FightState.EnemyTurnToPlayer:
                 {
+                    if (_player.CurrentAction() != Action.None) break;
+                    if (EntityFaceEntity(_enemy, _player))
+                    {
+                        _fightState = FightState.PlayerTurnToEnemyReal;
+                    }
                     break;
                 }
+                case FightState.PlayerTurnToEnemyReal:
+                {
+                    if (_player.CurrentAction() != Action.None) break;
+                    if (EntityFaceEntity(_player, _enemy))
+                    {
+                        _fightState = FightState.Fighting;
+                        EnemyQueueNextMove();
+                    }
+                    break;
+                }
+                case FightState.Fighting:
+                {
+                    _enemyBlockCountdown -= Time.fixedDeltaTime;
+                    if (_enemyBlockCountdown <= 0)
+                    {
+                        if (_enemyAttackCountdown >= 1.0 && _enemyAttackCountdown - Time.fixedDeltaTime < 1.0)
+                        {
+                            _enemy.Sword().Raise();
+                        }
+                        _enemyAttackCountdown -= Time.fixedDeltaTime;
+                        if (_enemyAttackCountdown <= 0)
+                        {
+                            EnemyAttack();
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+        private void EnemyQueueNextMove()
+        {
+            if (UnityEngine.Random.Range(0, 100) < 17)
+            {
+                _enemyBlockCountdown = UnityEngine.Random.Range(1.5f, 2.5f);
+            }
+            _enemyAttackBlocked = false;
+            _enemyAttackCountdown = UnityEngine.Random.Range(1.5f, 3.0f);
+        }
+
+        private void EnemyAttack()
+        {
+            _enemy.DoAttackAnimation();
+            if (_enemyAttackBlocked)
+            {
+                Debug.Log("Attack blocked!");
+                _player.Sword().Lower();
+            }
+            else
+            {
+                Debug.Log("Failed to block!");
+            }
+            EnemyQueueNextMove();
+        }
+
+        public void EnemyAttackDone()
+        {
+        }
+        
+        public void StartFight(Enemy enemy)
+        {
+            Debug.Log("Fight start");
+            Enemy.pause = true;
+            Player.stopMovement = true;
+            _enemy = enemy;
+            _enemyHealth = 100;
+            _fightState = FightState.PlayerTurnToEnemy;
+        }
+
+        public void PlayerAttack()
+        {
+            if (_player.IsAttacking()) return;
+            _player.DoAttackAnimation();
+        }
+
+        public bool PlayerBlock()
+        {
+            Debug.Log("Try Blocked");
+            if (!_enemyAttackBlocked && _enemyAttackCountdown > 0 && _enemyAttackCountdown < 1.0)
+            {
+                _enemyAttackBlocked = true;
+                Debug.Log("Blocked Time Hit!");
+                _player.Sword().Block();
+                return true;
+            }
+
+            return false;
+        }
+
+        public void PlayerAttackDone()
+        {
+            if (_enemyBlockCountdown > 0)
+            {
+                Debug.Log("Enemy Blocked");
+            }
+            else
+            {
+                _enemyHealth -= 25;
+                if (_enemyHealth <= 0)
+                {
+                    EnemyDie();
+                }
+            }
+        }
+
+        private void EnemyDie()
+        {
+            _enemy.gameObject.SetActive(false);
+            Enemy.pause = false;
+            Player.stopMovement = false;
+            _fightState = FightState.None;
+        }
+
+        bool EntityFaceEntity(Entity facer, Entity facee)
+        {
+            if (facer.CurrentAction() != Action.None) return false;
+            Vector3 worldDir = (facee.transform.position - facer.transform.position).normalized;
+            float angle = Vector3.SignedAngle(Vector3.forward, worldDir, Vector3.up);
+            Direction dir = Direction.North.GetFacingDirection(angle);
+            if (dir != facer.Facing())
+            {
+                if (((int)facer.Facing() - (int)dir + 4) % 4 > 2) facer.RequestAction(Action.TurnRight);
+                else facer.RequestAction(Action.TurnLeft);
+                return false;
+            }
+            else
+            {
+                return true;
             }
         }
     }

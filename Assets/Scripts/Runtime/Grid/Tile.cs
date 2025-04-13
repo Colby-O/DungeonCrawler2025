@@ -9,10 +9,11 @@ namespace DC2025
 {
 	public class Tile : MonoBehaviour
     {
-        private MeshRenderer _renderer;
-        
-		[SerializeField] private SerializableDictionary<Direction, bool> _walls;
+        private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
+        [SerializeField] private SerializableDictionary<Direction, bool> _walls;
 		[SerializeField, ReadOnly] private Vector3 _globalPosition;
+
+        private MeshRenderer _highlight;
 
         private float _enemySeenTimer;
 
@@ -119,14 +120,15 @@ namespace DC2025
 
         private void Start()
         {
-            _renderer = GetComponent<MeshRenderer>();
+            _highlight = transform.Find("Highlight").GetComponent<MeshRenderer>();
+            _highlight.material.EnableKeyword("_EMISSION");
         }
 
         private void FixedUpdate()
         {
             _globalPosition = transform.position;
             _enemySeenTimer -= Time.fixedDeltaTime * 5f;
-            _renderer.material.color = Color.Lerp(Color.white, Color.yellow, _enemySeenTimer);
+            _highlight.material.SetColor(EmissionColor, Color.Lerp(Color.black, DCGameManager.settings.enemyVisionHighlightColor, _enemySeenTimer));
         }
 
         private void Update()

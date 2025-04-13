@@ -9,6 +9,8 @@ namespace DC2025
         public void StartFight(Enemy enemy);
         public bool InFight();
         public void PlayerAttack();
+        public bool PlayerBlock();
         public void PlayerAttackDone();
+        public void EnemyAttackDone();
     }
 }

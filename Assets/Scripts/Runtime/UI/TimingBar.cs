@@ -32,16 +32,16 @@ namespace DC2025
             if (!_stopped)
             {
                 _ball.Translate(new Vector3(Time.deltaTime * _speed * _dir, 0, 0));
-                if (_ball.position.x + _ball.rect.size.x >= _panel.position.x + _panel.rect.size.x) _dir = -1;
-                else if (_ball.position.x <= _panel.position.x) _dir = 1;
+                if (_ball.anchoredPosition.x + _ball.rect.size.x >= _panel.anchoredPosition.x + _panel.rect.size.x) _dir = -1;
+                else if (_ball.anchoredPosition.x <= _panel.anchoredPosition.x) _dir = 1;
             }
         }
 
         public bool IsGreen()
         {
             return (
-                _ball.position.x + _ball.rect.size.x >= _targetBg.position.x &&
-                _ball.position.x <= _targetBg.position.x + _targetBg.rect.size.x
+                _ball.anchoredPosition.x + _ball.rect.size.x >= _targetBg.anchoredPosition.x &&
+                _ball.anchoredPosition.x <= _targetBg.anchoredPosition.x + _targetBg.rect.size.x
             );
         }
 
