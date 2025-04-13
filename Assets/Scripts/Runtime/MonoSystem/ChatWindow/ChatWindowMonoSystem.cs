@@ -1,3 +1,5 @@
+using PlazmaGames.Core;
+using PlazmaGames.UI;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -21,6 +23,7 @@ namespace DC2025
             text.text = msg;
             text.color = color ?? _deafultColor;
             _log.Add(text);
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().ScrollToBottom();
         }
 
         public void Clear()
