@@ -1,4 +1,6 @@
+using DC2025.Utils;
 using NUnit.Framework.Internal.Filters;
+using PlazmaGames.Attribute;
 using PlazmaGames.UI;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,11 +13,31 @@ namespace DC2025
         [Header("Movement Buttons")]
         [SerializeField] private List<EventButton> _moveButtons;
 
+        [Header("Health")]
+        [SerializeField] private RectTransform _healthBar;
+        [SerializeField, ReadOnly] private Vector2 _rectRange;
+
+        [Header("Inventory")]
+        [SerializeField] private GameObject _inv;
+        [SerializeField] private EventButton _openInv;
+        [SerializeField] private EventButton _backFromInv;
+
+        [Header("Stats")]
+        [SerializeField] private GameObject _stats;
+
         private Player _player;
+        private PlayerManager _playerManager;
 
         public void ForceHighlighted(Action action, bool isHelighted)
         {
             _moveButtons[(int)action].ForceHighlightedt(isHelighted);
+        }
+
+        public void UpdateHealth()
+        {
+            if (_playerManager == null) _playerManager = DCGameManager.Player.GetComponent<PlayerManager>();
+
+            _healthBar.sizeDelta = new Vector2(_healthBar.sizeDelta.x, Math.Map(_playerManager.GetHealth(), 0, _playerManager.GetMaxHealth(), _rectRange.x, _rectRange.y));
         }
 
         private void ApplyAction(Action action, bool state)
@@ -47,8 +69,17 @@ namespace DC2025
             }
         }
 
+        private void ToggleInventory(bool status)
+        {
+            _inv.SetActive(status);
+            _stats.SetActive(!status);
+        }
+
         public override void Init()
         {
+            _rectRange.y = 0;
+            _rectRange.y = _healthBar.sizeDelta.y;
+
             if (_moveButtons != null) 
             { 
                 for (int i = 0; i < _moveButtons.Count; i++)
@@ -58,6 +89,10 @@ namespace DC2025
                     _moveButtons[i].onPointerUp.AddListener(() => ApplyAction(action, false));
                 }
             }
+
+            ToggleInventory(false);
+            _openInv.onPointerDown.AddListener(() => ToggleInventory(true));
+            _backFromInv.onPointerDown.AddListener(() => ToggleInventory(false));
         }
 
         public override void Show()

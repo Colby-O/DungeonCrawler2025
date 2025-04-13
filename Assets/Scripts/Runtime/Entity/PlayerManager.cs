@@ -1,5 +1,7 @@
 using PlazmaGames.Attribute;
+using PlazmaGames.Core;
 using PlazmaGames.Runtime.DataStructures;
+using PlazmaGames.UI;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +20,10 @@ namespace DC2025
 
         [Header("Vitals")]
         [SerializeField, ReadOnly] private float _curHealth;
+
+        public float GetHealth() => _curHealth;
+
+        public float GetMaxHealth() => _maxHealth;
 
         public bool GivePotion(Potion potion)
         {
@@ -57,6 +63,8 @@ namespace DC2025
         {
             _curHealth -= amount;
 
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateHealth();
+
             if (_curHealth <= 0)
             {
                 OnDeath();
@@ -66,6 +74,7 @@ namespace DC2025
         public void Heal(int amount)
         {
             _curHealth = Mathf.Clamp(_curHealth + amount, 0, _maxHealth);
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateHealth();
         }
 
         public void OnDeath()
@@ -78,6 +87,12 @@ namespace DC2025
             _curHealth = _maxHealth;
             _potions = new List<Potion>();
             _craftingMats = new SerializableDictionary<MaterialTypes, int>();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space)) { Damage(10); }
+            if (Input.GetKeyDown(KeyCode.Q)) { Heal(5); }
         }
     }
 }
