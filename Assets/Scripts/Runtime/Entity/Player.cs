@@ -15,6 +15,8 @@ namespace DC2025
         private IFightMonoSystem _fightMs;
 
         private SwordSwing _sword;
+
+        public PlayerManager manager;
         
         [Header("Input System")]
         [SerializeField] private PlayerInput _input;
@@ -150,6 +152,7 @@ namespace DC2025
 
         private void Awake()
         {
+            this.manager = GetComponent<PlayerManager>();
             _sword = GetComponentInChildren<SwordSwing>();
             _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
             if (_input == null) _input = GetComponent<PlayerInput>();

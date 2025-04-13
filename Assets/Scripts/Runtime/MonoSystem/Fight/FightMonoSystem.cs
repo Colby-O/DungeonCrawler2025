@@ -126,7 +126,7 @@ namespace DC2025
                     _enemyBlockCountdown -= Time.fixedDeltaTime;
                     if (_enemyBlockCountdown <= 0)
                     {
-                        if (_enemyAttackCountdown >= 1.0 && _enemyAttackCountdown - Time.fixedDeltaTime < 1.0)
+                        if (_enemyAttackCountdown >= _enemy.AttackHintTime() && _enemyAttackCountdown - Time.fixedDeltaTime < _enemy.AttackHintTime())
                         {
                             _enemy.Sword().Raise();
                         }
@@ -153,21 +153,23 @@ namespace DC2025
 
         private void EnemyAttack()
         {
-            _enemy.DoAttackAnimation();
-            if (_enemyAttackBlocked)
-            {
-                Debug.Log("Attack blocked!");
-                _player.Sword().Lower();
-            }
-            else
-            {
-                Debug.Log("Failed to block!");
-            }
-            EnemyQueueNextMove();
+            if (!_enemy.Attacking()) _enemy.DoAttackAnimation();
         }
 
         public void EnemyAttackDone()
         {
+            if (_enemyAttackBlocked)
+            {
+                Debug.Log("Attack blocked!");
+                _player.Sword().Lower();
+                _player.manager.Damage(7);
+            }
+            else
+            {
+                Debug.Log("Failed to block!");
+                _player.manager.Damage(25);
+            }
+            EnemyQueueNextMove();
         }
         
         public void StartFight(Enemy enemy)
@@ -182,14 +184,14 @@ namespace DC2025
 
         public void PlayerAttack()
         {
-            if (_player.IsAttacking()) return;
+            if (_player.IsAttacking() || _enemyAttackBlocked) return;
             _player.DoAttackAnimation();
         }
 
         public bool PlayerBlock()
         {
             Debug.Log("Try Blocked");
-            if (!_enemyAttackBlocked && _enemyAttackCountdown > 0 && _enemyAttackCountdown < 1.0)
+            if (!_enemyAttackBlocked && _enemyAttackCountdown > 0 && _enemyAttackCountdown < _enemy.AttackHintTime())
             {
                 _enemyAttackBlocked = true;
                 Debug.Log("Blocked Time Hit!");
@@ -208,7 +210,7 @@ namespace DC2025
             }
             else
             {
-                _enemyHealth -= 25;
+                _enemyHealth -= 5;
                 if (_enemyHealth <= 0)
                 {
                     EnemyDie();

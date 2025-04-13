@@ -19,8 +19,11 @@ namespace DC2025
 		[SerializeField] int _pathDirection;
         private bool _attacking = false;
         private SwordSwing _sword;
+        [SerializeField] private float _attackHintTime = 0.5f;
 
         public SwordSwing Sword() => _sword;
+        public float AttackHintTime() => _attackHintTime;
+        public bool Attacking() => _attacking;
 
         protected override void Start()
         {
@@ -119,5 +122,6 @@ namespace DC2025
                     _fightMs.EnemyAttackDone();
                 });
         }
+
     }
 }

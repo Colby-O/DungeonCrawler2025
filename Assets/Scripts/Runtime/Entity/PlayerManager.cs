@@ -91,7 +91,6 @@ namespace DC2025
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space)) { Damage(10); }
             if (Input.GetKeyDown(KeyCode.Q)) { Heal(5); }
         }
     }
