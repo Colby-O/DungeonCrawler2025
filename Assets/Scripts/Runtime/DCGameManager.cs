@@ -14,6 +14,8 @@ namespace DC2025
         [SerializeField] private AnimationMonoSystem _animSystem;
         [SerializeField] private GridMonoSystem _gridSystem;
         [SerializeField] private FightMonoSystem _fightSystem;
+        [SerializeField] private ChatWindowMonoSystem _chatSystem;
+
         public static GameSettings settings;
 
         public static bool IsPaused;
@@ -25,6 +27,7 @@ namespace DC2025
             AddMonoSystem<AnimationMonoSystem, IAnimationMonoSystem>(_animSystem);
             AddMonoSystem<GridMonoSystem, IGridMonoSystem>(_gridSystem);
             AddMonoSystem<FightMonoSystem, IFightMonoSystem>(_fightSystem);
+            AddMonoSystem<ChatWindowMonoSystem, IChatWindowMonoSystem>(_chatSystem);
         }
 
         public override string GetApplicationName()

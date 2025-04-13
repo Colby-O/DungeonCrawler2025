@@ -11,52 +11,26 @@ namespace DC2025
     {
         [Header("Player Stats")]
         [SerializeField] private float _maxHealth;
-
-        [Header("Inventory")]
-        [SerializeField] private SerializableDictionary<MaterialTypes, int> _craftingMats;
-
-        [Header("Potions")]
-        [SerializeField] private List<Potion> _potions;
+        [SerializeField] private float _maxStamina;
+        [SerializeField] private float _StaminaRefillRate;
 
         [Header("Vitals")]
         [SerializeField, ReadOnly] private float _curHealth;
+        [SerializeField, ReadOnly] private float _curStamina;
 
         public float GetHealth() => _curHealth;
 
         public float GetMaxHealth() => _maxHealth;
 
-        public bool GivePotion(Potion potion)
-        {
-            if (_potions.Count >= 2) return false;
-            _potions.Add(potion);
-            return true;
-        }
+        public float GetStamina() => _curStamina;
 
-        public bool UsePotion(int index)
-        {
-            if (_potions.Count <= index) return false;
-            _potions[index].Use(this);
-            _potions.RemoveAt(index);
-            return true;
-        }
+        public float GetMaxStamina() => _maxStamina;
 
-        public int GetCraftingMaterial(MaterialTypes type)
+        public void UseStamina (int amount)
         {
-            return _craftingMats.ContainsKey(type) ? _craftingMats[type] : 0;
-        }
+            _curStamina = Mathf.Max(_curStamina - amount, 0);
 
-        public void AddCraftingMaterial(MaterialTypes type, int amount)
-        {
-            if (CanTakeCraftingMaterial(type, -amount))
-            {
-                if (_craftingMats.ContainsKey(type)) _craftingMats[type] += amount;
-                else _craftingMats.Add(type, amount);
-            }
-        }
-
-        public bool CanTakeCraftingMaterial(MaterialTypes type, int amount)
-        {
-            return ((_craftingMats.ContainsKey(type) ? _craftingMats[type] : 0) - amount) >= 0;
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateStamina();
         }
 
         public void Damage(int amount)
@@ -82,17 +56,23 @@ namespace DC2025
             Debug.Log("The Player Had Died :<");
         }
 
+        private void RefillStamina()
+        {
+            if (DCGameManager.IsPaused) return;
+            _curStamina = Mathf.Min(_curStamina + _StaminaRefillRate * Time.deltaTime, _maxStamina);
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateStamina();
+        }
+
         private void Awake()
         {
             _curHealth = _maxHealth;
-            _potions = new List<Potion>();
-            _craftingMats = new SerializableDictionary<MaterialTypes, int>();
+            _curStamina = _maxStamina;
         }
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Space)) { Damage(10); }
-            if (Input.GetKeyDown(KeyCode.Q)) { Heal(5); }
+            //if (Input.GetKeyDown(KeyCode.Space)) { UseStamina(10); }
+            RefillStamina();
         }
     }
 }
