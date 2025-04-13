@@ -1,4 +1,6 @@
 using PlazmaGames.Attribute;
+using PlazmaGames.Core;
+using PlazmaGames.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
@@ -12,42 +14,101 @@ namespace DC2025
         [SerializeField, ReadOnly] private Vector2 _rawMovement;
         [SerializeField, ReadOnly] private float _rawTurn;
 
+        public void SetRawMovement(Vector2 rawMovement)
+        {
+            _rawMovement = rawMovement;
+
+            if (_rawMovement != Vector2.zero) ProcessMovement();
+        }
+
+        public void SetRawTurn(float rawTurn)
+        {
+            _rawTurn = rawTurn;
+
+            if (rawTurn != 0) ProcessTurn();
+        }
+
         private void HandleMovementAction(InputAction.CallbackContext e)
         {
             if (DCGameManager.IsPaused) return;
-            _rawMovement = e.ReadValue<Vector2>();
-            ProcessMovement();
+            SetRawMovement(e.ReadValue<Vector2>());
         }
 
         private void HandleMovementCancelAction(InputAction.CallbackContext e)
         {
-            _rawMovement = Vector2.zero;
+            SetRawMovement(Vector2.zero);
         }
 
         private void HandleTurnAction(InputAction.CallbackContext e)
         {
             if (DCGameManager.IsPaused) return;
-            _rawTurn = e.ReadValue<float>();
-            ProcessTurn();
+            SetRawTurn(e.ReadValue<float>());
+           
         }
 
         private void HandleTurnCancelAction(InputAction.CallbackContext e)
         {
-            _rawTurn = 0;
+            SetRawTurn(0);
         }
 
         private void ProcessMovement()
         {
-            if (_rawMovement.x > 0) RequestAction(Action.MoveRight);
-            if (_rawMovement.x < 0) RequestAction(Action.MoveLeft);
-            if (_rawMovement.y > 0) RequestAction(Action.MoveUp);
-            if (_rawMovement.y < 0) RequestAction(Action.MoveDown);
+            if (_rawMovement.x > 0)
+            {
+                RequestAction(Action.MoveRight);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveRight, true);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveLeft, false);
+            }
+            else if (_rawMovement.x < 0)
+            {
+                RequestAction(Action.MoveLeft);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveRight, false);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveLeft, true);
+            }
+            else
+            {
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveRight, false);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveLeft, false);
+            }
+
+            if (_rawMovement.y > 0)
+            {
+                RequestAction(Action.MoveUp);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveUp, true);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveDown, false);
+            }
+            else if (_rawMovement.y < 0)
+            {
+                RequestAction(Action.MoveDown);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveUp, false);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveDown, true);
+            }
+            else
+            {
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveUp, false);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.MoveDown, false);
+            }
         }
 
         private void ProcessTurn()
         {
-            if (_rawTurn > 0) RequestAction(Action.TurnRight);
-            if (_rawTurn < 0) RequestAction(Action.TurnLeft);
+            if (_rawTurn > 0)
+            {
+                RequestAction(Action.TurnRight);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.TurnRight, true);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.TurnLeft, false);
+            }
+            else if (_rawTurn < 0)
+            {
+                RequestAction(Action.TurnLeft);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.TurnRight, false);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.TurnLeft, true);
+            }
+            else
+            {
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.TurnRight, false);
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceHighlighted(Action.TurnLeft, false);
+            }
         }
 
         protected override void OnMoveComplete()
