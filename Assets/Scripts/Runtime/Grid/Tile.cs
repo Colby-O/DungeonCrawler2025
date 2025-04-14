@@ -25,6 +25,7 @@ namespace DC2025
         private bool _lastEnterState = false;
         private bool _lastAdjancentState = false;
 
+        public bool HasInteractable() => _interactables != null && _interactables.Count > 0;
         public bool HasItemWithCollider()
         {
             bool hasCollider = false;
@@ -52,6 +53,7 @@ namespace DC2025
         {
             if (_interactables != null) _interactables.Add(interactable);
             else _interactables = new List<IInteractable>() { interactable };
+            interactable.CurrentTile = this;
         }
 
         public void RemoveInteractable(IInteractable interactable)
@@ -60,6 +62,7 @@ namespace DC2025
             {
                 _interactables.Remove(interactable);
             }
+            interactable.CurrentTile = null;
         }
 
         public void OnPlayerEnter()

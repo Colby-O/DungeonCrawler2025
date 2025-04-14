@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace DC2025
@@ -17,7 +18,12 @@ namespace DC2025
             {
                 if (hit.collider.transform != null)
                 {
-                    Debug.Log(hit.collider.transform.name);
+                    if (hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable))
+                    {
+                        if (Mouse.current.leftButton.wasPressedThisFrame) interactable.OnPressedDown();
+                        else if (Mouse.current.leftButton.wasReleasedThisFrame) interactable.OnPressedUp();
+                        else interactable.OnHover();
+                    }
                 }
             }
         }

@@ -7,6 +7,7 @@ namespace DC2025
     {
         public bool IsAdjancent { get; set; }
         public bool IsEntered { get; set; }
+        public Tile CurrentTile { get; set; }
         public bool HasCollider { get { return false; } }
 
         [SerializeField, ReadOnly] bool _isEntered;
@@ -31,6 +32,10 @@ namespace DC2025
         {
             Debug.Log("On Exit");
         }
+
+        public void OnPressedDown() { }
+        public void OnPressedUp() { }
+        public void OnHover() { }
 
         private void FixedUpdate()
         {

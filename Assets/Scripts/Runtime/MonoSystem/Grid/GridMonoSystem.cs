@@ -23,6 +23,19 @@ namespace DC2025
 
 		public Vector2 GetTileSize() => _tileSize;
 
+        public Tile GetTileAt(int x, int y) => GetTileAt(new Vector2Int(x, y));
+
+        public Tile GetTileAt(Vector2Int gridPos) => _tiles[gridPos];
+
+        public (Vector2Int, Tile) FindVaildLocationNearPlayer()
+        {
+			Vector2Int playerPos = WorldToGrid(DCGameManager.Player.transform.position);
+
+			if (_tiles.ContainsKey(playerPos) && !_tiles[playerPos].HasInteractable()) return (playerPos, GetTileAt(playerPos));
+
+			return (Vector2Int.zero, null);
+        }
+
         public List<EntityData> GetEntitesOnTile(Vector2Int pos)
         {
             return _entities.Where(e => e.loc == pos).ToList();

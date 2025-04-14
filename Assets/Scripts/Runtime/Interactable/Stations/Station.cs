@@ -12,10 +12,10 @@ namespace DC2025
         [SerializeField] private Transform _offset;
         [SerializeField] private float _transitionSpeed = 0.2f;
 
-        public bool IsEnabled { get; protected set; }
-
+        public Tile CurrentTile { get; set; }
         public bool IsAdjancent { get; set; }
         public bool IsEntered { get; set; }
+        public bool IsEnabled { get; protected set; }
 
         public bool HasCollider { get { return true; } }
         
@@ -43,9 +43,15 @@ namespace DC2025
 
         public abstract void Interact();
 
+        public void OnPressedUp() { }
+
+        public virtual void OnHover() { }
+
         public virtual void OnPlayerEnter() { }
 
         public virtual void OnPlayerExit() { }
+
+        public virtual void OnPressedDown() => Interact();
 
         public virtual void OnPlayerAdjancentEnter() 
         {

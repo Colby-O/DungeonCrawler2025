@@ -4,6 +4,7 @@ namespace DC2025
 {
     public interface IInteractable
     {
+        public Tile CurrentTile { get; set; }
         public bool IsAdjancent { get; set; }
         public bool IsEntered { get; set; }
 
@@ -13,5 +14,9 @@ namespace DC2025
         public void OnPlayerExit();
         public void OnPlayerAdjancentEnter();
         public void OnPlayerAdjancentExit();
+
+        public void OnPressedDown();
+        public void OnPressedUp();
+        public void OnHover();
     }
 }

@@ -15,11 +15,17 @@ namespace DC2025
         [SerializeField] private GridMonoSystem _gridSystem;
         [SerializeField] private FightMonoSystem _fightSystem;
         [SerializeField] private ChatWindowMonoSystem _chatSystem;
+        [SerializeField] private InventoryMonoSystem _inventorySystem;
+
+        [Header("Databases")]
+        [SerializeField] private ItemDatabase _itemDB;
 
         public static GameSettings settings;
 
         public static bool IsPaused;
         public static Interactor Player;
+
+        public static ItemDatabase ItemDB { get { return ((DCGameManager)GameManager.Instance)._itemDB; } }
 
         private void AttachMonoSystems()
         {
@@ -28,6 +34,7 @@ namespace DC2025
             AddMonoSystem<GridMonoSystem, IGridMonoSystem>(_gridSystem);
             AddMonoSystem<FightMonoSystem, IFightMonoSystem>(_fightSystem);
             AddMonoSystem<ChatWindowMonoSystem, IChatWindowMonoSystem>(_chatSystem);
+            AddMonoSystem<InventoryMonoSystem, IInventoryMonoSystem>(_inventorySystem);
         }
 
         public override string GetApplicationName()
