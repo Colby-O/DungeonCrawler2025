@@ -29,11 +29,42 @@ namespace DC2025
 
         public (Vector2Int, Tile) FindVaildLocationNearPlayer()
         {
+			Queue<Vector2Int> possibleLocations = new Queue<Vector2Int>();
+            Dictionary<Vector2Int, bool> visted = new Dictionary<Vector2Int, bool>();
+
 			Vector2Int playerPos = WorldToGrid(DCGameManager.Player.transform.position);
+            possibleLocations.Enqueue(playerPos);
+			visted[playerPos] = true;
 
-			if (_tiles.ContainsKey(playerPos) && !_tiles[playerPos].HasInteractable()) return (playerPos, GetTileAt(playerPos));
+			(Vector2Int, Tile) res = (Vector2Int.zero, null);
 
-			return (Vector2Int.zero, null);
+            while (possibleLocations.Count > 0) 
+			{
+				Vector2Int pos = possibleLocations.Dequeue();
+				if (_tiles.ContainsKey(pos) && !_tiles[pos].HasInteractable())
+				{
+                    res = (pos, GetTileAt(pos));
+					break;
+				}
+				else
+				{
+					for (int i = -1; i <= 1; i++)
+					{
+						for (int j = -1; j <= 1; j++)
+						{
+							Vector2Int nextPos = pos + new Vector2Int(i, j);
+
+                            if (!visted.ContainsKey(nextPos) || !visted[nextPos])
+							{
+								possibleLocations.Enqueue(nextPos);
+								visted.Add(nextPos, true);
+							}
+                        }
+					}
+                }
+            }
+
+			return res;
         }
 
         public List<EntityData> GetEntitesOnTile(Vector2Int pos)

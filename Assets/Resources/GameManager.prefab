@@ -88,6 +88,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 44f99ad9114d43e4fbb52198adba7701, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mouseSlot: {fileID: 0}
+  _slots: []
+  _rightSlot: {fileID: 0}
+  _leftSlot: {fileID: 0}
 --- !u!1 &2138974116077166966
 GameObject:
   m_ObjectHideFlags: 0
@@ -359,9 +363,9 @@ Transform:
   m_Children:
   - {fileID: 6077764974094617820}
   - {fileID: 2863431905669087098}
+  - {fileID: 6007508954855057738}
   - {fileID: 6888951129072786568}
   - {fileID: 6293934143337871499}
   - {fileID: 6238274937038635052}
-  - {fileID: 6007508954855057738}
   m_Father: {fileID: 4573325105231212099}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -6,6 +6,9 @@ TagManager:
   tags:
   - ChatWindowContainer
   - MouseSlot
+  - LeftSlot
+  - RightSlot
+  - Slot
   layers:
   - Default
   - TransparentFX

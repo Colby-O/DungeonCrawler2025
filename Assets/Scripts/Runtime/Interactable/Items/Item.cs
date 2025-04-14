@@ -20,5 +20,11 @@ namespace DC2025
 
         [Header("Inventory")]
         public Sprite Icon;
+
+        public override string ToString()
+        {
+            return $"<align=center>{Name}</align>\n" +
+                   $"<align=left>{Description}</align>\n";
+        }
     }
 }

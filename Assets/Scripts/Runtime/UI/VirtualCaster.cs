@@ -1,3 +1,5 @@
+using DC2025.Utils;
+using PlazmaGames.Core;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,9 +22,16 @@ namespace DC2025
                 {
                     if (hit.collider.TryGetComponent<IInteractable>(out IInteractable interactable))
                     {
-                        if (Mouse.current.leftButton.wasPressedThisFrame) interactable.OnPressedDown();
-                        else if (Mouse.current.leftButton.wasReleasedThisFrame) interactable.OnPressedUp();
-                        else interactable.OnHover();
+                        if (
+                            Mathf.FloorToInt(
+                                Vector3.Distance(hit.transform.position.SetY(0), DCGameManager.Player.transform.position.SetY(0)) / GameManager.GetMonoSystem<IGridMonoSystem>().GetTileSize().x
+                            ) <= DCGameManager.Player.GetClickDistance()
+                        )
+                        {
+                            if (Mouse.current.leftButton.wasPressedThisFrame) interactable.OnPressedDown();
+                            else if (Mouse.current.leftButton.wasReleasedThisFrame) interactable.OnPressedUp();
+                            else interactable.OnHover();
+                        }
                     }
                 }
             }
@@ -39,7 +48,6 @@ namespace DC2025
                     Vector3 virtualPos = new Vector3(hit.textureCoord.x, hit.textureCoord.y);
                     virtualPos.x *= _screenCamera.targetTexture.width;
                     virtualPos.y *= _screenCamera.targetTexture.height;
-                    eventData.position = virtualPos;
 
                     CheckForHit(virtualPos);
                 }

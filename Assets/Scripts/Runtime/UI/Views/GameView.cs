@@ -1,6 +1,7 @@
 using DC2025.Utils;
 using NUnit.Framework.Internal.Filters;
 using PlazmaGames.Attribute;
+using PlazmaGames.Core;
 using PlazmaGames.UI;
 using System.Collections.Generic;
 using UnityEngine;
@@ -87,6 +88,20 @@ namespace DC2025
             _stats.SetActive(!status);
         }
 
+        private void OpenInventory()
+        {
+            IInventoryMonoSystem inventory = GameManager.GetMonoSystem<IInventoryMonoSystem>();
+
+            if (inventory.GetMouseSlot().HasItem())
+            {
+                if (inventory.AddItemToInventory(inventory.GetMouseSlot().Item)) inventory.GetMouseSlot().Clear();
+            }
+            else
+            {
+                ToggleInventory(true);
+            }
+        }
+
         public override void Init()
         {
             _healthRectRange.y = 0;
@@ -106,7 +121,7 @@ namespace DC2025
             }
 
             ToggleInventory(false);
-            _openInv.onPointerDown.AddListener(() => ToggleInventory(true));
+            _openInv.onPointerDown.AddListener(OpenInventory);
             _backFromInv.onPointerDown.AddListener(() => ToggleInventory(false));
         }
 
