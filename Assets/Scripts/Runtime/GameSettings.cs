@@ -10,5 +10,6 @@ namespace DC2025
         public int playerAttackFailStamina = 20;
         public int playerBlockStamina = 10;
         public int playerBlockFailStamina = 35;
+        public float enemyDistractedWaitTime = 5.0f;
     }
 }

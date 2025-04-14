@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using DC2025.Utils;
 using PlazmaGames.Animation;
 using PlazmaGames.Attribute;
@@ -22,7 +23,7 @@ namespace DC2025
 		North,
 		East,
 		South,
-		West
+		West,
 	}
 
 	public static class ActionExtension
@@ -44,7 +45,15 @@ namespace DC2025
 	}
 
 	public static class DirectionExtension
-	{
+    {
+        public static Direction FromVector2Int(Vector2Int v)
+        {
+            if (v.x < 0) return Direction.West;
+            if (v.x > 0) return Direction.East;
+            if (v.y < 0) return Direction.South;
+            else return Direction.North;
+        }
+        public static List<Direction> AllDirections() => new List<Direction>{Direction.North, Direction.East, Direction.South, Direction.West};
 		public static Action GetMovement(this Direction dir, Direction facing)
 		{
 			return (Action)((((int)dir - (int)facing + 4)) % 4);
@@ -147,10 +156,14 @@ namespace DC2025
 		[Header("Sync")]
 		[SerializeField,] private float _syncInterval;
 		[SerializeField, ReadOnly] private float _timeSinceLastSync;
+
+        private IGridMonoSystem _gridMs;
         
         private bool _middleSynced = true;
         private Vector3 _moveFrom;
         private bool _canceling = false;
+
+        public Vector2Int GridPosition() => _gridMs.WorldToGrid(transform.position);
 
         public Action CurrentAction() => _currentActtion;
         public Direction Facing() => _facing;
@@ -192,6 +205,7 @@ namespace DC2025
         public void CancelMove()
         {
             if (_canceling) return;
+            if (!CurrentAction().IsMove()) return;
             _canceling = true;
             if (GameManager.GetMonoSystem<IAnimationMonoSystem>().HasAnimationRunning(this))
             {
@@ -243,16 +257,16 @@ namespace DC2025
 		{
 			if (!action.IsMove()) return;
 
-			Vector3 startPos = GameManager.GetMonoSystem<IGridMonoSystem>().GridToWorld(_gridPos).SetY(transform.position.y);
+			Vector3 startPos = _gridMs.GridToWorld(_gridPos).SetY(transform.position.y);
 			Vector2Int newGridPos = _gridPos + action.GetDirection(_facing).GetGridOffset();
-			Vector3 endPos = GameManager.GetMonoSystem<IGridMonoSystem>().GridToWorld(newGridPos).SetY(transform.position.y);
+			Vector3 endPos = _gridMs.GridToWorld(newGridPos).SetY(transform.position.y);
 
 			if (
-				!GameManager.GetMonoSystem<IGridMonoSystem>().CanMoveTo(_gridPos, action.GetDirection(_facing)) ||
-				!GameManager.GetMonoSystem<IGridMonoSystem>().CanMoveTo(newGridPos, action.GetDirection(_facing).Opposite())
+				!_gridMs.CanMoveTo(_gridPos, action.GetDirection(_facing)) ||
+				!_gridMs.CanMoveTo(newGridPos, action.GetDirection(_facing).Opposite())
 			)
 			{
-				endPos = startPos + action.GetDirection(_facing).ToVector3() * GameManager.GetMonoSystem<IGridMonoSystem>().GetTileSize().x / 4.0f;
+				endPos = startPos + action.GetDirection(_facing).ToVector3() * _gridMs.GetTileSize().x / 4.0f;
 				AnimateInvaildMove(startPos, endPos);
 			}
 			else
@@ -301,17 +315,20 @@ namespace DC2025
 		public void Sync()
 		{
 			transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.SetY(_facing.GetFacing()));
-			_gridPos = GameManager.GetMonoSystem<IGridMonoSystem>().WorldToGrid(transform.position);
-			GameManager.GetMonoSystem<IGridMonoSystem>().Sync(this, _gridPos);
+			_gridPos = _gridMs.WorldToGrid(transform.position);
+			_gridMs.Sync(this, _gridPos);
 			_timeSinceLastSync = 0;
 		}
 
 		protected virtual void Start()
-		{
+        {
+            _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
 			_queuedAction = Action.None;
 			_currentActtion = Action.None;
 
 			_timeSinceLastSync= 0;
+
+            _facing = Direction.North.GetFacingDirection(transform.rotation.eulerAngles.y);
 
 			Sync();
 		}

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DC2025.Utils;
 using PlazmaGames.Core;
+using UnityEditor.PackageManager.Requests;
 
 namespace DC2025
 {
@@ -13,10 +14,8 @@ namespace DC2025
 
         private IFightMonoSystem _fightMs;
         private IGridMonoSystem _gridMs;
-		[SerializeField] List<Transform> _path;
-		[SerializeField] bool _loop;
-		[SerializeField] int _pathPosition;
-		[SerializeField] int _pathDirection;
+		[SerializeField] private List<Transform> _path;
+		[SerializeField] private bool _loop;
         private bool _attacking = false;
         private SwordSwing _sword;
         [SerializeField] private float _attackHintTime = 0.5f;
@@ -26,6 +25,10 @@ namespace DC2025
         private Transform _healthBar;
         private Transform _healthBarBg;
         private float _healthBarFullSize;
+        
+        private bool _distracted = false;
+        private Direction _saveDirection;
+        private PathDirector _pathDirector;
 
         public SwordSwing Sword() => _sword;
         public float AttackHintTime() => _attackHintTime;
@@ -42,26 +45,38 @@ namespace DC2025
             _healthBarBg = transform.Find("HealthBarBg");
             _healthBarFullSize = _healthBar.localScale.y;
             DisableHealthBar();
+
+            SetNormalPath();
+        }
+
+        private void SetNormalPath()
+        {
+            _distracted = false;
+            _pathDirector = new PathDirector(this, _path.Select(p => _gridMs.WorldToGrid(p.position)).ToList(), _loop ? PathDirector.LoopMode.Circle : PathDirector.LoopMode.BackAndForth);
         }
 
 		void FixedUpdate()
         {
             if (Enemy.pause) return;
             
-            if (CurrentAction() == Action.None)
+            _pathDirector.Travel();
+
+            if (_distracted && _pathDirector.IsDone())
             {
-                Transform next = TryNextPathPosition();
-                Vector3 worldDir = (next.position - transform.position).normalized;
-                float angle = Vector3.SignedAngle(Vector3.forward, worldDir, Vector3.up);
-                Direction dir = Direction.North.GetFacingDirection(angle);
-                if (dir != Facing())
+                if (_pathDirector.PathPosition() <= 0)
                 {
-                    if (((int)Facing() - (int)dir + 4) % 4 > 2) RequestAction(Action.TurnRight);
-                    else RequestAction(Action.TurnLeft);
+                    if (Facing() != _saveDirection)
+                    {
+                        if (CurrentAction() == Action.None) RequestAction(Action.TurnLeft);
+                    }
+                    else
+                    {
+                        SetNormalPath();
+                    }
                 }
-                else
+                else if (_pathDirector.FinishTime() > DCGameManager.settings.enemyDistractedWaitTime)
                 {
-                    RequestAction(Action.MoveUp);
+                    _pathDirector.Reverse();
                 }
             }
 
@@ -80,7 +95,6 @@ namespace DC2025
             _healthBarBg.gameObject.SetActive(true);
             if (value < 0) value = 0;
             value /= 100;
-            Debug.Log(value);
             float worldSize = _healthBarFullSize * value;
             _healthBar.localScale = new Vector3(_healthBar.localScale.x, worldSize, _healthBar.localScale.z);
             _healthBar.localPosition = new Vector3((_healthBarFullSize - worldSize) / 2, _healthBar.localPosition.y, _healthBar.localPosition.z);
@@ -91,12 +105,14 @@ namespace DC2025
             Vector2Int forward = Facing().ToVector2Int();
             Vector2Int right = Facing().Right().ToVector2Int();
             Vector2Int pos = _gridMs.WorldToGrid(transform.position);
-            if (!_gridMs.CanMoveTo(pos, Facing())) return;
             List<Vector2Int> vision = new List<Vector2Int>();
             vision.Add(pos);
-            vision.Add(pos + 1 * forward + 0 * right);
-            if (_gridMs.CanMoveTo(pos, Facing().Right())) vision.Add(pos + 1 * forward + 1 * right);
-            if (_gridMs.CanMoveTo(pos, Facing().Left())) vision.Add(pos + 1 * forward - 1 * right);
+            if (_gridMs.CanMoveTo(pos, Facing()))
+            {
+                vision.Add(pos + 1 * forward + 0 * right);
+                if (_gridMs.CanMoveTo(pos, Facing().Right())) vision.Add(pos + 1 * forward + 1 * right);
+                if (_gridMs.CanMoveTo(pos, Facing().Left())) vision.Add(pos + 1 * forward - 1 * right);
+            }
             
             vision.ForEach(p => _gridMs.SetTileEnemySeen(p));
 
@@ -105,30 +121,6 @@ namespace DC2025
                 GameManager.GetMonoSystem<IFightMonoSystem>().StartFight(this);
             }
         }
-
-        private Transform TryNextPathPosition()
-        {
-            Vector2Int gridPos = _gridMs.WorldToGrid(transform.position);
-            Vector2Int nextGridPos = _gridMs.WorldToGrid(_path[_pathPosition].position);
-            if (gridPos != nextGridPos) return _path[_pathPosition];
-            
-			int nextPos = _pathPosition + _pathDirection;
-			if (nextPos < 0 || nextPos >= _path.Count)
-			{
-                if (!_loop)
-                {
-                    _pathDirection *= -1;
-                }
-                else
-                {
-                    _pathPosition = -1;
-                }
-			}
-
-			_pathPosition += _pathDirection;
-
-			return _path[_pathPosition];
-		}
 
         public void DoAttackAnimation()
         {
@@ -152,5 +144,20 @@ namespace DC2025
                 });
         }
 
+        public void Distraction(Vector2Int at)
+        {
+            List<Vector2Int> path = _gridMs.PathFind(GridPosition(), at);
+            CancelMove();
+            if (!_distracted)
+            {
+                _pathDirector = new PathDirector(this, path, PathDirector.LoopMode.Once);
+                _saveDirection = Facing();
+                _distracted = true;
+            }
+            else
+            {
+                _pathDirector.JoinPath(path);
+            }
+        }
     }
 }

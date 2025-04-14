@@ -5,6 +5,7 @@ using PlazmaGames.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using Input = UnityEngine.Input;
 
 namespace DC2025
 {
@@ -13,6 +14,7 @@ namespace DC2025
         public static bool stopMovement = false;
 
         private IFightMonoSystem _fightMs;
+        private IGridMonoSystem _gridMs;
 
         private SwordSwing _sword;
 
@@ -156,6 +158,7 @@ namespace DC2025
             this.manager = GetComponent<PlayerManager>();
             _sword = GetComponentInChildren<SwordSwing>();
             _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
+            _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
             if (_input == null) _input = GetComponent<PlayerInput>();
 
             _input.actions["Movement"].performed += HandleMovementAction;
@@ -168,9 +171,17 @@ namespace DC2025
             _input.actions["Block"].performed += HandleBlock;
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
-
+            do
+            {
+                if (!Input.GetKeyDown(KeyCode.T)) break;
+                Entity entity = _gridMs.GetClosestEntity(GridPosition(), e => e is Enemy);
+                if (!entity) break;
+                Enemy enemy = entity as Enemy;
+                Debug.Log("DISTRACT");
+                enemy.Distraction(GridPosition());
+            } while (false);
         }
 
         public void DoAttackAnimation()

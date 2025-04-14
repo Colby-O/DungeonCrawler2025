@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using PlazmaGames.Core.MonoSystem;
 using UnityEngine;
@@ -17,5 +18,7 @@ namespace DC2025
         public void SetTileEnemySeen(Vector2Int pos);
         public void RemoveEntity(Entity entity);
         public (Vector2Int, Tile) FindVaildLocationNearPlayer();
+        public Entity GetClosestEntity(Vector2Int pos, Func<Entity, bool> func);
+        public List<Vector2Int> PathFind(Vector2Int from, Vector2Int to);
     }
 }

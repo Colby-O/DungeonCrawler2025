@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System.Linq;
+using Unity.Collections;
 
 namespace DC2025
 {
@@ -55,6 +57,7 @@ namespace DC2025
             if (idx >= 0) _entities.RemoveAt(idx);
         }
 
+        
 		public Vector2Int WorldToGrid(Vector3 worldPos)
 		{
 			Vector3 clamped = new Vector3(Mathf.Round(worldPos.x) / _tileSize.x, 0, Mathf.Round(worldPos.z) / _tileSize.y);
@@ -165,6 +168,63 @@ namespace DC2025
                     }
                 }
             }
+        }
+        
+        public Entity GetClosestEntity(Vector2Int pos, Func<Entity, bool> func)
+        {
+            HashSet<Vector2Int> visited = new() { { pos } };
+            Queue<Vector2Int> nodes = new();
+            nodes.Enqueue(pos);
+            while (nodes.Count > 0)
+            {
+                Vector2Int v = nodes.Dequeue();
+                List<EntityData> onTile = GetEntitesOnTile(v);
+                if (onTile.Count > 0)
+                {
+                    Entity entity = onTile.FirstOrDefault(e => func(e.entity))?.entity;
+                    if (entity) return entity;
+                }
+                DirectionExtension.AllDirections().ForEach(dir =>
+                {
+                    if (!CanMoveTo(v, dir)) return;
+                    Vector2Int w = v + dir.ToVector2Int();
+                    if (!visited.Add(w)) return;
+                    nodes.Enqueue(w);
+                });
+            }
+
+            return null;
+        }
+        
+        public List<Vector2Int> PathFind(Vector2Int from, Vector2Int to)
+        {
+            Dictionary<Vector2Int, Vector2Int> visited = new() { { from, from } };
+            Queue<Vector2Int> nodes = new();
+            nodes.Enqueue(from);
+            while (nodes.Count > 0)
+            {
+                Vector2Int v = nodes.Dequeue();
+                if (v == to)
+                {
+                    List<Vector2Int> path = new() { v };
+                    while (v != from)
+                    {
+                        v = visited[v];
+                        path.Add(v);
+                    }
+
+                    path.Reverse();
+                    return path;
+                }
+                DirectionExtension.AllDirections().ForEach(dir =>
+                {
+                    if (!CanMoveTo(v, dir)) return;
+                    Vector2Int w = v + dir.ToVector2Int();
+                    if (!visited.TryAdd(w, v)) return;
+                    nodes.Enqueue(w);
+                });
+            }
+            return new List<Vector2Int>();
         }
 
         private void Awake()

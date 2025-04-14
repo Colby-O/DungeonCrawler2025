@@ -255,6 +255,7 @@ namespace DC2025
         private void EnemyDie()
         {
             _chatMs.Send("The enemy died!");
+            _gridMs.RemoveEntity(_enemy);
             _enemy.DisableHealthBar();
             _enemy.gameObject.SetActive(false);
             Enemy.pause = false;
