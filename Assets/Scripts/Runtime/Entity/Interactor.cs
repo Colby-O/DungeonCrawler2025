@@ -11,6 +11,9 @@ namespace DC2025
         [SerializeField] private Camera _camera;
         [SerializeField] private Transform _head;
 
+        [Header("Pickingup Settings")]
+        [SerializeField] private int _clickDist = 1;
+
         [Header("Input System")]
         [SerializeField] private PlayerInput _input;
 
@@ -21,6 +24,8 @@ namespace DC2025
         private Quaternion _cameraRot;
 
         public Station NearbyStation { get; set; }
+
+        public int GetClickDistance() => _clickDist;
 
         public Camera GetCamera()
         {

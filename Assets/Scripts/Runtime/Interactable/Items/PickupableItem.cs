@@ -21,6 +21,8 @@ namespace DC2025
         private Vector3 _centerPos;
         private float _height;
 
+        public Item GetItemData() => _data;
+
         private void MoveItem()
         {
             if (IsEntered)
@@ -37,7 +39,7 @@ namespace DC2025
         {
             if (_inventory.GetMouseSlot().HasItem()) return;
 
-            _inventory.GetMouseSlot().UpdateSlot(_data, this);
+            _inventory.GetMouseSlot().UpdateSlot(this);
             HideItem();
         }
 
@@ -49,11 +51,20 @@ namespace DC2025
         public void Drop()
         {
             gameObject.SetActive(true);
-            Vector2Int newGridPos = _grid.WorldToGrid(DCGameManager.Player.transform.position);
-            _grid.GetTileAt(newGridPos).AddInteractable(this);
-            _centerPos = _grid.GridToWorld(newGridPos);
-            //Recenter();
-            IsEntered = true;
+            (Vector2Int, Tile) newGridPos = _grid.FindVaildLocationNearPlayer();
+            newGridPos.Item2.AddInteractable(this);
+            _centerPos = _grid.GridToWorld(newGridPos.Item1);
+            Vector2Int playerPos = _grid.WorldToGrid(DCGameManager.Player.transform.position);
+
+            if (playerPos == newGridPos.Item1)
+            {
+                IsEntered = true;
+            }
+            else
+            {
+                IsEntered = false;
+                Recenter();
+            }
         }
 
         public void HideItem()
