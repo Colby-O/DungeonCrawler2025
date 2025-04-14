@@ -1,13 +1,5 @@
-using PlazmaGames.Core.Debugging;
-using PlazmaGames.Runtime.DataStructures;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using PlazmaGames.Core;
-using Unity.VisualScripting;
 using UnityEngine;
-using static UnityEditor.LightingExplorerTableColumn;
-using Random = System.Random;
 
 namespace DC2025
 {
@@ -16,6 +8,7 @@ namespace DC2025
         private enum FightState
         {
             None,
+            PlayerCancelMoves,
             PlayerTurnToEnemy,
             EnemyMoveToPlayer,
             EnemyTurnToPlayer,
@@ -53,6 +46,18 @@ namespace DC2025
             switch (_fightState)
             {
                 case FightState.None: break;
+                case FightState.PlayerCancelMoves:
+                {
+                    if (_player.CurrentAction() == Action.None)
+                    {
+                        _fightState = FightState.PlayerTurnToEnemy;
+                    }
+                    else
+                    {
+                        if (_player.CurrentAction().IsMove()) _player.CancelMove();
+                    }
+                    break;
+                }
                 case FightState.PlayerTurnToEnemy:
                 {
                     if (_player.CurrentAction() != Action.None) break;
@@ -151,9 +156,8 @@ namespace DC2025
 
         private void EnemyQueueNextMove()
         {
-            if (UnityEngine.Random.Range(0, 100) < 20)
+            if (UnityEngine.Random.Range(0, 100) < _enemy.BlockChance() * 100)
             {
-                Debug.Log("ENEMY BLCOKING!!!!!!!!!!!!!!");
                 _enemyBlockCountdown = UnityEngine.Random.Range(1.5f, 2.5f);
                 _enemy.Sword().Block();
             }
@@ -188,7 +192,8 @@ namespace DC2025
             Player.stopMovement = true;
             _enemy = enemy;
             _enemyHealth = 100;
-            _fightState = FightState.PlayerTurnToEnemy;
+            _enemy.SetHealBar(_enemyHealth);
+            _fightState = FightState.PlayerCancelMoves;
         }
 
         public void PlayerAttack()
@@ -217,6 +222,7 @@ namespace DC2025
             {
                 _chatMs.Send("You strike the enemy dealing 10 damage.");
                 _enemyHealth -= 10;
+                _enemy.SetHealBar(_enemyHealth);
                 if (_enemyHealth <= 0)
                 {
                     EnemyDie();
@@ -249,6 +255,7 @@ namespace DC2025
         private void EnemyDie()
         {
             _chatMs.Send("The enemy died!");
+            _enemy.DisableHealthBar();
             _enemy.gameObject.SetActive(false);
             Enemy.pause = false;
             Player.stopMovement = false;

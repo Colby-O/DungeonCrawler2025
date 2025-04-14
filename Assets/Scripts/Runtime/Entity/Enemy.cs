@@ -20,9 +20,16 @@ namespace DC2025
         private bool _attacking = false;
         private SwordSwing _sword;
         [SerializeField] private float _attackHintTime = 0.5f;
+        [SerializeField] private float _attackAniTime = 0.25f;
+        [SerializeField] private float _blockChance = 0.1f;
+
+        private Transform _healthBar;
+        private Transform _healthBarBg;
+        private float _healthBarFullSize;
 
         public SwordSwing Sword() => _sword;
         public float AttackHintTime() => _attackHintTime;
+        public float BlockChance() => _blockChance;
         public bool Attacking() => _attacking;
 
         protected override void Start()
@@ -31,6 +38,10 @@ namespace DC2025
             _sword = GetComponentInChildren<SwordSwing>();
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
             _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
+            _healthBar = transform.Find("HealthBar");
+            _healthBarBg = transform.Find("HealthBarBg");
+            _healthBarFullSize = _healthBar.localScale.y;
+            DisableHealthBar();
         }
 
 		void FixedUpdate()
@@ -57,6 +68,24 @@ namespace DC2025
             CheckCanSeePlayer();
         }
 
+        public void DisableHealthBar()
+        {
+            _healthBar.gameObject.SetActive(false);
+            _healthBarBg.gameObject.SetActive(false);
+        }
+        
+        public void SetHealBar(float value)
+        {
+            _healthBar.gameObject.SetActive(true);
+            _healthBarBg.gameObject.SetActive(true);
+            if (value < 0) value = 0;
+            value /= 100;
+            Debug.Log(value);
+            float worldSize = _healthBarFullSize * value;
+            _healthBar.localScale = new Vector3(_healthBar.localScale.x, worldSize, _healthBar.localScale.z);
+            _healthBar.localPosition = new Vector3((_healthBarFullSize - worldSize) / 2, _healthBar.localPosition.y, _healthBar.localPosition.z);
+        }
+
         private void CheckCanSeePlayer()
         {
             Vector2Int forward = Facing().ToVector2Int();
@@ -66,8 +95,8 @@ namespace DC2025
             List<Vector2Int> vision = new List<Vector2Int>();
             vision.Add(pos);
             vision.Add(pos + 1 * forward + 0 * right);
-            vision.Add(pos + 1 * forward + 1 * right);
-            vision.Add(pos + 1 * forward - 1 * right);
+            if (_gridMs.CanMoveTo(pos, Facing().Right())) vision.Add(pos + 1 * forward + 1 * right);
+            if (_gridMs.CanMoveTo(pos, Facing().Left())) vision.Add(pos + 1 * forward - 1 * right);
             
             vision.ForEach(p => _gridMs.SetTileEnemySeen(p));
 
@@ -110,7 +139,7 @@ namespace DC2025
             Vector3 endPos = startPos + transform.forward * 0.7f;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                 this,
-                0.2f,
+                _attackAniTime,
                 (float t) =>
                 {
                     if (t < 0.5f) transform.position = Vector3.Lerp(startPos, endPos, t * 2.0f);

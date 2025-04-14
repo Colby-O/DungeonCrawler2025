@@ -34,12 +34,12 @@ namespace DC2025
 
 		public static bool IsMove(this Action action)
 		{
-			return action == Action.MoveUp || action == Action.MoveDown || action == Action.MoveLeft || action == Action.MoveRight;
+			return action is Action.MoveUp or Action.MoveDown or Action.MoveLeft or Action.MoveRight;
 		}
 
 		public static bool IsTurn(this Action action)
 		{
-			return action == Action.TurnLeft || action == Action.TurnRight;
+			return action is Action.TurnLeft or Action.TurnRight;
 		}
 	}
 
@@ -62,6 +62,10 @@ namespace DC2025
         public static Direction Right(this Direction dir)
         {
             return (Direction)(((int)dir + 1) % 4);
+        }
+        public static Direction Left(this Direction dir)
+        {
+            return (Direction)(((int)dir + 3) % 4);
         }
 
 		public static Direction Opposite(this Direction dir)
@@ -145,6 +149,8 @@ namespace DC2025
 		[SerializeField, ReadOnly] private float _timeSinceLastSync;
         
         private bool _middleSynced = true;
+        private Vector3 _moveFrom;
+        private bool _canceling = false;
 
         public Action CurrentAction() => _currentActtion;
         public Direction Facing() => _facing;
@@ -173,6 +179,7 @@ namespace DC2025
 
 		private void AnimateMove(Vector3 startPos, Vector3 endPos)
         {
+            _moveFrom = startPos;
             _middleSynced = false;
 			GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
 				this,
@@ -181,6 +188,27 @@ namespace DC2025
 				OnMoveComplete
 			);
 		}
+
+        public void CancelMove()
+        {
+            if (_canceling) return;
+            _canceling = true;
+            if (GameManager.GetMonoSystem<IAnimationMonoSystem>().HasAnimationRunning(this))
+            {
+                GameManager.GetMonoSystem<IAnimationMonoSystem>().StopAllAnimations(this);
+                _middleSynced = false;
+                Vector3 startPos = transform.position;
+                GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
+                    this,
+                    _moveSpeed,
+                    (float t) => MovementStep(t, startPos, _moveFrom),
+                    () =>
+                    {
+                        _canceling = false;
+                        OnMoveComplete();
+                    });
+            }
+        }
 
 		private void AnimateTurn(Quaternion startRot, Quaternion endRot)
 		{

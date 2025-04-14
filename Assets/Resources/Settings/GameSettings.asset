@@ -13,3 +13,7 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   enemyVisionHighlightColor: {r: 6.3715596, g: 0, b: 0, a: 0}
+  playerAttackStamina: 10
+  playerAttackFailStamina: 20
+  playerBlockStamina: 10
+  playerBlockFailStamina: 25
