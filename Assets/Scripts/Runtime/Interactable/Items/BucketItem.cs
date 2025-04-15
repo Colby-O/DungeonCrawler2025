@@ -2,10 +2,8 @@ using UnityEngine;
 
 namespace DC2025
 {
-    public class WeaponItem : MaterialItem
+    public class BucketItem : MaterialItem
     {
-        [SerializeField, Range(0f, 1f)] private float _durability;
-
         public override string GetName()
         {
             return string.Empty;
@@ -24,11 +22,6 @@ namespace DC2025
         public override void SetMaterial(MaterialType material)
         {
 
-        }
-
-        public float GetDurability()
-        {
-            return _durability;
         }
     }
 }

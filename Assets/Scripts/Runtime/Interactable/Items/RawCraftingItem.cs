@@ -2,33 +2,28 @@ using UnityEngine;
 
 namespace DC2025
 {
-    public class WeaponItem : MaterialItem
+    public class RawCraftingItem : MaterialItem
     {
-        [SerializeField, Range(0f, 1f)] private float _durability;
+        [SerializeField] private ItemData data;
 
         public override string GetName()
         {
-            return string.Empty;
+            return data.Name;
         }
 
         public override string GetDescription()
         {
-            return string.Empty;
+            return data.Description;
         }
 
         public override Sprite GetIcon()
         {
-            return null;
+            return data.Icon;
         }
 
         public override void SetMaterial(MaterialType material)
         {
 
-        }
-
-        public float GetDurability()
-        {
-            return _durability;
         }
     }
 }

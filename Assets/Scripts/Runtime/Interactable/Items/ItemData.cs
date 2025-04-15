@@ -11,14 +11,12 @@ namespace DC2025
         Crafting
     }
 
-    public abstract class Item : BaseSO
+    [CreateAssetMenu(fileName = "Defaultitem", menuName = "Item")]
+    public class ItemData : BaseSO
     {
         [Header("Infomation")]
         public string Name;
         public string Description;
-        [ReadOnly] ItemType Type;
-
-        [Header("Inventory")]
         public Sprite Icon;
 
         public override string ToString()

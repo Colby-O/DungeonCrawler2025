@@ -9,10 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b28e892ffc8d85442af8286030ba1d64, type: 3}
+  m_Script: {fileID: 11500000, guid: b725ef0f286f14b44923b69308216ccc, type: 3}
   m_Name: DefaultCraftingMaterial
   m_EditorClassIdentifier: 
-  id: 0
+  id: -1
   includeInDatabase: 1
   Name: Test
   Description: A Test Item
