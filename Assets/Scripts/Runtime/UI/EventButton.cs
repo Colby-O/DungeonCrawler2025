@@ -1,3 +1,4 @@
+using PlazmaGames.Attribute;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -10,6 +11,20 @@ namespace DC2025
         public UnityEvent onPointerUp = new UnityEvent();
         public UnityEvent onPointerDown = new UnityEvent();
 
+        [SerializeField, ReadOnly] private bool _isDisabled = false;
+
+        public bool IsDisabled { 
+            get 
+            { 
+                return _isDisabled;
+            } 
+            set
+            {
+                _isDisabled = value;
+                targetGraphic.color = _isDisabled ? colors.disabledColor : colors.normalColor;
+            }
+        }
+
         public bool IsPointerUsed { get; set; }
 
         public void ForceHighlightedt(bool state)
@@ -19,6 +34,8 @@ namespace DC2025
 
         public override void OnPointerUp(PointerEventData eventData)
         {
+            if (IsDisabled) return;
+
             IsPointerUsed = false;
             base.OnPointerUp(eventData);
             onPointerUp.Invoke();
@@ -26,6 +43,8 @@ namespace DC2025
 
         public override void OnPointerDown(PointerEventData eventData)
         {
+            if (IsDisabled) return;
+
             IsPointerUsed = true;
             base.OnPointerDown(eventData);
             onPointerDown.Invoke();

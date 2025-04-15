@@ -34,14 +34,14 @@ namespace DC2025
             _staminaRefilCountdown = _StaminaRefillDelay;
             _curStamina = Mathf.Max(_curStamina - amount, 0);
 
-            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateStamina();
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().UpdateStamina();
         }
 
         public void Damage(int amount)
         {
             _curHealth -= amount;
 
-            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateHealth();
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().UpdateHealth();
 
             if (_curHealth <= 0)
             {
@@ -52,7 +52,7 @@ namespace DC2025
         public void Heal(int amount)
         {
             _curHealth = Mathf.Clamp(_curHealth + amount, 0, _maxHealth);
-            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateHealth();
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().UpdateHealth();
         }
 
         public void OnDeath()
@@ -69,7 +69,7 @@ namespace DC2025
             if (_staminaRefilCountdown <= 0)
             {
                 _curStamina = Mathf.Min(_curStamina + _StaminaRefillRate * Time.deltaTime, _maxStamina);
-                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().UpdateStamina();
+                GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().UpdateStamina();
             }
         }
 

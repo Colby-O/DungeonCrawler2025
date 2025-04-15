@@ -17,6 +17,8 @@ namespace DC2025
         [SerializeField] private MaterialType _type;
         [SerializeField] private int _rating = 0;
 
+        public MaterialType GetMaterial() => _type;
+
         public int GetRating()
         {
             return Mathf.Clamp( _rating, 0, 4);
