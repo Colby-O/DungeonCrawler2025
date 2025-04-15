@@ -16,7 +16,7 @@ namespace DC2025
 		[SerializeField] private List<Transform> _path;
 		[SerializeField] private bool _loop;
         private bool _attacking = false;
-        private SwordSwing _sword;
+        private Sword _sword;
         [SerializeField] private float _attackHintTime = 0.5f;
         [SerializeField] private float _attackAniTime = 0.25f;
         [SerializeField] private float _blockChance = 0.1f;
@@ -28,16 +28,19 @@ namespace DC2025
         private bool _distracted = false;
         private Direction _saveDirection;
         private PathDirector _pathDirector;
+        [SerializeField] private int _attackDamage = 20;
 
-        public SwordSwing Sword() => _sword;
+        public Sword Sword() => _sword;
         public float AttackHintTime() => _attackHintTime;
         public float BlockChance() => _blockChance;
         public bool Attacking() => _attacking;
 
+        public int AttackDamage() => _attackDamage;
+
         protected override void Start()
         {
             base.Start();
-            _sword = GetComponentInChildren<SwordSwing>();
+            _sword = GetComponentInChildren<Sword>();
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
             _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
             _healthBar = transform.Find("HealthBar");

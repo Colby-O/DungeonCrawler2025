@@ -4772,6 +4772,39 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1178736674770272520, guid: 30dc6a0e5987af94e9120a20326f91ec, type: 3}
   m_PrefabInstance: {fileID: 2111751593}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &467295161
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 467295162}
+  m_Layer: 0
+  m_Name: TempSword
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &467295162
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 467295161}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1085185811}
+  - {fileID: 1343181100}
+  m_Father: {fileID: 1223956710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &478331415
 GameObject:
   m_ObjectHideFlags: 0
@@ -11376,14 +11409,14 @@ Transform:
   m_GameObject: {fileID: 1085185810}
   serializedVersion: 2
   m_LocalRotation: {x: 0.2023074, y: -0.42392707, z: 0.16791232, w: 0.86669666}
-  m_LocalPosition: {x: 0.8970001, y: -0.36099994, z: 0.8610007}
+  m_LocalPosition: {x: 0.8970003, y: -0.36099994, z: 0.8610007}
   m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1778523505}
   - {fileID: 1174010385}
   - {fileID: 1979688384}
-  m_Father: {fileID: 1223956710}
+  m_Father: {fileID: 467295162}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1087964295 stripped
 Transform:
@@ -12772,8 +12805,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1085185811}
-  - {fileID: 1343181100}
+  - {fileID: 467295162}
   m_Father: {fileID: 241793819}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1223956711
@@ -12789,7 +12821,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _swingPositions: []
-  _swingTime: 0.3
 --- !u!1001 &1224357403
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14468,7 +14499,7 @@ Transform:
   - {fileID: 1273221957}
   - {fileID: 1730046130}
   - {fileID: 1204988922}
-  m_Father: {fileID: 1223956710}
+  m_Father: {fileID: 467295162}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &1352245267 stripped
 Transform:

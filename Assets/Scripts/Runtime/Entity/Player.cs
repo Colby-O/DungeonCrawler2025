@@ -16,7 +16,7 @@ namespace DC2025
         private IFightMonoSystem _fightMs;
         private IGridMonoSystem _gridMs;
 
-        private SwordSwing _sword;
+        private Sword _sword;
 
         public PlayerManager manager;
         
@@ -25,10 +25,10 @@ namespace DC2025
         [SerializeField, ReadOnly] private Vector2 _rawMovement;
         [SerializeField, ReadOnly] private float _rawTurn;
         [SerializeField] private float _attackAniMagnitude = 0.7f;
-        [SerializeField] private float _attackAniSpeed = 0.2f;
+        [SerializeField] private float _stumbleAniSpeed = 0.2f;
         [SerializeField] private float _stumbleAniMagnitude = 0.5f;
 
-        public SwordSwing Sword() => _sword;
+        public Sword Sword() => _sword;
         private bool _attacking = false;
 
         public bool IsAttacking() => _attacking;
@@ -156,7 +156,7 @@ namespace DC2025
         private void Awake()
         {
             this.manager = GetComponent<PlayerManager>();
-            _sword = GetComponentInChildren<SwordSwing>();
+            _sword = GetComponentInChildren<Sword>();
             _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
             if (_input == null) _input = GetComponent<PlayerInput>();
@@ -171,8 +171,9 @@ namespace DC2025
             _input.actions["Block"].performed += HandleBlock;
         }
 
-        private void Update()
+        protected override void Update()
         {
+            base.Update();
             do
             {
                 if (!Input.GetKeyDown(KeyCode.T)) break;
@@ -186,6 +187,7 @@ namespace DC2025
 
         public void DoAttackAnimation()
         {
+            if (!_sword.HasSword()) return;
             if (_attacking) return;
             _attacking = true;
             _sword.Swing();
@@ -193,7 +195,7 @@ namespace DC2025
             Vector3 endPos = startPos + transform.forward * _attackAniMagnitude;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                 this,
-                _attackAniSpeed,
+                _sword.stats.speed,
                 (float t) =>
                 {
                     if (t < 0.5f) transform.position = Vector3.Lerp(startPos, endPos, t * 2.0f);
@@ -215,7 +217,7 @@ namespace DC2025
             Vector3 endPos = startPos + transform.right * _stumbleAniMagnitude;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                 this,
-                _attackAniSpeed,
+                _stumbleAniSpeed,
                 (float t) =>
                 {
                     if (t < 0.5f) transform.position = Vector3.Lerp(startPos, endPos, t * 2.0f);

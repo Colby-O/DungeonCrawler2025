@@ -3,16 +3,20 @@ using System.Linq;
 using UnityEngine;
 using PlazmaGames.Animation;
 using PlazmaGames.Core;
+using Unity.VisualScripting;
 
 namespace DC2025
 {
-    public class SwordSwing : MonoBehaviour
+    public class Sword : MonoBehaviour
     {
+        private Transform _swordObject;
         private Transform _model;
         private Transform _defaultPosition;
         private Transform _blockPosition;
         [SerializeField] private List<Transform> _swingPositions;
-        [SerializeField] private float _swingTime = 0.64f;
+        public SwordStats stats = new SwordStats();
+        
+        public bool HasSword() => _model.gameObject.activeSelf;
         
         public void Raise()
         {
@@ -33,7 +37,7 @@ namespace DC2025
         {
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                 this,
-                _swingTime,
+                this.stats.speed,
                 (t) =>
                 {
                     t *= 1.11111f;
@@ -62,7 +66,7 @@ namespace DC2025
             Quaternion endRot = Quaternion.Euler(0, 20, 20) * startRot;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                 this,
-                _swingTime,
+                this.stats.speed,
                 (t) =>
                 {
                     if (t < 0.5) _model.rotation = Quaternion.Lerp(startRot, endRot, t * 2);
@@ -73,8 +77,9 @@ namespace DC2025
 
         private void Start()
         {
-            _model = transform.Find("Model");
-            Transform positions = transform.Find("Positions");
+            _swordObject = transform.GetChild(0);
+            _model = _swordObject.Find("Model");
+            Transform positions = _swordObject.Find("Positions");
             _defaultPosition = positions.Find("Default");
             _blockPosition = positions.Find("Block");
             positions = positions.Find("Swing");
@@ -84,6 +89,5 @@ namespace DC2025
                 _swingPositions.Add(positions.GetChild(i));
             }
         }
-
     }
 }

@@ -32,6 +32,8 @@ namespace DC2025
         private bool _enemyAttackBlocked = false;
 
         public bool InFight() => _fightState == FightState.Fighting;
+
+        public float AttackHintTime() => _enemy.AttackHintTime() + _player.Sword().stats.foresight;
         
         private void Start()
         {
@@ -139,7 +141,7 @@ namespace DC2025
                     _enemyBlockCountdown -= Time.fixedDeltaTime;
                     if (_enemyBlockCountdown <= 0)
                     {
-                        if (_enemyAttackCountdown >= _enemy.AttackHintTime() && _enemyAttackCountdown - Time.fixedDeltaTime < _enemy.AttackHintTime())
+                        if (_enemyAttackCountdown >= AttackHintTime() && _enemyAttackCountdown - Time.fixedDeltaTime < AttackHintTime())
                         {
                             _enemy.Sword().Raise();
                         }
@@ -179,8 +181,8 @@ namespace DC2025
             }
             else
             {
-                _chatMs.Send($"The enemy strikes you dealing 25 damage.");
-                _player.manager.Damage(25);
+                _chatMs.Send($"The enemy strikes you dealing {_enemy.AttackDamage()} damage.");
+                _player.manager.Damage(_enemy.AttackDamage());
             }
             EnemyQueueNextMove();
         }
@@ -198,15 +200,20 @@ namespace DC2025
 
         public void PlayerAttack()
         {
-            if (_player.IsAttacking() || _enemyAttackBlocked || _player.manager.GetStamina() < DCGameManager.settings.playerAttackStamina) return;
+            if (!_player.Sword().HasSword())
+            {
+                _chatMs.Send("Attacking without a sword is futile.");
+                return;
+            }
+            if (_player.IsAttacking() || _enemyAttackBlocked || _player.manager.GetStamina() < _player.Sword().stats.ApplyStamina(DCGameManager.settings.playerAttackStamina)) return;
             if (_enemyBlockCountdown > 0)
             {
-                _player.manager.UseStamina(DCGameManager.settings.playerAttackFailStamina);
+                _player.manager.UseStamina(_player.Sword().stats.ApplyStamina(DCGameManager.settings.playerAttackFailStamina));
                 _playerAttackBlocked = true;
             }
             else
             {
-                _player.manager.UseStamina(DCGameManager.settings.playerAttackStamina);
+                _player.manager.UseStamina(_player.Sword().stats.ApplyStamina(DCGameManager.settings.playerAttackStamina));
                 _playerAttackBlocked = false;
             }
             _player.DoAttackAnimation();
@@ -220,8 +227,8 @@ namespace DC2025
             }
             else
             {
-                _chatMs.Send("You strike the enemy dealing 10 damage.");
-                _enemyHealth -= 10;
+                _chatMs.Send($"You strike the enemy dealing {_player.Sword().stats.damage} damage.");
+                _enemyHealth -= _player.Sword().stats.damage;
                 _enemy.SetHealBar(_enemyHealth);
                 if (_enemyHealth <= 0)
                 {
@@ -233,19 +240,19 @@ namespace DC2025
         public bool PlayerBlock()
         {
             if (_enemyAttackBlocked) return false;
-            if (_player.manager.GetStamina() < DCGameManager.settings.playerBlockStamina) return false;
-            if (_enemyAttackCountdown > 0 && _enemyAttackCountdown < _enemy.AttackHintTime())
+            if (_player.manager.GetStamina() < _player.Sword().stats.ApplyStamina(DCGameManager.settings.playerBlockStamina)) return false;
+            if (_enemyAttackCountdown > 0 && _enemyAttackCountdown < AttackHintTime())
             {
                 _enemyAttackBlocked = true;
                 _player.Sword().Block();
-                _player.manager.UseStamina(DCGameManager.settings.playerBlockStamina);
+                _player.manager.UseStamina(_player.Sword().stats.ApplyStamina(DCGameManager.settings.playerBlockStamina));
                 return true;
             }
             else
             {
                 _enemyAttackBlocked = false;
                 _chatMs.Send("You try to block the enemy but stumble.");
-                _player.manager.UseStamina(DCGameManager.settings.playerBlockFailStamina);
+                _player.manager.UseStamina(_player.Sword().stats.ApplyStamina(DCGameManager.settings.playerBlockFailStamina));
                 _player.Stumble();
             }
 
