@@ -2,6 +2,7 @@ using DC2025.Utils;
 using PlazmaGames.Core;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -16,13 +17,29 @@ namespace DC2025
         [SerializeField] private List<GameObject> _stars;
         [SerializeField] private GameObject _durablityContainer;
         [SerializeField] private RectTransform _durablityProgress;
+        [SerializeField] private GameObject _cover;
 
         [Header("Infomaton")]
         [SerializeField] SlotType _type;
+        [SerializeField] private bool _disabled = false;
+        [SerializeField] private bool _disablePopup = false;
 
         private IInventoryMonoSystem _inventory;
 
         public PickupableItem Item { get; set; }
+
+        public UnityEvent OnChange = new UnityEvent();
+
+        public void SetCoverAmount(float amount)
+        {
+            _cover.transform.localScale = _cover.transform.localScale.SetY(Mathf.Clamp01(amount));
+        }
+
+        public void ToogleDisableState(bool state)
+        {
+            _disabled = state;
+            _cover.SetActive(_disabled);
+        }
 
         public bool HasItem() => Item != null;
 
@@ -84,6 +101,7 @@ namespace DC2025
             Item = obj;
             Item.Hide();
             Refresh();
+            OnChange.Invoke();
         }
 
         public void Clear()
@@ -94,16 +112,18 @@ namespace DC2025
             ResetRating();
             SetDurability(0);
             ToggleDurability(false);
+            OnChange.Invoke();
         }
 
         public void OnPointerDown(PointerEventData eventData)
         {
+            if (_disabled) return;
+
             if (_inventory.GetMouseSlot().HasItem()) 
             {
                 if (Item == null)
                 {
-                    UpdateSlot(_inventory.GetMouseSlot().Item);
-                    Debug.Log(Item);
+                    UpdateSlot(_inventory.GetMouseSlot().Item);;
                     _inventory.GetMouseSlot().Clear();
                 }
                 else
@@ -114,9 +134,11 @@ namespace DC2025
                     _inventory.GetMouseSlot().Clear();
                     _inventory.GetMouseSlot().UpdateSlot(temp);
                 }
-
-                _inventory.GetPopup().Enable();
-                _inventory.GetPopup().SetText(Item.GetDescription());
+                if (!_disablePopup)
+                {
+                    _inventory.GetPopup().Enable();
+                    _inventory.GetPopup().SetText(Item.GetDescription());
+                }
             }
             else if (Item != null)
             {
@@ -128,7 +150,7 @@ namespace DC2025
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (!_inventory.GetMouseSlot().HasItem() && Item != null)
+            if (!_disablePopup && !_inventory.GetMouseSlot().HasItem() && Item != null)
             {
                 _inventory.GetPopup().Enable();
                 _inventory.GetPopup().SetText(Item.GetDescription());
@@ -144,6 +166,7 @@ namespace DC2025
         {
             _inventory = GameManager.GetMonoSystem<IInventoryMonoSystem>();
             Clear();
+            ToogleDisableState(_disabled);
         }
     }
 }
