@@ -5,10 +5,15 @@ namespace DC2025
 {
     public enum MaterialType
     {
+        Bronze=0,
         Iron,
         Steel,
-        Cobolt,
-        Bronze
+        Cobolt
+    }
+
+    public static class MaterialTypeExt
+    {
+        public static int Rank(this MaterialType type) => (int)type;
     }
 
     public abstract class MaterialItem : PickupableItem

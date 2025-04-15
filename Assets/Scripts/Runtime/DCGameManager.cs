@@ -16,6 +16,7 @@ namespace DC2025
         [SerializeField] private FightMonoSystem _fightSystem;
         [SerializeField] private ChatWindowMonoSystem _chatSystem;
         [SerializeField] private InventoryMonoSystem _inventorySystem;
+        [SerializeField] private SwordBuilderMonoSystem _swordBuilderSystem;
 
         [Header("Databases")]
         [SerializeField] private ItemDatabase _itemDB;
@@ -35,6 +36,7 @@ namespace DC2025
             AddMonoSystem<FightMonoSystem, IFightMonoSystem>(_fightSystem);
             AddMonoSystem<ChatWindowMonoSystem, IChatWindowMonoSystem>(_chatSystem);
             AddMonoSystem<InventoryMonoSystem, IInventoryMonoSystem>(_inventorySystem);
+            AddMonoSystem<SwordBuilderMonoSystem, ISwordBuilderMonoSystem>(_swordBuilderSystem);
         }
 
         public override string GetApplicationName()
