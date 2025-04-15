@@ -34,6 +34,7 @@ namespace DC2025
         public void UpdateSlot(PickupableItem obj)
         {
             Item = obj;
+            Item.HideItem();
             _icon.sprite = Item.GetItemData().Icon;
             _icon.color = Color.white;
 
