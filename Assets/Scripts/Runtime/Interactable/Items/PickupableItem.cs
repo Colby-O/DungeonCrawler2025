@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DC2025
 {
-    public class PickupableItem : MonoBehaviour, IInteractable
+    public abstract class PickupableItem : MonoBehaviour, IInteractable
     {
         public bool IsAdjancent { get; set; }
         public bool IsEntered { get; set; }
@@ -12,16 +12,11 @@ namespace DC2025
 
         public bool HasCollider => false;
 
-        [Header("Data")]
-        [SerializeField] private Item _data;
-
         private IGridMonoSystem _grid;
         private IInventoryMonoSystem _inventory;
         private Player _player;
         private Vector3 _centerPos;
         private float _height;
-
-        public Item GetItemData() => _data;
 
         private void MoveItem()
         {
@@ -40,7 +35,7 @@ namespace DC2025
             if (_inventory.GetMouseSlot().HasItem()) return;
 
             _inventory.GetMouseSlot().UpdateSlot(this);
-            HideItem();
+            Hide();
         }
 
         private void Recenter()
@@ -67,7 +62,7 @@ namespace DC2025
             }
         }
 
-        public void HideItem()
+        public void Hide()
         {
             CurrentTile?.RemoveInteractable(this);
             gameObject.SetActive(false);
@@ -80,29 +75,34 @@ namespace DC2025
 
         public void Release()
         {
-            HideItem();
+            Hide();
             Destroy(gameObject);
         }
 
-        public void OnPressedUp() { }
+        public abstract Sprite GetIcon();
 
-        public void OnHover() { }
+        public abstract string GetDescription();
+        public abstract string GetName();
 
-        public void OnPlayerAdjancentEnter() { }
+        public virtual void OnPressedUp() { }
 
-        public void OnPlayerAdjancentExit() { }
+        public virtual void OnHover() { }
 
-        public void OnPressedDown()
+        public virtual void OnPlayerAdjancentEnter() { }
+
+        public virtual void OnPlayerAdjancentExit() { }
+
+        public virtual void OnPressedDown()
         {
             PickupItem();
         }
 
-        public void OnPlayerEnter()
+        public virtual void OnPlayerEnter()
         {
             _centerPos = _grid.GridToWorld(_grid.WorldToGrid(transform.position));
         }
 
-        public void OnPlayerExit()
+        public virtual void OnPlayerExit()
         {
             Recenter();
         }

@@ -1,9 +1,11 @@
 using DC2025.Utils;
 using PlazmaGames.Core;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.UIElements.Experimental;
 
 namespace DC2025
 {
@@ -11,6 +13,9 @@ namespace DC2025
     {
         [Header("UI")]
         [SerializeField] private Image _icon;
+        [SerializeField] private List<GameObject> _stars;
+        [SerializeField] private GameObject _durablityContainer;
+        [SerializeField] private RectTransform _durablityProgress;
 
         [Header("Infomaton")]
         [SerializeField] SlotType _type;
@@ -21,12 +26,64 @@ namespace DC2025
 
         public bool HasItem() => Item != null;
 
+        public void ResetRating()
+        {
+            for (int i = 0; i < _stars.Count; i++)
+            {
+                _stars[i].SetActive(false);
+            }
+        }
+
+        public void SetStarSlots(int rating)
+        {
+            ResetRating();
+            for (int i = 0; i < Mathf.Min(rating, _stars.Count); i++)
+            {
+                _stars[i].SetActive(true);
+            }
+        }
+
+        public void ToggleDurability(bool state)
+        {
+            _durablityContainer.SetActive(state);
+        }
+
+        public void SetDurability(float val)
+        {
+            _durablityProgress.localScale = _durablityProgress.localScale.SetX(Mathf.Clamp01(val));
+        }
+
+        public void Refresh()
+        {
+            _icon.sprite = Item.GetIcon();
+            _icon.color = Color.white;
+
+            if (Item is MaterialItem)
+            {
+                SetStarSlots((Item as MaterialItem).GetRating());
+            }
+            else
+            {
+                ResetRating();
+            }
+
+            if (Item is WeaponItem)
+            {
+                ToggleDurability(true);
+                SetDurability((Item as WeaponItem).GetDurability());
+            }
+            else
+            {
+                SetDurability(0);
+                ToggleDurability(false);
+            }
+        }
+
         public void UpdateSlot(PickupableItem obj)
         {
             Item = obj;
-            Item.HideItem();
-            _icon.sprite = Item.GetItemData().Icon;
-            _icon.color = Color.white;
+            Item.Hide();
+            Refresh();
         }
 
         public void Clear()
@@ -34,6 +91,9 @@ namespace DC2025
             Item = null;
             _icon.sprite = null;
             _icon.color = Color.clear;
+            ResetRating();
+            SetDurability(0);
+            ToggleDurability(false);
         }
 
         public void OnPointerDown(PointerEventData eventData)
@@ -56,7 +116,7 @@ namespace DC2025
                 }
 
                 _inventory.GetPopup().Enable();
-                _inventory.GetPopup().SetText(Item.GetItemData().ToString());
+                _inventory.GetPopup().SetText(Item.GetDescription());
             }
             else if (Item != null)
             {
@@ -71,7 +131,7 @@ namespace DC2025
             if (!_inventory.GetMouseSlot().HasItem() && Item != null)
             {
                 _inventory.GetPopup().Enable();
-                _inventory.GetPopup().SetText(Item.GetItemData().ToString());
+                _inventory.GetPopup().SetText(Item.GetDescription());
             }
         }
 

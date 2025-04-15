@@ -41,12 +41,25 @@ namespace DC2025
                 {
                     foundFlag = true;
                     slot.UpdateSlot(item);
-                    item.HideItem();
+                    item.Hide();
                     break;
                 }
             }
 
             return foundFlag;
+        }
+
+        public void RefreshInventory()
+        {
+            List<InventorySlot> slotsToCheck = new List<InventorySlot>(_slots)
+            {
+                _leftSlot,
+                _rightSlot
+            };
+            foreach (InventorySlot slot in slotsToCheck)
+            {
+                slot.Refresh();
+            }
         }
 
         private void Start()

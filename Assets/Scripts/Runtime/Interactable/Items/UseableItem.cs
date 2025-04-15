@@ -2,9 +2,23 @@ using UnityEngine;
 
 namespace DC2025
 {
-    [CreateAssetMenu(fileName = "DefaultUseableItem", menuName = "Items/Useable")]
-    public class UseableItem : Item
+    public class UseableItem : PickupableItem
     {
-        
+        [SerializeField] private ItemData data;
+
+        public override string GetName()
+        {
+            return data.Name;
+        }
+
+        public override string GetDescription()
+        {
+            return data.Description;
+        }
+
+        public override Sprite GetIcon()
+        {
+            return data.Icon;
+        }
     }
 }
