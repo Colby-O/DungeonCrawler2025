@@ -1,3 +1,4 @@
+using PlazmaGames.Runtime.DataStructures;
 using UnityEngine;
 
 namespace DC2025
@@ -14,5 +15,7 @@ namespace DC2025
         public float molderTempDropRate = 0.25f;
         public float molderTimeToWin = 1.00f;
         public float forgeCookTime = 4;
+
+        public SerializableDictionary<MaterialType, Color> materialColors;
     }
 }

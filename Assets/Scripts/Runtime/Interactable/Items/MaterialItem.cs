@@ -5,7 +5,7 @@ namespace DC2025
 {
     public enum MaterialType
     {
-        Bronze=0,
+        Bronze=0,   
         Iron,
         Steel,
         Cobolt
@@ -19,8 +19,8 @@ namespace DC2025
     public abstract class MaterialItem : PickupableItem
     {
         [Header("Mateiral Settings")]
-        [SerializeField] private MaterialType _type;
-        [SerializeField] private int _rating = 0;
+        [SerializeField] protected MaterialType _type;
+        [SerializeField] protected int _rating = 0;
 
         public MaterialType GetMaterial() => _type;
 
@@ -35,5 +35,10 @@ namespace DC2025
         }
 
         public abstract void SetMaterial(MaterialType material);
+
+        protected virtual void Awake()
+        {
+            SetMaterial(_type);
+        }
     }
 }

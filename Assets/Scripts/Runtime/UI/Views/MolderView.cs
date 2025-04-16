@@ -82,6 +82,7 @@ namespace DC2025
         
         private void StartMolder()
         {
+            _tookStar = false;
             _isStarted = true;
             _currentRating = (_input[0].Item as BucketItem).GetRating();
             for (int i = 4 - 1; i >= 0; i--) _stars[i].SetActive(i <= _currentRating - 1);
@@ -93,6 +94,7 @@ namespace DC2025
             _ratingContainer.SetActive(true);
 
             SetTemperatureColor(false);
+            SetTemperaturePosition(1);
 
             ReturnOrDestroyOutputItem();
             _molder.StartMolder(_tickLowNrml, _tickHighNrml);

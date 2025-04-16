@@ -56,9 +56,13 @@ namespace DC2025
             _monoSystemHolder.SetActive(true);
         }
 
-        private void Start()
+        private void Awake()
         {
             DCGameManager.settings = Resources.Load<GameSettings>("Settings/GameSettings");
+        }
+
+        private void Start()
+        {
             Player = FindAnyObjectByType<Interactor>();
         }
     }

@@ -4,6 +4,8 @@ namespace DC2025
 {
     public class BucketItem : MaterialItem
     {
+        [SerializeField] private MeshRenderer _mr;
+
         public override string GetName()
         {
             return string.Empty;
@@ -16,12 +18,13 @@ namespace DC2025
 
         public override Sprite GetIcon()
         {
-            return null;
+            return Resources.Load<Sprite>($"Icons/Buckets/{GetMaterial()}"); ;
         }
 
         public override void SetMaterial(MaterialType material)
         {
-
+            _type = material;
+            _mr.materials[1].SetColor("_BaseColor", DCGameManager.settings.materialColors[_type]);
         }
     }
 }
