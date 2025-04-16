@@ -1,3 +1,4 @@
+using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using UnityEngine;
@@ -6,8 +7,24 @@ namespace DC2025
 {
     public class Forge : Station
     {
+        [Header("Settings")]
+        [SerializeField] private float _cookTime = 30;
+        [SerializeField, Range(0, 1)] private float _startTemperture = 0.8f;
+        [SerializeField, Min(0)] private float _accelerationWhileDown = 0.01f;
+        [SerializeField, Min(0)] private float _accelerationWhileUp = 0.02f;
+        [SerializeField, Min(0)] private float _fanForce = 0.03f;
+        [SerializeField, Range(0, 1)] private float _outOfRangeAllowed;
+        [SerializeField] private Vector2 _allowedRange = new Vector2(0.60f, 0.77f);
+
         [Header("Debugging")]
-        private ForgeView _view;
+        [SerializeField, ReadOnly] private ForgeView _view;
+        [SerializeField, ReadOnly] private float _timerOn = 0;
+        [SerializeField, ReadOnly] private float _maxOutOfRangeTime = 0;
+        [SerializeField, ReadOnly] private float _outOfRangeTime = 0;
+        [SerializeField, ReadOnly] private bool _isStarted = false;
+        [SerializeField, ReadOnly] private float _temperture = 0.0f;
+        [SerializeField, ReadOnly] private float _vel;
+
 
         public override void Interact()
         {
@@ -28,9 +45,64 @@ namespace DC2025
             }
         }
 
+        public void StartForge()
+        {
+            _isStarted = true;
+            _timerOn = 0;
+            _temperture = _startTemperture;
+            _maxOutOfRangeTime = _cookTime * _outOfRangeAllowed;
+            _outOfRangeTime = 0;
+            _view.UpdateProgress(1f);
+            _view.UpdateTemperture(_temperture);
+        }
+
+        public void ForgetSetp()
+        {
+            _timerOn += Time.deltaTime;
+            _vel -= ((_vel > 0) ? _accelerationWhileUp : _accelerationWhileDown) * Time.deltaTime;
+            _temperture += _vel * Time.deltaTime;
+
+            if (_temperture > _allowedRange.y || _temperture < _allowedRange.x)
+            {
+                _outOfRangeTime += Time.deltaTime;
+
+                if (_outOfRangeTime > _maxOutOfRangeTime)
+                {
+                    _view.RemoveStar();
+                }
+            }
+
+            _view.UpdateProgress(1f - _timerOn / _cookTime);
+            _view.UpdateTemperture(_temperture);
+
+            if (_timerOn > _cookTime)
+            {
+                StopForge();
+            }
+        }
+
+        public void FanFlame()
+        {
+            _vel = _fanForce;
+        }
+
+        public void StopForge()
+        {
+            _isStarted = false;
+            _view.StopForge();
+        }
+
         private void Start()
         {
             _view = GameManager.GetMonoSystem<IUIMonoSystem>().GetView<ForgeView>();
+        }
+
+        private void Update()
+        {
+            if (_view.IsStarted())
+            {
+                ForgetSetp();
+            }
         }
     }
 }
