@@ -66,7 +66,10 @@ namespace DC2025
             _vel -= ((_vel > 0) ? _accelerationWhileUp : _accelerationWhileDown) * Time.deltaTime;
             _temperture += _vel * Time.deltaTime;
 
-            if (_temperture > _allowedRange.y || _temperture < _allowedRange.x)
+            bool isInRange = _temperture > _allowedRange.y || _temperture < _allowedRange.x;
+            _view.OnTempertureRangeChange(!isInRange);
+
+            if (isInRange)
             {
                 _outOfRangeTime += Time.deltaTime;
 
