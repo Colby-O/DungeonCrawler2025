@@ -29,5 +29,16 @@ namespace DC2025
             Instantiate(_blades[bladeType], parent);
             Instantiate(_handles[handleType], parent);
         }
+
+        public BladeItem CreateBlade(BladeType bladeType, MaterialType materialType, int rating)
+        {
+            GameObject go = Instantiate(_blades[bladeType]);
+            BladeItem blade = go.AddComponent<BladeItem>();
+            blade.bladeType = bladeType;
+            blade.SetMaterial(materialType);
+            blade.SetRating(rating);
+            blade.ForceInit();
+            return blade;
+        }
     }
 }

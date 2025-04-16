@@ -8,7 +8,6 @@ namespace DC2025
     public class Forge : Station
     {
         [Header("Settings")]
-        [SerializeField] private float _cookTime = 30;
         [SerializeField, Min(0)] private float _graceTime = 5;
         [SerializeField, Range(0, 1)] private float _startTemperture = 0.8f;
         [SerializeField, Min(0)] private float _accelerationWhileDown = 0.01f;
@@ -51,10 +50,11 @@ namespace DC2025
             _isStarted = true;
             _timerOn = 0;
             _temperture = _startTemperture;
-            _maxOutOfRangeTime = _cookTime * _outOfRangeAllowed;
+            _maxOutOfRangeTime = DCGameManager.settings.forgeCookTime * _outOfRangeAllowed;
             _outOfRangeTime = 0;
             _view.UpdateProgress(1f);
             _view.UpdateTemperture(_temperture);
+            _vel = 0;
         }
 
         public void ForgetSetp()
@@ -79,10 +79,10 @@ namespace DC2025
                 }
             }
 
-            _view.UpdateProgress(1f - _timerOn / _cookTime);
+            _view.UpdateProgress(1f - _timerOn / DCGameManager.settings.forgeCookTime);
             _view.UpdateTemperture(_temperture);
 
-            if (_timerOn > _cookTime)
+            if (_timerOn > DCGameManager.settings.forgeCookTime)
             {
                 StopForge();
             }

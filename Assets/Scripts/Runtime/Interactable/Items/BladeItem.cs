@@ -4,6 +4,8 @@ namespace DC2025
 {
     public class BladeItem : MaterialItem
     {
+        public BladeType bladeType;
+        
         public override string GetName()
         {
             return string.Empty;

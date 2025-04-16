@@ -17,3 +17,7 @@ MonoBehaviour:
   playerAttackFailStamina: 20
   playerBlockStamina: 10
   playerBlockFailStamina: 25
+  enemyDistractedWaitTime: 5
+  molderTempDropRate: 2
+  molderTimeToWin: 1
+  forgeCookTime: 4
