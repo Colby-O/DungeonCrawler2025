@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using PlazmaGames.Attribute;
 using DC2025.Utils;
 using static UnityEditor.Rendering.CameraUI;
+using UnityEngine.UI;
 
 namespace DC2025
 {
@@ -19,7 +20,7 @@ namespace DC2025
         [SerializeField] private GameObject _miniContainer;
         [SerializeField] private GameObject _ratingContainer;
         [SerializeField] private List<GameObject> _stars;
-        [SerializeField] private RectTransform _tempProg;
+        [SerializeField] private Image _tempProg;
         [SerializeField] private RectTransform _timeProg;
         [SerializeField] private EventButton _fanFlame;
 
@@ -30,13 +31,13 @@ namespace DC2025
 
         private GenericView _generic;
 
-        private void UpdateForgeState()
-        {
-            _start.IsDisabled = !CanStartForge();
-        }
-
         public bool IsStarted() => _isStarted;
         public void SetForge(Forge forge) => _currentForge = forge;
+
+        public void OnTempertureRangeChange(bool isInRange)
+        {
+            _tempProg.color = (isInRange) ? Color.green : Color.red;
+        }
 
         public void UpdateProgress(float prog)
         {
@@ -52,7 +53,7 @@ namespace DC2025
 
         public void UpdateTemperture(float prog)
         {
-            _tempProg.localScale = _tempProg.localScale.SetY(Mathf.Clamp01(prog));
+            _tempProg.transform.localScale = _tempProg.transform.localScale.SetY(Mathf.Clamp01(prog));
         }
 
         public bool CanStartForge()
@@ -72,6 +73,8 @@ namespace DC2025
             _generic.ToggleInventory(false, false);
             _miniContainer.SetActive(true);
             _ratingContainer.SetActive(true);
+
+            OnTempertureRangeChange(true);
 
             ReturnOrDestoryOutputItem();
             _currentForge.StartForge();
@@ -98,6 +101,11 @@ namespace DC2025
             _input[1].Item.Release();
             _input[0].Clear();
             _input[1].Clear();
+        }
+
+        private void UpdateForgeState()
+        {
+            _start.IsDisabled = !CanStartForge();
         }
 
         private void CreateBucket()
