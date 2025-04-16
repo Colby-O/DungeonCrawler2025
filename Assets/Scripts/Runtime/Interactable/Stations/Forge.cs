@@ -9,6 +9,7 @@ namespace DC2025
     {
         [Header("Settings")]
         [SerializeField] private float _cookTime = 30;
+        [SerializeField, Min(0)] private float _graceTime = 5;
         [SerializeField, Range(0, 1)] private float _startTemperture = 0.8f;
         [SerializeField, Min(0)] private float _accelerationWhileDown = 0.01f;
         [SerializeField, Min(0)] private float _accelerationWhileUp = 0.02f;
@@ -59,6 +60,9 @@ namespace DC2025
         public void ForgetSetp()
         {
             _timerOn += Time.deltaTime;
+
+            if (_graceTime > _timerOn) return;
+
             _vel -= ((_vel > 0) ? _accelerationWhileUp : _accelerationWhileDown) * Time.deltaTime;
             _temperture += _vel * Time.deltaTime;
 
