@@ -104,6 +104,7 @@ MonoBehaviour:
   _offset: {fileID: 8029129048948065465}
   _transitionSpeed: 0.2
   _cookTime: 30
+  _graceTime: 2
   _startTemperture: 0.69
   _accelerationWhileDown: 0.3
   _accelerationWhileUp: 0.08
