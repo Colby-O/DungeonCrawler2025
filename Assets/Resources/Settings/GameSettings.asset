@@ -17,3 +17,15 @@ MonoBehaviour:
   playerAttackFailStamina: 20
   playerBlockStamina: 10
   playerBlockFailStamina: 25
+  enemyDistractedWaitTime: 5
+  materialColors:
+    list:
+    - Key: 0
+      Value: {r: 0.47058824, g: 0.39607844, b: 0, a: 1}
+    - Key: 1
+      Value: {r: 0.7647059, g: 0, b: 0, a: 1}
+    - Key: 2
+      Value: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 1}
+    - Key: 3
+      Value: {r: 0, g: 0.05882353, b: 0.58431375, a: 1}
+    keyCollision: 0

@@ -7,6 +7,13 @@ namespace DC2025
 {
     public class Forge : Station
     {
+        [Header("Particle System")]
+        [SerializeField] private ParticleSystem _particleSystem;
+        [SerializeField] private int _normalSpawnRate = 100;
+        [SerializeField] private float _normalLife = 0.4f;
+        [SerializeField] private int _fanSpawnRate = 200;
+        [SerializeField] private float _fanLife = 0.6f;
+
         [Header("Settings")]
         [SerializeField] private float _cookTime = 30;
         [SerializeField, Min(0)] private float _graceTime = 5;
@@ -26,6 +33,8 @@ namespace DC2025
         [SerializeField, ReadOnly] private float _temperture = 0.0f;
         [SerializeField, ReadOnly] private float _vel;
 
+        private ParticleSystem.MainModule _psMain;
+        private ParticleSystem.EmissionModule _psEmission;
 
         public override void Interact()
         {
@@ -66,6 +75,17 @@ namespace DC2025
             _vel -= ((_vel > 0) ? _accelerationWhileUp : _accelerationWhileDown) * Time.deltaTime;
             _temperture += _vel * Time.deltaTime;
 
+            if (_vel > 0)
+            {
+                _psMain.startLifetime = _fanLife;
+                _psEmission.rateOverTime = _fanSpawnRate;
+            }
+            else
+            {
+                _psMain.startLifetime = _normalLife;
+                _psEmission.rateOverTime = _normalSpawnRate;
+            }
+
             bool isInRange = _temperture > _allowedRange.y || _temperture < _allowedRange.x;
             _view.OnTempertureRangeChange(!isInRange);
 
@@ -97,11 +117,18 @@ namespace DC2025
         {
             _isStarted = false;
             _view.StopForge();
+            _psMain.startLifetime = _normalLife;
+            _psEmission.rateOverTime = _normalSpawnRate;
         }
 
         private void Start()
         {
             _view = GameManager.GetMonoSystem<IUIMonoSystem>().GetView<ForgeView>();
+            _psMain = _particleSystem.main;
+            _psEmission = _particleSystem.emission;
+            _psMain.startLifetime = _normalLife;
+            _psEmission.rateOverTime = _normalSpawnRate;
+
         }
 
         private void Update()

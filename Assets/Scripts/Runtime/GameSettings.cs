@@ -1,3 +1,4 @@
+using PlazmaGames.Runtime.DataStructures;
 using UnityEngine;
 
 namespace DC2025
@@ -11,5 +12,7 @@ namespace DC2025
         public int playerBlockStamina = 10;
         public int playerBlockFailStamina = 35;
         public float enemyDistractedWaitTime = 5.0f;
+
+        public SerializableDictionary<MaterialType, Color> materialColors;
     }
 }
