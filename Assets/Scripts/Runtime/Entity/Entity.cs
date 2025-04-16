@@ -320,9 +320,13 @@ namespace DC2025
 			_timeSinceLastSync = 0;
 		}
 
-		protected virtual void Start()
+        protected virtual void Awake()
         {
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
+        }
+
+		protected virtual void Start()
+        {
 			_queuedAction = Action.None;
 			_currentActtion = Action.None;
 

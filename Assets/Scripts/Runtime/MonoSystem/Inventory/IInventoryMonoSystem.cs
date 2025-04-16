@@ -9,5 +9,6 @@ namespace DC2025
         public CusorPopup GetPopup();
         public bool AddItemToInventory(PickupableItem item);
         public void RefreshInventory();
+        public InventorySlot GetHandSlot(SlotType slot);
     }
 }

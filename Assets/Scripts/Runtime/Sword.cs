@@ -10,31 +10,35 @@ namespace DC2025
     public class Sword : MonoBehaviour
     {
         private Transform _swordObject;
-        private Transform _model;
+        private Transform _model = null;
         private Transform _defaultPosition;
         private Transform _blockPosition;
         [SerializeField] private List<Transform> _swingPositions;
         public SwordStats stats = new SwordStats();
-        
-        public bool HasSword() => _model.gameObject.activeSelf;
+
+        public bool HasSword() => _model;
         
         public void Raise()
         {
+            if (!HasSword()) return;
             _model.SetPositionAndRotation(_swingPositions[0].position, _swingPositions[0].rotation);
         }
         
         public void Block()
         {
+            if (!HasSword()) return;
             _model.SetPositionAndRotation(_blockPosition.position, _blockPosition.rotation);
         }
 
         public void Lower()
         {
+            if (!HasSword()) return;
             _model.SetPositionAndRotation(_defaultPosition.position, _defaultPosition.rotation);
         }
 
         public void Swing()
         {
+            if (!HasSword()) return;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                 this,
                 this.stats.speed,
@@ -62,6 +66,7 @@ namespace DC2025
         
         public void Stumble()
         {
+            if (!HasSword()) return;
             Quaternion startRot = _model.rotation;
             Quaternion endRot = Quaternion.Euler(0, 20, 20) * startRot;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
@@ -87,6 +92,21 @@ namespace DC2025
             for (int i = 0; i < positions.childCount; i++)
             {
                 _swingPositions.Add(positions.GetChild(i));
+            }
+        }
+
+        public void SetModel(Transform model)
+        {
+            if (!model)
+            {
+                if (HasSword()) Destroy(_model.gameObject);
+                _model = null;
+            }
+            else
+            {
+                if (HasSword()) Destroy(_model.gameObject);
+                _model = Instantiate(model.gameObject, _swordObject).transform;
+                Lower();
             }
         }
     }

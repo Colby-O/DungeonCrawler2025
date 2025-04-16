@@ -5,6 +5,7 @@ using PlazmaGames.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Windows;
+using UnityEngine.XR;
 using Input = UnityEngine.Input;
 
 namespace DC2025
@@ -15,6 +16,7 @@ namespace DC2025
 
         private IFightMonoSystem _fightMs;
         private IGridMonoSystem _gridMs;
+        private IInventoryMonoSystem _invMs;
 
         private Sword _sword;
 
@@ -153,12 +155,14 @@ namespace DC2025
             }
         }
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             this.manager = GetComponent<PlayerManager>();
             _sword = GetComponentInChildren<Sword>();
             _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
+            _invMs = GameManager.GetMonoSystem<IInventoryMonoSystem>();
             if (_input == null) _input = GetComponent<PlayerInput>();
 
             _input.actions["Movement"].performed += HandleMovementAction;
@@ -169,6 +173,24 @@ namespace DC2025
             
             _input.actions["Interact"].performed += HandleInteract;
             _input.actions["Block"].performed += HandleBlock;
+            
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            Debug.Log(_invMs);
+            Debug.Log(_invMs.GetHandSlot(SlotType.Left));
+            Debug.Log(_invMs.GetHandSlot(SlotType.Left).OnChange);
+            _invMs.GetHandSlot(SlotType.Left).OnChange.AddListener(HandleSwordSlotChange);
+        }
+
+        private void HandleSwordSlotChange()
+        {
+            PickupableItem item = _invMs.GetHandSlot(SlotType.Left).Item;
+            if (!item || item is not WeaponItem) return;
+            WeaponItem weapon = item as WeaponItem;
+            _sword.SetModel(weapon?.transform.Find("Model"));
         }
 
         protected override void Update()

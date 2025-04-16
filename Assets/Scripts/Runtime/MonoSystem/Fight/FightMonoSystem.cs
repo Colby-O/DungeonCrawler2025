@@ -239,6 +239,11 @@ namespace DC2025
         
         public bool PlayerBlock()
         {
+            if (!_player.Sword().HasSword())
+            {
+                _chatMs.Send("Blocking without a sword is futile.");
+                return false;
+            }
             if (_enemyAttackBlocked) return false;
             if (_player.manager.GetStamina() < _player.Sword().stats.ApplyStamina(DCGameManager.settings.playerBlockStamina)) return false;
             if (_enemyAttackCountdown > 0 && _enemyAttackCountdown < AttackHintTime())
