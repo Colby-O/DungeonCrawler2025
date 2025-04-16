@@ -1,4 +1,5 @@
 using DC2025.Utils;
+using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using UnityEngine;
 
@@ -14,9 +15,12 @@ namespace DC2025
 
         private IGridMonoSystem _grid;
         private IInventoryMonoSystem _inventory;
-        private Player _player;
-        private Vector3 _centerPos;
-        private float _height;
+
+        [Header("DeBugging")]
+        [SerializeField, ReadOnly] private Player _player;
+        [SerializeField, ReadOnly] private Vector3 _centerPos;
+        [SerializeField, ReadOnly] private float _height;
+        [SerializeField, ReadOnly] private bool _hasInited = false;
 
         private void MoveItem()
         {
@@ -68,6 +72,18 @@ namespace DC2025
             gameObject.SetActive(false);
         }
 
+        public void ForceInit()
+        {
+            if (_hasInited) return;
+            _hasInited = true;
+            _height = transform.position.y;
+            _grid = GameManager.GetMonoSystem<IGridMonoSystem>();
+            _inventory = GameManager.GetMonoSystem<IInventoryMonoSystem>();
+            _player = DCGameManager.Player.GetComponent<Player>();
+            _centerPos = _grid.GridToWorld(_grid.WorldToGrid(transform.position));
+            transform.position = _centerPos.SetY(transform.position.y);
+        }
+
         public void PlaceItemAt(Vector2Int pos)
         {
 
@@ -107,18 +123,9 @@ namespace DC2025
             Recenter();
         }
 
-        private void Awake()
-        {
-            _height = transform.position.y;
-        }
-
         private void Start()
         {
-            _grid = GameManager.GetMonoSystem<IGridMonoSystem>();
-            _inventory = GameManager.GetMonoSystem<IInventoryMonoSystem>();
-           _player = DCGameManager.Player.GetComponent<Player>();
-            _centerPos = _grid.GridToWorld(_grid.WorldToGrid(transform.position));
-            transform.position = _centerPos.SetY(transform.position.y);
+            ForceInit();
         }
 
         private void Update() 
