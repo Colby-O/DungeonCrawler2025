@@ -26,7 +26,8 @@ namespace DC2025
 
         private IInventoryMonoSystem _inventory;
 
-        public PickupableItem Item { get; set; }
+        public SlotData Data { get; private set; }
+        public PickupableItem Item { get { return Data.Item; } set { Data.Item = value; } }
 
         public UnityEvent OnChange = new UnityEvent();
 
@@ -164,6 +165,7 @@ namespace DC2025
 
         private void Awake()
         {
+            Data = new SlotData();
             _inventory = GameManager.GetMonoSystem<IInventoryMonoSystem>();
             Clear();
             ToogleDisableState(_disabled);

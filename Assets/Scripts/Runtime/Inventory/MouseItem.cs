@@ -14,7 +14,8 @@ namespace DC2025
         [Header("UI")]
         [SerializeField] Image _icon;
 
-        public PickupableItem Item { get; set;}
+        public SlotData Data { get; private set; }
+        public PickupableItem Item { get { return Data.Item; } set { Data.Item = value; } }
 
         [SerializeField, ReadOnly] private bool _wasUpdatedThisFrame = false;
 
@@ -68,6 +69,7 @@ namespace DC2025
 
         private void Awake()
         {
+            Data = new SlotData();
             Clear();
         }
 
