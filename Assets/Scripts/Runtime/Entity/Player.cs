@@ -188,9 +188,15 @@ namespace DC2025
         private void HandleSwordSlotChange()
         {
             PickupableItem item = _invMs.GetHandSlot(SlotType.Left).Item;
-            if (!item || item is not WeaponItem) return;
-            WeaponItem weapon = item as WeaponItem;
-            _sword.SetModel(weapon?.transform.Find("Model"));
+            if (!item || item is not WeaponItem)
+            {
+                _sword.SetModel(null);
+            }
+            else
+            {
+                WeaponItem weapon = item as WeaponItem;
+                _sword.SetModel(weapon.transform.Find("Model"));
+            }
         }
 
         protected override void Update()
