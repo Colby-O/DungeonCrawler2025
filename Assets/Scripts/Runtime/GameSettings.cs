@@ -20,5 +20,14 @@ namespace DC2025
         public int anvilHammerCount = 4;
 
         public SerializableDictionary<MaterialType, Color> materialColors;
+
+        [Header("Potion Settings")]
+        public SerializableDictionary<MaterialType, PotionType> potionMaterialConverter;
+        public int healthPotionHealAmount = 100;
+        public int staminaPotionAmount = 100;
+        public float strengthPotionDamageMul = 2;
+        public float strengthPotionTime = 20f;
+        public float foresightAmount = 0.2f;
+        public float foresightPotionTime = 20f;
     }
 }

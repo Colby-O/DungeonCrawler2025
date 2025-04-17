@@ -35,6 +35,7 @@ Transform:
   - {fileID: 2029808788442664394}
   - {fileID: 7248512870614198019}
   - {fileID: 6630752952767250552}
+  - {fileID: 8372867007951301043}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5378781374126520791
@@ -113,6 +114,7 @@ MonoBehaviour:
       Value: {fileID: 1177393428980468238}
     keyCollision: 0
   _globalPosition: {x: 0, y: 0, z: 0}
+  _doorFacing: 0
 --- !u!1001 &2140441104953672007
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -124,6 +126,10 @@ PrefabInstance:
     - target: {fileID: 3028466436055168767, guid: bdca869c53fb8d944bf81b7c1fcfcae8, type: 3}
       propertyPath: m_Name
       value: Door
+      objectReference: {fileID: 0}
+    - target: {fileID: 3028466436055168767, guid: bdca869c53fb8d944bf81b7c1fcfcae8, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4733693832145142079, guid: bdca869c53fb8d944bf81b7c1fcfcae8, type: 3}
       propertyPath: m_LocalScale.x
@@ -197,6 +203,115 @@ MonoBehaviour:
 Transform:
   m_CorrespondingSourceObject: {fileID: 4733693832145142079, guid: bdca869c53fb8d944bf81b7c1fcfcae8, type: 3}
   m_PrefabInstance: {fileID: 2140441104953672007}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &5213899455263962718
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 2562598337573628855}
+    m_Modifications:
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.0106096985
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.0106096985
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.0106096985
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00007
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.000040000006
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.00053999986
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 90
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4733645607978779445, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 9155811925372393193, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_Name
+      value: Web
+      objectReference: {fileID: 0}
+    - target: {fileID: 9155811925372393193, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9155811925372393193, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8059656760579030942}
+  m_SourcePrefab: {fileID: 100100000, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+--- !u!1 &3986960562000437431 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9155811925372393193, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+  m_PrefabInstance: {fileID: 5213899455263962718}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &8059656760579030942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3986960562000437431}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6e139fae2f12745898c7a8812ecfb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mr: {fileID: 8204972537788026209}
+  _type: 0
+--- !u!23 &8204972537788026209 stripped
+MeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4145166409802758975, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+  m_PrefabInstance: {fileID: 5213899455263962718}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &8372867007951301043 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4353041029182136301, guid: 3063f2b796a57c84ca4c790780878468, type: 3}
+  m_PrefabInstance: {fileID: 5213899455263962718}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &5850817116828406685
 PrefabInstance:

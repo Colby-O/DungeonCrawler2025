@@ -10,7 +10,7 @@ using UnityEngine.UIElements.Experimental;
 
 namespace DC2025
 {
-    public class InventorySlot : MonoBehaviour, IPointerDownHandler, IPointerEnterHandler, IPointerExitHandler
+    public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
     {
         [Header("UI")]
         [SerializeField] private Image _icon;
@@ -123,39 +123,6 @@ namespace DC2025
             OnChange.Invoke();
         }
 
-        public void OnPointerDown(PointerEventData eventData)
-        {
-            if (_disabled) return;
-
-            if (_inventory.GetMouseSlot().HasItem()) 
-            {
-                if (Item == null)
-                {
-                    UpdateSlot(_inventory.GetMouseSlot().Item);;
-                    _inventory.GetMouseSlot().Clear();
-                }
-                else
-                {
-                    PickupableItem temp = Item;
-                    Clear();
-                    UpdateSlot(_inventory.GetMouseSlot().Item);
-                    _inventory.GetMouseSlot().Clear();
-                    _inventory.GetMouseSlot().UpdateSlot(temp);
-                }
-                if (!_disablePopup)
-                {
-                    _inventory.GetPopup().Enable();
-                    _inventory.GetPopup().SetText(Item.GetDescription());
-                }
-            }
-            else if (Item != null)
-            {
-                _inventory.GetPopup().Disable();
-                _inventory.GetMouseSlot().UpdateSlot(Item);
-                Clear();
-            }
-        }
-
         public void OnPointerEnter(PointerEventData eventData)
         {
             if (!_disablePopup && !_inventory.GetMouseSlot().HasItem() && Item != null)
@@ -176,6 +143,52 @@ namespace DC2025
             _inventory = GameManager.GetMonoSystem<IInventoryMonoSystem>();
             Clear();
             ToogleDisableState(_disabled);
+        }
+
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            if (_disabled) return;
+
+            if (eventData.button == PointerEventData.InputButton.Right)
+            {
+                if (Item != null)
+                {
+                    if (Item is PotionItem)
+                    {
+                        (Item as PotionItem).Use();
+                    }
+                }
+            } 
+            else if (eventData.button == PointerEventData.InputButton.Left)
+            {
+                if (_inventory.GetMouseSlot().HasItem())
+                {
+                    if (Item == null)
+                    {
+                        UpdateSlot(_inventory.GetMouseSlot().Item); ;
+                        _inventory.GetMouseSlot().Clear();
+                    }
+                    else
+                    {
+                        PickupableItem temp = Item;
+                        Clear();
+                        UpdateSlot(_inventory.GetMouseSlot().Item);
+                        _inventory.GetMouseSlot().Clear();
+                        _inventory.GetMouseSlot().UpdateSlot(temp);
+                    }
+                    if (!_disablePopup)
+                    {
+                        _inventory.GetPopup().Enable();
+                        _inventory.GetPopup().SetText(Item.GetDescription());
+                    }
+                }
+                else if (Item != null)
+                {
+                    _inventory.GetPopup().Disable();
+                    _inventory.GetMouseSlot().UpdateSlot(Item);
+                    Clear();
+                }
+            }
         }
     }
 }

@@ -31,9 +31,17 @@ namespace DC2025
         private float _enemyHealth = 0;
         private bool _enemyAttackBlocked = false;
 
+        private float _damageMultiplier = 1f;
+        private float _strengthPotionTime;
+        private float _maxStrengthPotionTime;
+
+        private float _potionForesight;
+        private float _foresightPotionTime;
+        private float _maxForesightPotionTime;
+
         public bool InFight() => _fightState == FightState.Fighting;
 
-        public float AttackHintTime() => _enemy.AttackHintTime() + _player.Sword().stats.foresight;
+        public float AttackHintTime() => _enemy.AttackHintTime() + _player.Sword().stats.foresight + _potionForesight;
         
         private void Start()
         {
@@ -172,6 +180,21 @@ namespace DC2025
             if (!_enemy.Attacking()) _enemy.DoAttackAnimation();
         }
 
+        public void AddDamageBoost(float mul, float duration)
+        {
+            _damageMultiplier = mul;
+            _maxStrengthPotionTime = duration;
+            _strengthPotionTime = 0;
+        }
+
+        public void AddForesightBoost(float amount, float duration)
+        {
+            _potionForesight = amount;
+            _maxForesightPotionTime = duration;
+            _foresightPotionTime = 0;
+        }
+
+
         public void EnemyAttackDone()
         {
             if (_enemyAttackBlocked)
@@ -228,7 +251,7 @@ namespace DC2025
             else
             {
                 _chatMs.Send($"You strike the enemy dealing {_player.Sword().stats.damage} damage.");
-                _enemyHealth -= _player.Sword().stats.damage;
+                _enemyHealth -= _player.Sword().stats.damage * _damageMultiplier;
                 _enemy.SetHealBar(_enemyHealth);
                 if (_enemyHealth <= 0)
                 {
@@ -275,7 +298,7 @@ namespace DC2025
             _fightState = FightState.None;
         }
 
-        bool EntityFaceEntity(Entity facer, Entity facee)
+        private bool EntityFaceEntity(Entity facer, Entity facee)
         {
             if (facer.CurrentAction() != Action.None) return false;
             Vector3 worldDir = (facee.transform.position - facer.transform.position).normalized;
@@ -290,6 +313,40 @@ namespace DC2025
             else
             {
                 return true;
+            }
+        }
+
+        private void Awake()
+        {
+            _strengthPotionTime = 0;
+            _maxStrengthPotionTime = 0;
+
+            _foresightPotionTime = 0;
+            _maxForesightPotionTime = 0;
+        }
+
+        private void Update()
+        {
+            if (_strengthPotionTime < _maxStrengthPotionTime)
+            {
+                _strengthPotionTime += Time.deltaTime;
+                if (_strengthPotionTime >= _maxStrengthPotionTime)
+                {
+                    _damageMultiplier = 1;
+                    _strengthPotionTime = 0;
+                    _maxStrengthPotionTime = 0;
+                }
+            }
+
+            if (_foresightPotionTime < _maxForesightPotionTime)
+            {
+                _foresightPotionTime += Time.deltaTime;
+                if (_foresightPotionTime >= _maxForesightPotionTime)
+                {
+                    _potionForesight = 0;
+                    _foresightPotionTime = 0;
+                    _maxForesightPotionTime = 0;
+                }
             }
         }
     }
