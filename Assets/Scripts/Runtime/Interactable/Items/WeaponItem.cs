@@ -4,8 +4,11 @@ namespace DC2025
 {
     public enum BladeType
     {
-        Sword,
+        Dagger,
         Axe,
+        ShortSword,
+        LongSword,
+        BattleAxe,
     }
 
     public enum HandleType

@@ -12,14 +12,15 @@ namespace DC2025
 
         private void Start()
         {
-            _blades.Add(BladeType.Sword, Resources.Load<GameObject>("Prefabs/SwordComponents/SwordBlade"));
+            _blades.Add(BladeType.ShortSword, Resources.Load<GameObject>("Prefabs/SwordComponents/ShortSwordBlade"));
+            _blades.Add(BladeType.LongSword, Resources.Load<GameObject>("Prefabs/SwordComponents/LongSwordBlade"));
             _blades.Add(BladeType.Axe, Resources.Load<GameObject>("Prefabs/SwordComponents/AxeBlade"));
+            _blades.Add(BladeType.BattleAxe, Resources.Load<GameObject>("Prefabs/SwordComponents/BattleAxeBlade"));
+            _blades.Add(BladeType.Dagger, Resources.Load<GameObject>("Prefabs/SwordComponents/DaggerBlade"));
             
             _handles.Add(HandleType.Balanced, Resources.Load<GameObject>("Prefabs/SwordComponents/BalancedHandle"));
             _handles.Add(HandleType.Quick, Resources.Load<GameObject>("Prefabs/SwordComponents/QuickHandle"));
             _handles.Add(HandleType.Lightweight, Resources.Load<GameObject>("Prefabs/SwordComponents/LightweightHandle"));
-
-            BuildSword(transform, BladeType.Sword, HandleType.Quick, MaterialType.Cobolt);
         }
 
         public void BuildSword(Transform parent, BladeType bladeType, HandleType handleType, MaterialType materialType)

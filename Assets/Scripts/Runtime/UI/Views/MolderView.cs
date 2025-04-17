@@ -34,12 +34,24 @@ namespace DC2025
         public bool IsStarted() => _isStarted;
         
         public void SetMolder(Molder m) => _molder = m;
+        
+        public MoldItem GetMold() => _input[1].Item as MoldItem;
+        public BucketItem GetBucket() => _input[0].Item as BucketItem;
 
         public void RemoveStar()
         {
             if (_tookStar) return;
             _tookStar = true;
             _stars[--_currentRating].SetActive(false);
+        }
+
+        public void SubscribeMoldChange(UnityEngine.Events.UnityAction func)
+        {
+            _input[1].OnChange.AddListener(func);
+        }
+        public void SubscribeMaterialChange(UnityEngine.Events.UnityAction func)
+        {
+            _input[0].OnChange.AddListener(func);
         }
 
         public override void Init()
