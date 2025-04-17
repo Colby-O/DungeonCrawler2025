@@ -32,5 +32,15 @@ namespace DC2025
                 _view.SetAnvil(null);
             }
         }
+
+        public override void ForceClose()
+        {
+            if (IsEnabled)
+            {
+                IsEnabled = false;
+                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                _view.SetAnvil(null);
+            }
+        }
     }
 }
