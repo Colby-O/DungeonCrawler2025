@@ -55,6 +55,12 @@ namespace DC2025
             GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().UpdateHealth();
         }
 
+        public void AddStamina(int amount)
+        {
+            _curStamina = Mathf.Min(_curStamina + amount, _maxStamina);
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().UpdateStamina();
+        }
+
         public void OnDeath()
         {
             Debug.Log("The Player Had Died :<");

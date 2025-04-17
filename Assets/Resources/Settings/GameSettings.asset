@@ -22,6 +22,8 @@ MonoBehaviour:
   molderTimeToWin: 1
   moldMoveSpeed: 20
   forgeCookTime: 4
+  anvilHammerShowHitTime: 1
+  anvilHammerCount: 4
   materialColors:
     list:
     - Key: 0
@@ -33,3 +35,20 @@ MonoBehaviour:
     - Key: 3
       Value: {r: 0, g: 0.05882353, b: 0.58431375, a: 1}
     keyCollision: 0
+  potionMaterialConverter:
+    list:
+    - Key: 0
+      Value: 2
+    - Key: 1
+      Value: 0
+    - Key: 2
+      Value: 3
+    - Key: 3
+      Value: 1
+    keyCollision: 0
+  healthPotionHealAmount: 100
+  staminaPotionAmount: 100
+  strengthPotionDamageMul: 2
+  strengthPotionTime: 20
+  foresightAmount: 0.5
+  foresightPotionTime: 20
