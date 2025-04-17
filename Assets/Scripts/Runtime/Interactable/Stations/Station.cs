@@ -1,5 +1,6 @@
 using PlazmaGames.Animation;
 using PlazmaGames.Core;
+using System.Collections.Generic;
 using System.Security.Cryptography;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,9 +13,24 @@ namespace DC2025
         [SerializeField] private Transform _offset;
         [SerializeField] private float _transitionSpeed = 0.2f;
 
-        public Tile CurrentTile { get; set; }
+        private List<Tile> _currentTiles;
+
+        public List<Tile> CurrentTile
+        {
+            get
+            {
+                if (_currentTiles == null)
+                {
+                    _currentTiles = new List<Tile>();
+                }
+
+                return _currentTiles;
+            }
+        }
         public bool IsAdjancent { get; set; }
         public bool IsEntered { get; set; }
+        public bool WasStateEnterChangedThisFrame { get; set; }
+        public bool WasStateAdjancentChangedThisFrame { get; set; }
         public bool IsEnabled { get; protected set; }
 
         public bool HasCollider { get { return true; } }
@@ -43,6 +59,8 @@ namespace DC2025
 
         public abstract void Interact();
 
+        public abstract void ForceClose();
+
         public void OnPressedUp() { }
 
         public virtual void OnHover() { }
@@ -60,7 +78,17 @@ namespace DC2025
 
         public virtual void OnPlayerAdjancentExit() 
         {
-            if (DCGameManager.Player.NearbyStation == this) DCGameManager.Player.NearbyStation = null;
+            if (DCGameManager.Player.NearbyStation == this)
+            {
+                DCGameManager.Player.NearbyStation.ForceClose();
+                DCGameManager.Player.NearbyStation = null;
+            }
+        }
+
+        private void LateUpdate()
+        {
+            WasStateEnterChangedThisFrame = false;
+            WasStateAdjancentChangedThisFrame = false;
         }
     }
 }

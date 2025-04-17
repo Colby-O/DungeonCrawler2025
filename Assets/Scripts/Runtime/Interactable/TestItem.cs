@@ -1,4 +1,5 @@
 using PlazmaGames.Attribute;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DC2025
@@ -7,11 +8,27 @@ namespace DC2025
     {
         public bool IsAdjancent { get; set; }
         public bool IsEntered { get; set; }
-        public Tile CurrentTile { get; set; }
+        public bool WasStateEnterChangedThisFrame { get; set; }
+        public bool WasStateAdjancentChangedThisFrame { get; set; }
+        public List<Tile> CurrentTile
+        {
+            get
+            {
+                if (_currentTiles == null)
+                {
+                    _currentTiles = new List<Tile>();
+                }
+
+                return _currentTiles;
+            }
+        }
+
         public bool HasCollider { get { return false; } }
 
         [SerializeField, ReadOnly] bool _isEntered;
         [SerializeField, ReadOnly] bool _isAdjancent;
+
+        private List<Tile> _currentTiles;
 
         public void OnPlayerAdjancentEnter()
         {
@@ -41,6 +58,12 @@ namespace DC2025
         {
             _isEntered = IsEntered;
             _isAdjancent = IsAdjancent;
+        }
+
+        private void LateUpdate()
+        {
+            WasStateEnterChangedThisFrame = false;
+            WasStateAdjancentChangedThisFrame = false;
         }
     }
 }

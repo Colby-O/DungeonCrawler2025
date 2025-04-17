@@ -54,6 +54,16 @@ namespace DC2025
             }
         }
 
+        public override void ForceClose()
+        {
+            if (IsEnabled)
+            {
+                IsEnabled = false;
+                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                _view.SetForge(null);
+            }
+        }
+
         public void StartForge()
         {
             _isStarted = true;

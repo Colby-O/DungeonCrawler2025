@@ -4,6 +4,7 @@ using UnityEngine;
 using PlazmaGames.Runtime.DataStructures;
 using PlazmaGames.Attribute;
 using System.Security.Cryptography;
+using System.Linq;
 
 namespace DC2025
 {
@@ -11,7 +12,9 @@ namespace DC2025
     {
         private static readonly int EmissionColor = Shader.PropertyToID("_EmissionColor");
         [SerializeField] private SerializableDictionary<Direction, bool> _walls;
-		[SerializeField, ReadOnly] private Vector3 _globalPosition;
+        [SerializeField] private SerializableDictionary<Direction, Blockage> _blockages;
+        [SerializeField, ReadOnly] private Vector3 _globalPosition;
+        [SerializeField, ReadOnly] private Direction _doorFacing;
 
         private MeshRenderer _highlight;
 
@@ -45,15 +48,19 @@ namespace DC2025
             if (HasItemWithCollider() && !ignoreColliders) return true;
 
 			dir = dir.GetFacingDirection(-transform.rotation.eulerAngles.y);
-			if (_walls.ContainsKey(dir)) return _walls[dir];
+			if ((_walls.ContainsKey(dir) && _walls[dir]) || (_blockages.ContainsKey(dir) && _blockages[dir] != null && !_blockages[dir].IsOpen)) return true;
 			return false;
 		}
 
         public void AddInteractable(IInteractable interactable)
         {
-            if (_interactables != null) _interactables.Add(interactable);
-            else _interactables = new List<IInteractable>() { interactable };
-            interactable.CurrentTile = this;
+            if (_interactables == null) _interactables = new List<IInteractable>();
+
+            if (!_interactables.Contains(interactable))
+            {
+                _interactables.Add(interactable);
+                interactable.CurrentTile.Add(this);
+            }
         }
 
         public void RemoveInteractable(IInteractable interactable)
@@ -61,8 +68,8 @@ namespace DC2025
             if (_interactables != null && _interactables.Contains(interactable))
             {
                 _interactables.Remove(interactable);
+                interactable.CurrentTile.Remove(this);
             }
-            interactable.CurrentTile = null;
         }
 
         public void OnPlayerEnter()
@@ -76,7 +83,9 @@ namespace DC2025
                     interactable.OnPlayerEnter();
                     interactable.IsEntered = true;
                 }
-			}
+
+                interactable.WasStateEnterChangedThisFrame = true;
+            }
 		}
 
         public void OnPlayerExit()
@@ -85,7 +94,7 @@ namespace DC2025
 
             foreach (IInteractable interactable in _interactables)
             {
-                if (interactable.IsEntered)
+                if (interactable.IsEntered && !interactable.WasStateEnterChangedThisFrame)
                 {
                     interactable.OnPlayerExit();
                     interactable.IsEntered = false;
@@ -104,6 +113,7 @@ namespace DC2025
                     interactable.OnPlayerAdjancentEnter();
                     interactable.IsAdjancent = true;
                 }
+                interactable.WasStateAdjancentChangedThisFrame = true;
             }
         }
 
@@ -113,7 +123,7 @@ namespace DC2025
 
             foreach (IInteractable interactable in _interactables)
             {
-                if (interactable.IsAdjancent)
+                if (interactable.IsAdjancent && !interactable.WasStateAdjancentChangedThisFrame)
                 {
                     interactable.OnPlayerAdjancentExit();
                     interactable.IsAdjancent = false;
@@ -121,10 +131,24 @@ namespace DC2025
             }
         }
 
+        public SerializableDictionary<Direction, Blockage> GetBlockages()
+        {
+            return _blockages;
+        }
+
         private void Start()
         {
             _highlight = transform.Find("Highlight").GetComponent<MeshRenderer>();
             _highlight.material.EnableKeyword("_EMISSION");
+
+            if (_blockages != null)
+            {
+                foreach (Blockage blockage in _blockages.Values)
+                {
+                    if (blockage == null) continue;
+                    AddInteractable(blockage);
+                }
+            }
         }
 
         private void FixedUpdate()

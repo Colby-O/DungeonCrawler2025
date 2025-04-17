@@ -24,6 +24,7 @@ namespace DC2025
         private Quaternion _cameraRot;
 
         public Station NearbyStation { get; set; }
+        public Blockage NearbyBlockage { get; set; }
 
         public int GetClickDistance() => _clickDist;
 
@@ -40,6 +41,7 @@ namespace DC2025
         private void HandleInteractAction(InputAction.CallbackContext e)
         {
             if (NearbyStation != null) NearbyStation.Interact();
+            if (NearbyBlockage != null) NearbyBlockage.Interact();
         }
 
         private void Awake()

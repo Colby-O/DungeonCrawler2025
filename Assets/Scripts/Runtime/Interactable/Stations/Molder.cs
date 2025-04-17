@@ -140,6 +140,16 @@ namespace DC2025
             }
         }
 
+        public override void ForceClose()
+        {
+             if (IsEnabled)
+            {
+                IsEnabled = false;
+                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                _view.SetMolder(null);
+            }
+        }
+
         public void StartMolder(float low, float high)
         {
             _low = low;

@@ -25,7 +25,7 @@ namespace DC2025
         {
             for (int i = 0; i < data.Count; i++)
             {
-                data[i] = _slots[i].Data;
+                data[i].Item = _slots[i].Data.Item;
             }
         }
 

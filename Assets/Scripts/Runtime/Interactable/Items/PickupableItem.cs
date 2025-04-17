@@ -1,6 +1,8 @@
 using DC2025.Utils;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace DC2025
@@ -9,7 +11,20 @@ namespace DC2025
     {
         public bool IsAdjancent { get; set; }
         public bool IsEntered { get; set; }
-        public Tile CurrentTile { get; set; }
+        public bool WasStateEnterChangedThisFrame { get; set; }
+        public bool WasStateAdjancentChangedThisFrame { get; set; }
+        public List<Tile> CurrentTile
+        {
+            get
+            {
+                if (_currentTiles == null)
+                {
+                    _currentTiles = new List<Tile>();
+                }
+
+                return _currentTiles;
+            }
+        }
 
         public bool HasCollider => false;
 
@@ -21,6 +36,8 @@ namespace DC2025
         [SerializeField, ReadOnly] private Vector3 _centerPos;
         [SerializeField, ReadOnly] private float _height;
         [SerializeField, ReadOnly] private bool _hasInited = false;
+
+        private List<Tile> _currentTiles;
 
         private void MoveItem()
         {
@@ -68,7 +85,7 @@ namespace DC2025
 
         public void Hide()
         {
-            CurrentTile?.RemoveInteractable(this);
+            foreach (Tile tile in CurrentTile.ToList()) tile?.RemoveInteractable(this);
             gameObject.SetActive(false);
         }
 
@@ -133,6 +150,12 @@ namespace DC2025
         private void Update() 
         {
             MoveItem();
+        }
+
+        private void LateUpdate()
+        {
+            WasStateEnterChangedThisFrame = false;
+            WasStateAdjancentChangedThisFrame = false;
         }
     }
 }

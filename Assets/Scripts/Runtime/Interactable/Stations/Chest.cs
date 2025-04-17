@@ -39,6 +39,16 @@ namespace DC2025
             }
         }
 
+        public override void ForceClose()
+        {
+            if (IsEnabled)
+            {
+                IsEnabled = false;
+                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                _view.FetchSlots(ref _slots);
+            }
+        }
+
         private void Start()
         {
             _view = GameManager.GetMonoSystem<IUIMonoSystem>().GetView<ChestView>();
