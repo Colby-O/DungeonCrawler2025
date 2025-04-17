@@ -55,7 +55,7 @@ namespace DC2025
 
         public virtual void OnPlayerAdjancentEnter() 
         {
-            if (DCGameManager.Player.NearbyStation == null) DCGameManager.Player.NearbyStation = this;
+            DCGameManager.Player.NearbyStation = this;
         }
 
         public virtual void OnPlayerAdjancentExit() 

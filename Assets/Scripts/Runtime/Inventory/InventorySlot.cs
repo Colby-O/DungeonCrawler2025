@@ -27,7 +27,7 @@ namespace DC2025
         private IInventoryMonoSystem _inventory;
 
         public SlotData Data { get; private set; }
-        public PickupableItem Item { get { return Data.Item; } set { Data.Item = value; } }
+        public PickupableItem Item { get { return (Data != null) ? Data.Item : null; } set { if (Data != null) Data.Item = value; } }
 
         public UnityEvent OnChange = new UnityEvent();
 
@@ -40,6 +40,11 @@ namespace DC2025
         {
             _disabled = state;
             _cover.SetActive(_disabled);
+        }
+
+        public void ClearData()
+        {
+            Data = null;
         }
 
         public bool HasItem() => Item != null;
@@ -96,6 +101,8 @@ namespace DC2025
                 ToggleDurability(false);
             }
         }
+
+        public void UpdateSlot(SlotData data) => UpdateSlot(data.Item);
 
         public void UpdateSlot(PickupableItem obj)
         {

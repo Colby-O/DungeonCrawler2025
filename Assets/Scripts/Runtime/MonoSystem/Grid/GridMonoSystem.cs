@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Unity.Collections;
+using static UnityEditor.PlayerSettings;
 
 namespace DC2025
 {
@@ -111,7 +112,7 @@ namespace DC2025
 			data.entity = entity;
 			data.loc = loc;
 
-			if (entity is Player) UpdateTiles(data.loc, true);
+			if (entity is Player) UpdateTiles(data.loc, data.entity as Player, true);
 
             if (_entities != null) _entities.Add(data);
 			else _entities = new List<EntityData> { data };
@@ -129,36 +130,53 @@ namespace DC2025
 			{
                 if (data.entity is Player)
                 {
-                    UpdateTiles(data.loc, false);
-                    UpdateTiles(loc, true);
+                    UpdateTiles(data.loc, data.entity as Player, false);
+                    UpdateTiles(loc, data.entity as Player, true);
                 }
                 data.loc = loc;
             }
 		}
 
-		private void UpdateTiles(Vector2Int loc, bool onEnter = true)
-		{
-			for (int i = -1; i <= 1; i++)
-			{
-				for (int j = -1; j <= 1; j++)
-				{
-					Vector2Int pos = new Vector2Int(loc.x + i, loc.y + j);
-					if (_tiles.ContainsKey(pos))
-					{
-						if (i == 0 && j == 0)
-						{
-							_tiles[pos].OnPlayerEnterRequest = onEnter;
-                        }
-						else
-						{
-							_tiles[pos].OnPlayerAdjancentRequest = onEnter;
-                        }
-					}
-				}
-			}
-		}
+		private void UpdateTiles(Vector2Int loc, Player player, bool onEnter = true)
+        {
+            Vector2Int forwardPos = loc + player.Facing().ToVector2Int();
 
-		private void RegisterTiles()
+            if (_tiles.ContainsKey(loc)) _tiles[loc].OnPlayerEnterRequest = onEnter;
+            if (_tiles.ContainsKey(forwardPos) && !_tiles[forwardPos].HasWallAt(player.Facing().Opposite(), true)) _tiles[forwardPos].OnPlayerAdjancentRequest = onEnter;
+
+            for (int i = -1; i <= 1; i++)
+            {
+                for (int j = -1; j <= 1; j++)
+                {
+                    Vector2Int pos = new Vector2Int(loc.x + i, loc.y + j);
+                    if (_tiles.ContainsKey(pos))
+                    {
+                        if (pos != loc && pos != forwardPos) _tiles[pos].OnPlayerAdjancentRequest = false;
+                    }
+                }
+            }
+            //Code for checking all tile Adjancent Check
+            //    for (int i = -1; i <= 1; i++)
+            //    {
+            //        for (int j = -1; j <= 1; j++)
+            //        {
+            //            Vector2Int pos = new Vector2Int(loc.x + i, loc.y + j);
+            //            if (_tiles.ContainsKey(pos))
+            //            {
+            //                if (i == 0 && j == 0)
+            //                {
+            //                    _tiles[pos].OnPlayerEnterRequest = onEnter;
+            //                }
+            //                else
+            //                {
+            //                    _tiles[pos].OnPlayerAdjancentRequest = onEnter;
+            //                }
+            //            }
+            //        }
+            //    }
+        }
+
+        private void RegisterTiles()
 		{
 			Tile[] tiles = FindObjectsByType<Tile>(FindObjectsSortMode.None);
 

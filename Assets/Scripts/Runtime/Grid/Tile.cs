@@ -40,9 +40,9 @@ namespace DC2025
             return hasCollider;
         }
 
-        public bool HasWallAt(Direction dir)
+        public bool HasWallAt(Direction dir, bool ignoreColliders = false)
 		{
-            if (HasItemWithCollider()) return true;
+            if (HasItemWithCollider() && !ignoreColliders) return true;
 
 			dir = dir.GetFacingDirection(-transform.rotation.eulerAngles.y);
 			if (_walls.ContainsKey(dir)) return _walls[dir];
