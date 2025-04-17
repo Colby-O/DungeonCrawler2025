@@ -100,6 +100,8 @@ namespace DC2025
         public abstract string GetDescription();
         public abstract string GetName();
 
+        public virtual Color GetColor() => Color.white;
+
         public virtual void OnPressedUp() { }
 
         public virtual void OnHover() { }
