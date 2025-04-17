@@ -13,9 +13,14 @@ namespace DC2025
 
     public enum HandleType
     {
-        Balanced,
+        Balanced=0,
         Quick,
         Lightweight,
+    }
+
+    public static class HandleTypeExt
+    {
+        public static int HandleCount() => System.Enum.GetNames(typeof(HandleType)).Length;
     }
     
     public class WeaponItem : MaterialItem
@@ -27,12 +32,12 @@ namespace DC2025
 
         public override string GetName()
         {
-            return string.Empty;
+            return $"{GetMaterial()} {handleType} {bladeType}";
         }
 
         public override string GetDescription()
         {
-            return string.Empty;
+            return $"A {GetMaterial()} {bladeType} with a {handleType} handle. Used to kill things.";
         }
 
         public override Sprite GetIcon()

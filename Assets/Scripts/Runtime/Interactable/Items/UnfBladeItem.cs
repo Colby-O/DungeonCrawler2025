@@ -2,23 +2,22 @@ using UnityEngine;
 
 namespace DC2025
 {
-    public class BladeItem : MaterialItem
+    public class UnfBladeItem : MaterialItem
     {
         public BladeType bladeType;
-        
-        public override string GetName()
+        public override Sprite GetIcon()
         {
-            return $"{GetMaterial()} {bladeType} Blade";
+            return Resources.Load<Sprite>($"Icons/UnfBlades/{bladeType}"); ;
         }
 
         public override string GetDescription()
         {
-            return $"A {GetMaterial()} {bladeType} blade. Needs a handle before use.";
+            return $"An unfinished {GetMaterial()} {bladeType} blade. Needs to be refined on an anvil.";
         }
 
-        public override Sprite GetIcon()
+        public override string GetName()
         {
-            return Resources.Load<Sprite>($"Icons/Blades/{bladeType}"); ;
+            return $"Unfinished {GetMaterial()} {bladeType} Blade";
         }
 
         public override void SetMaterial(MaterialType material)
@@ -29,7 +28,6 @@ namespace DC2025
                 mr.material.color = DCGameManager.settings.materialColors[_type];
             }
         }
-
         public override Color GetColor()
         {
             return DCGameManager.settings.materialColors[_type];

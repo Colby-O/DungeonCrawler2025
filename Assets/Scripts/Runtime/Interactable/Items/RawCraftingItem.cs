@@ -4,17 +4,16 @@ namespace DC2025
 {
     public class RawCraftingItem : MaterialItem
     {
-        [SerializeField] private ItemData data;
         [SerializeField] private MeshRenderer _mr;
 
         public override string GetName()
         {
-            return data.Name;
+            return $"{GetMaterial()} Rock";
         }
 
         public override string GetDescription()
         {
-            return data.Description;
+            return $"A rock of {GetMaterial()}, used for crafting weapons. Needs to be smelted in a furnace.";
         }
 
         public override Sprite GetIcon()

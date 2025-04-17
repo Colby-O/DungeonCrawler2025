@@ -12,8 +12,8 @@ namespace DC2025
             return Resources.Load<Sprite>($"Icons/Molds/{bladeType}"); ;
         }
 
-        public override string GetDescription() => "A mold for a blade.";
+        public override string GetDescription() => $"A mold for a {bladeType} blade. Pour molten material to make a blade.";
 
-        public override string GetName() => "Weapon Mold";
+        public override string GetName() => $"{bladeType} Mold";
     }
 }

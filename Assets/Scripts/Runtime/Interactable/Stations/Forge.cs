@@ -35,6 +35,8 @@ namespace DC2025
         private ParticleSystem.MainModule _psMain;
         private ParticleSystem.EmissionModule _psEmission;
 
+        private IChatWindowMonoSystem _chatMs;
+
         public override void Interact()
         {
             if (_view.IsStarted()) return;
@@ -105,7 +107,7 @@ namespace DC2025
 
                 if (_outOfRangeTime > _maxOutOfRangeTime)
                 {
-                    _view.RemoveStar();
+                    _view.RemoveStar(_temperture < _allowedRange.x);
                 }
             }
 
@@ -133,6 +135,7 @@ namespace DC2025
 
         private void Start()
         {
+            _chatMs = GameManager.GetMonoSystem<IChatWindowMonoSystem>();
             _view = GameManager.GetMonoSystem<IUIMonoSystem>().GetView<ForgeView>();
             _psMain = _particleSystem.main;
             _psEmission = _particleSystem.emission;

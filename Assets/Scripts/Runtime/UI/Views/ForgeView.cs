@@ -29,8 +29,9 @@ namespace DC2025
 		[SerializeField, ReadOnly] private int _currentRating = 4;
 
 		private GenericView _generic;
+        private IChatWindowMonoSystem _chatMs;
 
-		public bool IsStarted() => _isStarted;
+        public bool IsStarted() => _isStarted;
 		public void SetForge(Forge forge) => _currentForge = forge;
 
 		public void OnTempertureRangeChange(bool isInRange)
@@ -43,11 +44,14 @@ namespace DC2025
 			_timeProg.localScale = _timeProg.localScale.SetY(Mathf.Clamp01(prog));
 		}
 
-		public void RemoveStar()
+		public void RemoveStar(bool tooLow)
 		{
 			if (_currentRating <= 3) return;
 			_stars[_currentRating - 1].SetActive(false);
 			_currentRating -= 1;
+            string level = tooLow ? "low" : "high";
+            string effect = tooLow ? "solidified" : "burned";
+            _chatMs.Send($"The temperature got too {level} and the {GetMaterial()} {effect}.");
 		}
 
 		public void UpdateTemperture(float prog)
@@ -64,6 +68,7 @@ namespace DC2025
 
 		public void StartForge()
 		{
+            _chatMs.Send($"You start to melt down the {GetMaterial()} into a bucket.");
 			_isStarted = true;
 			_currentRating = 4;
 			_start.IsDisabled = true;
@@ -82,6 +87,8 @@ namespace DC2025
 		public void StopForge()
 		{
 			_isStarted = false;
+            
+            _chatMs.Send($"The {GetMaterial()} finished melting.");
 
 			CreateBucket();
 			ClearInputSlots();
@@ -141,7 +148,8 @@ namespace DC2025
 		}
 
 		public override void Init()
-		{
+        {
+            _chatMs = GameManager.GetMonoSystem<IChatWindowMonoSystem>();
 			_generic = GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>();
 			UpdateForgeState();
 			CheckForOutputDisable();
@@ -172,5 +180,10 @@ namespace DC2025
 			base.Hide();
 			_generic.ToggleInventory(false, true);
 		}
-	}
+
+        public MaterialType GetMaterial()
+        {
+            return (_input[0].Item as RawCraftingItem).GetMaterial();
+        }
+    }
 }

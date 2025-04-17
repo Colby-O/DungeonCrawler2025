@@ -31,6 +31,8 @@ namespace DC2025
         private int _currentRating = 4;
         private bool _tookStar = false;
         
+        private IChatWindowMonoSystem _chatMs;
+
         public bool IsStarted() => _isStarted;
         
         public void SetMolder(Molder m) => _molder = m;
@@ -38,11 +40,18 @@ namespace DC2025
         public MoldItem GetMold() => _input[1].Item as MoldItem;
         public BucketItem GetBucket() => _input[0].Item as BucketItem;
 
-        public void RemoveStar()
+        public void RemoveStar(bool tooLow)
         {
             if (_tookStar) return;
             _tookStar = true;
             _stars[--_currentRating].SetActive(false);
+            string cause = tooLow ? "cooled too much" : "is still too hot";
+            _chatMs.Send($"The molten {GetMaterial()} {cause}.");
+        }
+
+        private MaterialType GetMaterial()
+        {
+            return (_input[0].Item as BucketItem).GetMaterial();
         }
 
         public void SubscribeMoldChange(UnityEngine.Events.UnityAction func)
@@ -56,6 +65,7 @@ namespace DC2025
 
         public override void Init()
         {
+            _chatMs = GameManager.GetMonoSystem<IChatWindowMonoSystem>();
             float height = _tickTop.localPosition.y - _tickBottom.localPosition.y;
             _tickLowNrml = 1 - (_tickLow.localPosition.y - _tickBottom.localPosition.y) / height;
             _tickHighNrml = 1 - (_tickHigh.localPosition.y - _tickBottom.localPosition.y) / height;
@@ -94,6 +104,7 @@ namespace DC2025
         
         private void StartMolder()
         {
+            _chatMs.Send($"You prepare to dip the {GetMoldType()} mold with the molten {GetMaterial()} into water.");
             _tookStar = false;
             _isStarted = true;
             _currentRating = (_input[0].Item as BucketItem).GetRating();
@@ -112,8 +123,14 @@ namespace DC2025
             _molder.StartMolder(_tickLowNrml, _tickHighNrml);
         }
 
+        private BladeType GetMoldType()
+        {
+            return (_input[1].Item as MoldItem).bladeType;
+        }
+
         public void StopMolder()
         {
+            _chatMs.Send($"You peel the unfinished {GetMaterial()} {GetMoldType()} blade from the mold.");
             _isStarted = false;
 
             CreateBlade();
@@ -131,7 +148,7 @@ namespace DC2025
         {
             BucketItem bucket = _input[0].Item as BucketItem;
             MoldItem mold = _input[1].Item as MoldItem;
-            BladeItem blade = GameManager.GetMonoSystem<ISwordBuilderMonoSystem>().CreateBlade(mold.bladeType, bucket.GetMaterial(), _currentRating);
+            UnfBladeItem blade = GameManager.GetMonoSystem<ISwordBuilderMonoSystem>().CreateUnfBlade(mold.bladeType, bucket.GetMaterial(), _currentRating);
             _output.UpdateSlot(blade);
         }
         

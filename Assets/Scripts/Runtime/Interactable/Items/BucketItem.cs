@@ -8,12 +8,12 @@ namespace DC2025
 
         public override string GetName()
         {
-            return string.Empty;
+            return $"Molten {GetMaterial()}";
         }
 
         public override string GetDescription()
         {
-            return string.Empty;
+            return $"A bucket of molten {GetMaterial()}. Can be poured into a mold to make a blade.";
         }
 
         public override Sprite GetIcon()

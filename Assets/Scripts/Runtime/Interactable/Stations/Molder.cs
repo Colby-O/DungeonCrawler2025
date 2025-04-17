@@ -104,14 +104,14 @@ namespace DC2025
 
             if (_done && Time.time - _doneTime >= DCGameManager.settings.molderTimeToWin)
             {
-                if (!InRange()) _view.RemoveStar();
+                if (!InRange()) _view.RemoveStar(_temp <= _low);
                 _view.StopMolder();
             }
             else if (_lowering && !_done)
             {
                 _temp -= DCGameManager.settings.molderTempDropRate * Time.deltaTime;
                 if (_temp < 0) _temp = 0;
-                if (_temp < _low) _view.RemoveStar();
+                if (_temp < _low) _view.RemoveStar(true);
                 _view.SetTemperaturePosition(_temp);
                 if (_inRange != InRange())
                 {
