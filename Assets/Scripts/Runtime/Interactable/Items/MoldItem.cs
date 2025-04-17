@@ -8,7 +8,8 @@ namespace DC2025
         
         public override Sprite GetIcon()
         {
-            return null;
+            Debug.Log($"Icons/Molds/{bladeType}");
+            return Resources.Load<Sprite>($"Icons/Molds/{bladeType}"); ;
         }
 
         public override string GetDescription() => "A mold for a blade.";

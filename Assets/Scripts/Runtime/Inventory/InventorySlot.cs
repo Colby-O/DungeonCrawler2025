@@ -79,7 +79,7 @@ namespace DC2025
         public void Refresh()
         {
             _icon.sprite = Item.GetIcon();
-            _icon.color = Color.white;
+            _icon.color = Item.GetColor();
 
             if (Item is MaterialItem)
             {

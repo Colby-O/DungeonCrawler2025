@@ -37,7 +37,7 @@ namespace DC2025
             Item = obj;
             Item.Hide();
             _icon.sprite = Item.GetIcon();
-            _icon.color = Color.white;
+            _icon.color = Item.GetColor();
             
             _wasUpdatedThisFrame = true;
         }
