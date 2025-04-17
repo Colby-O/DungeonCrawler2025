@@ -16,6 +16,8 @@ namespace DC2025
         public float molderTimeToWin = 1.00f;
         public float moldMoveSpeed = 2.0f;
         public float forgeCookTime = 4;
+        public float anvilHammerShowHitTime = 1.0f;
+        public int anvilHammerCount = 4;
 
         public SerializableDictionary<MaterialType, Color> materialColors;
     }

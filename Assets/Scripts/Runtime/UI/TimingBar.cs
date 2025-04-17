@@ -31,9 +31,10 @@ namespace DC2025
         {
             if (!_stopped)
             {
-                _ball.Translate(new Vector3(Time.deltaTime * _speed * _dir, 0, 0));
-                if (_ball.anchoredPosition.x + _ball.rect.size.x >= _panel.anchoredPosition.x + _panel.rect.size.x) _dir = -1;
-                else if (_ball.anchoredPosition.x <= _panel.anchoredPosition.x) _dir = 1;
+                float inc = Time.deltaTime * _speed * _dir;
+                if (_ball.anchoredPosition.x + _ball.rect.size.x + inc >= _panel.anchoredPosition.x + _panel.rect.size.x) _dir = -1;
+                else if (_ball.anchoredPosition.x + inc <= _panel.anchoredPosition.x) _dir = 1;
+                _ball.Translate(new Vector3(inc, 0, 0));
             }
         }
 
