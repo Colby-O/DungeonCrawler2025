@@ -20,6 +20,7 @@ MonoBehaviour:
   enemyDistractedWaitTime: 5
   molderTempDropRate: 2
   molderTimeToWin: 1
+  moldMoveSpeed: 20
   forgeCookTime: 4
   materialColors:
     list:
