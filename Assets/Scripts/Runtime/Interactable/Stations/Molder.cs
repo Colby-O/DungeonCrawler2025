@@ -4,6 +4,7 @@ using PlazmaGames.Core;
 using PlazmaGames.UI;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.TextCore;
 
 namespace DC2025
 {
@@ -73,6 +74,7 @@ namespace DC2025
             {
                 Transform liquid = _currentMold.Find("Liquid");
                 liquid.gameObject.SetActive(true);
+                liquid.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", DCGameManager.settings.materialColors[_view.GetMaterial()]);
             }
         }
 
