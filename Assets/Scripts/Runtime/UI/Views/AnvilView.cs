@@ -106,6 +106,7 @@ namespace DC2025
 
         private void HitHammer()
         {
+            if (_timingBar.IsStopped()) return;
             if (_timingBar.Stop())
             {
                 _progress += 1;

@@ -1,5 +1,6 @@
 using PlazmaGames.UI;
 using System.Collections.Generic;
+using PlazmaGames.Core;
 using UnityEngine;
 
 namespace DC2025
@@ -12,6 +13,7 @@ namespace DC2025
         [SerializeField] private EventButton _brew;
 
         private Cauldron _currentCauldron;
+        private GenericView _generic;
 
         public void SetCauldron(Cauldron cauldron) => _currentCauldron = cauldron;
 
@@ -50,6 +52,7 @@ namespace DC2025
 
         public override void Init()
         {
+            _generic = GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>();
             _input.OnChange.AddListener(UpdateCauldranState);
             _output.OnChange.AddListener(UpdateCauldranState);
             _output.ToogleDisableState(true);
@@ -61,12 +64,14 @@ namespace DC2025
         {
             base.Show();
             DCGameManager.IsPaused = true;
+            _generic?.ToggleInventory(true, false);
         }
 
         public override void Hide()
         {
             base.Hide();
             DCGameManager.IsPaused = false;
+            _generic?.ToggleInventory(false, false);
         }
     }
 }

@@ -25,6 +25,7 @@ namespace DC2025
             _craftButton.onPointerDown.AddListener(Craft);
             _input.OnChange.AddListener(UpdateState);
             _output.OnChange.AddListener(CheckForOutputDisable);
+            CheckForOutputDisable();
             _nextHandle.onPointerDown.AddListener(NextHandle);
             _prevHandle.onPointerDown.AddListener(PrevHandle);
         }
