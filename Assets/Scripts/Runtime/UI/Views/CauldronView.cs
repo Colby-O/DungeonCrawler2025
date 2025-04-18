@@ -31,6 +31,8 @@ namespace DC2025
 
         private void CreatePotion()
         {
+            if (!CanBrew()) return;
+
             PotionItem potion = Instantiate(Resources.Load<PotionItem>("Prefabs/Items/PotionItem"));
             potion.SetMaterial((_input.Item as RawCraftingItem).GetMaterial());
             potion.SetRating(0);
@@ -55,6 +57,7 @@ namespace DC2025
             _generic = GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>();
             _input.OnChange.AddListener(UpdateCauldranState);
             _output.OnChange.AddListener(UpdateCauldranState);
+            UpdateCauldranState();
             _output.ToogleDisableState(true);
 
             _brew.onPointerDown.AddListener(Brew);

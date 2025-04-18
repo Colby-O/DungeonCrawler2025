@@ -156,6 +156,8 @@ namespace DC2025
                     if (Item is PotionItem)
                     {
                         (Item as PotionItem).Use();
+                        Item.Release();
+                        Clear();
                     }
                 }
             } 
