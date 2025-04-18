@@ -49,7 +49,7 @@ namespace DC2025
             _chatMs.Send($"The molten {GetMaterial()} {cause}.");
         }
 
-        private MaterialType GetMaterial()
+        public MaterialType GetMaterial()
         {
             return (_input[0].Item as BucketItem).GetMaterial();
         }
