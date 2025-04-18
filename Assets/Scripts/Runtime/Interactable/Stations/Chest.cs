@@ -26,16 +26,17 @@ namespace DC2025
         public override void Interact()
         {
             IsEnabled = !IsEnabled;
-
             if (IsEnabled)
             {
                 GameManager.GetMonoSystem<IUIMonoSystem>().Show<ChestView>();
                 _view.SetSlots(_slots);
+                _view.SetCurremtChest(this);
             }
             else
             {
-                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<ChestView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.FetchSlots(ref _slots);
+                _view.SetCurremtChest(null);
                 OnClose();
             }
         }
@@ -45,7 +46,7 @@ namespace DC2025
             if (IsEnabled)
             {
                 IsEnabled = false;
-                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<ChestView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.FetchSlots(ref _slots);
                 OnClose();
             }

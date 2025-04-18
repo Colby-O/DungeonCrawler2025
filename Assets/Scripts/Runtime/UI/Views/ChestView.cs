@@ -9,6 +9,10 @@ namespace DC2025
     {
         [SerializeField] private List<InventorySlot> _slots;
 
+        private Chest _currentChest = null;
+
+        public void SetCurremtChest(Chest chest) => _currentChest = chest;
+
         public void SetSlots(List<SlotData> data)
         {
             if (_slots == null) return;
@@ -44,6 +48,7 @@ namespace DC2025
         {
             base.Hide();
             DCGameManager.IsPaused = false;
+            if (_currentChest != null && _currentChest.IsEnabled) _currentChest.Interact();
         }
     }
 }

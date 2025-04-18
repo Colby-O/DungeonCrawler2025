@@ -51,7 +51,7 @@ namespace DC2025
             }
             else
             {
-                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<ForgeView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.SetForge(null);
                 OnClose();
             }
@@ -62,7 +62,7 @@ namespace DC2025
             if (IsEnabled)
             {
                 IsEnabled = false;
-                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<ForgeView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.SetForge(null);
                 OnClose();
             }

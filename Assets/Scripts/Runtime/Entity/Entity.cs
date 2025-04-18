@@ -262,7 +262,7 @@ namespace DC2025
 			Vector3 endPos = _gridMs.GridToWorld(newGridPos).SetY(transform.position.y);
 
 			if (
-				!_gridMs.CanMoveTo(_gridPos, action.GetDirection(_facing)) ||
+				!_gridMs.CanMoveTo(_gridPos, action.GetDirection(_facing), this is Player) ||
 				!_gridMs.CanMoveTo(newGridPos, action.GetDirection(_facing).Opposite())
 			)
 			{

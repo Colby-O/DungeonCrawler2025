@@ -137,7 +137,7 @@ namespace DC2025
             }
             else
             {
-                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<MolderView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.SetMolder(null);
                 OnClose();
             }
@@ -148,7 +148,7 @@ namespace DC2025
              if (IsEnabled)
             {
                 IsEnabled = false;
-                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<MolderView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.SetMolder(null);
                 OnClose();
             }

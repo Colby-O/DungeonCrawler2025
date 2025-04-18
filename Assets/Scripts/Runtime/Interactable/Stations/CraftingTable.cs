@@ -23,12 +23,12 @@ namespace DC2025
             if (IsEnabled)
             {
                 GameManager.GetMonoSystem<IUIMonoSystem>().Show<CraftingTableView>();
-                //_view.SetCraftingTable(this);
+                _view.SetTable(this);
             }
             else
             {
-                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
-                //_view.SetCraftingTable(null);
+                if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<CraftingTableView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                _view.SetTable(null);
                 OnClose();
             }
         }
@@ -38,8 +38,8 @@ namespace DC2025
             if (IsEnabled)
             {
                 IsEnabled = false;
-                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
-                //_view.SetCraftingTable(null);
+                if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<CraftingTableView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                _view.SetTable(null);
                 OnClose();
             }
         }

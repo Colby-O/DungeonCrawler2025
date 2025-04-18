@@ -69,19 +69,36 @@ namespace DC2025
             SetRawTurn(0);
         }
         
-        private void HandleInteract(InputAction.CallbackContext obj)
+        public void Attack()
         {
             if (_fightMs.InFight()) _fightMs.PlayerAttack();
         }
-        
-        private void HandleBlock(InputAction.CallbackContext obj)
+
+        public void Block()
         {
             if (_fightMs.InFight())
             {
                 _fightMs.PlayerBlock();
             }
         }
+
+        private void HandleInteract(InputAction.CallbackContext obj)
+        {
+            Attack();
+        }
         
+        private void HandleBlock(InputAction.CallbackContext obj)
+        {
+            Block();
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceAction2Highlighted(true);
+        }
+
+        private void HandleBlockCanceled(InputAction.CallbackContext obj)
+        {
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceAction2Highlighted(false);
+        }
+
+
         private void ProcessMovement()
         {
             if (_rawMovement.x > 0)
@@ -170,7 +187,7 @@ namespace DC2025
             
             _input.actions["Interact"].performed += HandleInteract;
             _input.actions["Block"].performed += HandleBlock;
-            
+            _input.actions["Block"].canceled += HandleBlockCanceled;
         }
 
         protected override void Start()

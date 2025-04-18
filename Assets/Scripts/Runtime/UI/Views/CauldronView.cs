@@ -75,6 +75,7 @@ namespace DC2025
             base.Hide();
             DCGameManager.IsPaused = false;
             _generic?.ToggleInventory(false, false);
+            if (_currentCauldron != null && _currentCauldron.IsEnabled) _currentCauldron.Interact();
         }
     }
 }

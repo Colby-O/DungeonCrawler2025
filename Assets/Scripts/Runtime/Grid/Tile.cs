@@ -43,13 +43,22 @@ namespace DC2025
             return hasCollider;
         }
 
-        public bool HasWallAt(Direction dir, bool ignoreColliders = false)
+        public bool HasWallAt(Direction dir, bool ignoreColliders = false, bool forceDoorOpen = false)
 		{
             if (HasItemWithCollider() && !ignoreColliders) return true;
 
 			dir = dir.GetFacingDirection(-transform.rotation.eulerAngles.y);
-			if ((_walls.ContainsKey(dir) && _walls[dir]) || (_blockages.ContainsKey(dir) && _blockages[dir] != null && !_blockages[dir].IsOpen)) return true;
-			return false;
+            if ((_walls.ContainsKey(dir) && _walls[dir]) || (_blockages.ContainsKey(dir) && _blockages[dir] != null && !_blockages[dir].IsOpen))
+            {
+                if (forceDoorOpen && _blockages.ContainsKey(dir) && _blockages[dir] != null && !_blockages[dir].IsLocked)
+                {
+                    _blockages[dir].Open();
+                }
+
+                return true;
+            }
+
+            return false;
 		}
 
         public void AddInteractable(IInteractable interactable)

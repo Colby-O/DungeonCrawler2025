@@ -179,6 +179,7 @@ namespace DC2025
 		{
 			base.Hide();
 			_generic.ToggleInventory(false, true);
+			if (_currentForge != null && _currentForge.IsEnabled) _currentForge.Interact();
 		}
 
         public MaterialType GetMaterial()

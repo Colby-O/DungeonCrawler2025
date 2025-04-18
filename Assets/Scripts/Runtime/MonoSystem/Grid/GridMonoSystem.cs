@@ -99,9 +99,9 @@ namespace DC2025
 			return new Vector3(gridPos.x * _tileSize.x, 0, gridPos.y * _tileSize.y);
 		}
 
-		public bool CanMoveTo(Vector2Int gridPos, Direction from)
+		public bool CanMoveTo(Vector2Int gridPos, Direction from, bool forceDoorsOpen = false)
 		{
-			if (_tiles.ContainsKey(gridPos)) return !_tiles[gridPos].HasWallAt(from);
+			if (_tiles.ContainsKey(gridPos)) return !_tiles[gridPos].HasWallAt(from, false, forceDoorsOpen);
 			return false;
 		}
 

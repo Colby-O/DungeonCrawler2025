@@ -18,6 +18,10 @@ namespace DC2025
         private GenericView _generic;
         private IChatWindowMonoSystem _chatMs;
 
+        private CraftingTable _currentTable;
+
+        public void SetTable(CraftingTable table) => _currentTable = table;
+
         public override void Init()
         {
             _chatMs = GameManager.GetMonoSystem<IChatWindowMonoSystem>();
@@ -87,6 +91,8 @@ namespace DC2025
         {
             base.Hide();
             _generic.ToggleInventory(false, true);
+
+            if (_currentTable != null && _currentTable.IsEnabled) _currentTable.Interact();
         }
     }
 }

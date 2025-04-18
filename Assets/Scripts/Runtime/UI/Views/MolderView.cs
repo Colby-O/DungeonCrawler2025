@@ -100,6 +100,8 @@ namespace DC2025
         {
             base.Hide();
             _generic.ToggleInventory(false, true);
+
+            if (_molder != null && _molder.IsEnabled) _molder.Interact(); 
         }
         
         private void StartMolder()

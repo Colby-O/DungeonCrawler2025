@@ -26,6 +26,7 @@ namespace DC2025
         public static bool IsPaused;
         public static Interactor Player;
         public static PlayerManager PlayerManager;
+        public static Player PlayerController;
 
         public static ItemDatabase ItemDB { get { return ((DCGameManager)GameManager.Instance)._itemDB; } }
 
@@ -66,6 +67,7 @@ namespace DC2025
         {
             Player = FindAnyObjectByType<Interactor>();
             PlayerManager = Player.GetComponent<PlayerManager>();
+            PlayerController = Player.GetComponent<Player>();
         }
     }
 }

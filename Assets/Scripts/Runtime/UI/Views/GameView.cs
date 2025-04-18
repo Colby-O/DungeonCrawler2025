@@ -13,7 +13,8 @@ namespace DC2025
     {
         [Header("Movement Buttons")]
         [SerializeField] private List<EventButton> _moveButtons;
-
+        [SerializeField] private EventButton _action1;
+        [SerializeField] private EventButton _action2;
         private Player _player;
 
         public void ForceHighlighted(Action action, bool isHelighted)
@@ -50,6 +51,27 @@ namespace DC2025
             }
         }
 
+        public void ForceAction1Highlighted(bool isHelighted)
+        {
+            _action1.ForceHighlightedt(isHelighted);
+        }
+
+        public void ForceAction2Highlighted(bool isHelighted)
+        {
+            _action2.ForceHighlightedt(isHelighted);
+        }
+
+        private void ProcessAction1()
+        {
+            DCGameManager.Player.Interact();
+            DCGameManager.PlayerController.Attack();
+        }
+
+        private void ProcessAction2()
+        {
+            DCGameManager.PlayerController.Block();
+        }
+
         public override void Init()
         {
             if (_moveButtons != null) 
@@ -61,6 +83,9 @@ namespace DC2025
                     _moveButtons[i].onPointerUp.AddListener(() => ApplyAction(action, false));
                 }
             }
+
+            _action1.onPointerDown.AddListener(ProcessAction1);
+            _action2.onPointerDown.AddListener(ProcessAction2);
         }
 
         public override void Show()

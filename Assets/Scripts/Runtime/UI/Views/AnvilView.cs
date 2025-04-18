@@ -184,6 +184,7 @@ namespace DC2025
         {
             base.Hide();
             _generic.ToggleInventory(false, true);
+            if (_anvil != null && _anvil.IsEnabled) _anvil.Interact();
         }
     }
 }

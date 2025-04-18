@@ -4,6 +4,7 @@ using PlazmaGames.Core;
 using PlazmaGames.UI;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 namespace DC2025
@@ -137,6 +138,14 @@ namespace DC2025
         private void Update() 
         {
             Scroll(_scrollDir);
+
+            if (Keyboard.current.escapeKey.wasPressedThisFrame)
+            {
+                if (!GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<GameView>())
+                {
+                    GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+                }
+            }
         }
     }
 }

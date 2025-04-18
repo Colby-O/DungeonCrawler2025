@@ -1,5 +1,6 @@
 using PlazmaGames.Attribute;
 using PlazmaGames.Core;
+using PlazmaGames.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -38,10 +39,21 @@ namespace DC2025
             return (_head.transform.TransformPoint(_cameraPos), _head.transform.rotation * _cameraRot);
         }
 
-        private void HandleInteractAction(InputAction.CallbackContext e)
+        public void Interact()
         {
             if (NearbyStation != null) NearbyStation.Interact();
             if (NearbyBlockage != null) NearbyBlockage.Interact();
+        }
+
+        private void HandleInteractAction(InputAction.CallbackContext e)
+        {
+            Interact();
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceAction1Highlighted(true);
+        }
+
+        private void HandleInteractCancel(InputAction.CallbackContext e)
+        {
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GameView>().ForceAction1Highlighted(false);
         }
 
         private void Awake()
@@ -50,6 +62,7 @@ namespace DC2025
             if (_camera == null) _camera = Camera.main;
 
             _input.actions["Interact"].performed += HandleInteractAction;
+            _input.actions["Interact"].canceled += HandleInteractCancel;
 
             _cameraPos = _camera.transform.localPosition;
             _cameraRot = _camera.transform.rotation;
