@@ -131,6 +131,7 @@ namespace DC2025
 
         public virtual void OnPressedDown()
         {
+            if (GameManager.GetMonoSystem<IFightMonoSystem>().InFight()) return;
             GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.pickupSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             PickupItem();
         }

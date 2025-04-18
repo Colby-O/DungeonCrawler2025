@@ -1,6 +1,7 @@
 using DC2025.Utils;
 using NUnit.Framework.Interfaces;
 using PlazmaGames.Attribute;
+using PlazmaGames.Core;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -53,6 +54,7 @@ namespace DC2025
 
         private void Drop()
         {
+            if (GameManager.GetMonoSystem<IFightMonoSystem>().InFight()) return;
             Debug.Log("Dropping Itewm");
             Item.Drop();
             Clear();
