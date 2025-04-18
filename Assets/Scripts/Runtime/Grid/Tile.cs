@@ -27,6 +27,7 @@ namespace DC2025
 
         private bool _lastEnterState = false;
         private bool _lastAdjancentState = false;
+        private bool _distraction = false;
 
         public bool HasInteractable() => _interactables != null && _interactables.Count > 0;
         public bool HasItemWithCollider()
@@ -164,7 +165,14 @@ namespace DC2025
         {
             _globalPosition = transform.position;
             _enemySeenTimer -= Time.fixedDeltaTime * 5f;
-            _highlight.material.SetColor(EmissionColor, Color.Lerp(Color.black, DCGameManager.settings.enemyVisionHighlightColor, _enemySeenTimer));
+            if (_distraction)
+            {
+                _highlight.material.SetColor(EmissionColor,  DCGameManager.settings.distractionHighlightColor);
+            }
+            else
+            {
+                _highlight.material.SetColor(EmissionColor, Color.Lerp(Color.black, DCGameManager.settings.enemyVisionHighlightColor, _enemySeenTimer));
+            }
         }
 
         private void Update()
@@ -190,5 +198,13 @@ namespace DC2025
             _enemySeenTimer = 1;
         }
 
+        public void UnsetDistraction()
+        {
+            _distraction = false;
+        }
+        public void SetDistraction()
+        {
+            _distraction = true;
+        }
     }
 }

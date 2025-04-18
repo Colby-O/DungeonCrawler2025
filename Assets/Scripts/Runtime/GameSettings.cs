@@ -7,6 +7,7 @@ namespace DC2025
     public class GameSettings : ScriptableObject
     {
         [ColorUsage(true, true)] public Color enemyVisionHighlightColor;
+        [ColorUsage(true, true)] public Color distractionHighlightColor;
         public int playerAttackStamina = 10;
         public int playerAttackFailStamina = 20;
         public int playerBlockStamina = 10;
@@ -18,6 +19,7 @@ namespace DC2025
         public float forgeCookTime = 4;
         public float anvilHammerShowHitTime = 1.0f;
         public int anvilHammerCount = 4;
+        public SerializableDictionary<MaterialType, float> durabilityAmmounts;
 
         public SerializableDictionary<MaterialType, Color> materialColors;
 

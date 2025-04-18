@@ -208,23 +208,8 @@ namespace DC2025
             }
             else
             {
-                WeaponItem weapon = item as WeaponItem;
-                _sword.SetModel(weapon.transform.Find("Model"));
+                _sword.SetModel(item as WeaponItem);
             }
-        }
-
-        protected override void Update()
-        {
-            base.Update();
-            do
-            {
-                if (!Input.GetKeyDown(KeyCode.T)) break;
-                Entity entity = _gridMs.GetClosestEntity(GridPosition(), e => e is Enemy);
-                if (!entity) break;
-                Enemy enemy = entity as Enemy;
-                Debug.Log("DISTRACT");
-                enemy.Distraction(GridPosition());
-            } while (false);
         }
 
         public void DoAttackAnimation()

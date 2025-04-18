@@ -157,7 +157,7 @@ namespace DC2025
 		[SerializeField,] private float _syncInterval;
 		[SerializeField, ReadOnly] private float _timeSinceLastSync;
 
-        private IGridMonoSystem _gridMs;
+        protected IGridMonoSystem _gridMs;
         
         private bool _middleSynced = true;
         private Vector3 _moveFrom;

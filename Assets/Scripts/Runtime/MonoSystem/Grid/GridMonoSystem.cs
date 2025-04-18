@@ -81,6 +81,21 @@ namespace DC2025
 			}
 		}
 
+        public void UnsetTileDistraction(Vector2Int pos)
+        {
+			if (_tiles.ContainsKey(pos))
+			{
+				_tiles[pos].UnsetDistraction();
+			}
+        }
+		public void SetTileDistraction(Vector2Int pos)
+		{
+			if (_tiles.ContainsKey(pos))
+			{
+				_tiles[pos].SetDistraction();
+			}
+		}
+
 		public void RemoveEntity(Entity entity)
 		{
 			int idx = _entities.FindIndex(e => e.entity == entity);

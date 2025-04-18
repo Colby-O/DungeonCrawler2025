@@ -15,9 +15,16 @@ namespace DC2025
         private Transform _blockPosition;
         [SerializeField] private List<Transform> _swingPositions;
         public SwordStats stats = new SwordStats();
+        private WeaponItem _item = null;
 
         public bool HasSword() => _model;
-        
+
+        public float Durability() => _item ? _item.GetDurability() : 0;
+        public void TakeDurability()
+        {
+            if (_item) _item.TakeDurability();
+        }
+
         public void Raise()
         {
             if (!HasSword()) return;
@@ -95,19 +102,21 @@ namespace DC2025
             }
         }
 
-        public void SetModel(Transform model)
+        public void SetModel(WeaponItem weapon)
         {
-            if (!model)
+            if (!weapon)
             {
                 if (HasSword()) Destroy(_model.gameObject);
                 _model = null;
+                _item = null;
+                return;
             }
-            else
-            {
-                if (HasSword()) Destroy(_model.gameObject);
-                _model = Instantiate(model.gameObject, _swordObject).transform;
-                Lower();
-            }
+            
+            Transform model = weapon.transform.Find("Model");
+            _item = weapon;
+            if (HasSword()) Destroy(_model.gameObject);
+            _model = Instantiate(model.gameObject, _swordObject).transform;
+            Lower();
         }
     }
 }

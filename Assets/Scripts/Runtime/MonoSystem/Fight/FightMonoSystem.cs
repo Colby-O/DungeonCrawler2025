@@ -239,6 +239,7 @@ namespace DC2025
                 _player.manager.UseStamina(_player.Sword().stats.ApplyStamina(DCGameManager.settings.playerAttackStamina));
                 _playerAttackBlocked = false;
             }
+            _player.Sword().TakeDurability();
             _player.DoAttackAnimation();
         }
 
@@ -289,6 +290,7 @@ namespace DC2025
 
         private void EnemyDie()
         {
+            _enemy.OnKilled.Invoke();
             _chatMs.Send("The enemy died!");
             _gridMs.RemoveEntity(_enemy);
             _enemy.DisableHealthBar();

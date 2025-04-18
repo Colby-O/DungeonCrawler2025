@@ -1,3 +1,4 @@
+using PlazmaGames.Core;
 using UnityEngine;
 
 namespace DC2025
@@ -48,6 +49,17 @@ namespace DC2025
         public override void SetMaterial(MaterialType material)
         {
 
+        }
+
+        public void TakeDurability()
+        {
+            _durability -= DCGameManager.settings.durabilityAmmounts[GetMaterial()];
+            if (_durability <= 0)
+            {
+                _durability = 0;
+            }
+
+            GameManager.GetMonoSystem<IInventoryMonoSystem>().GetHandSlot(SlotType.Left).Refresh();
         }
 
         public float GetDurability()

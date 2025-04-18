@@ -1,9 +1,12 @@
+using System;
 using DC2025.Utils;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DC2025
 {
@@ -39,6 +42,9 @@ namespace DC2025
 
         private List<Tile> _currentTiles;
 
+        public UnityEvent OnPickup = new UnityEvent();
+        public UnityEvent OnDrop = new UnityEvent();
+
         private void MoveItem()
         {
             if (IsEntered)
@@ -51,10 +57,14 @@ namespace DC2025
             }
         }
 
+        protected virtual bool CanPickup() => true;
+
         private void PickupItem()
         {
             if (_inventory.GetMouseSlot().HasItem()) return;
+            if (!CanPickup()) return;
 
+            OnPickup.Invoke();
             _inventory.GetMouseSlot().UpdateSlot(this);
             Hide();
         }
@@ -81,12 +91,19 @@ namespace DC2025
                 IsEntered = false;
                 Recenter();
             }
+            MoveItem();
+            OnDrop.Invoke();
         }
 
         public void Hide()
         {
             foreach (Tile tile in CurrentTile.ToList()) tile?.RemoveInteractable(this);
             gameObject.SetActive(false);
+        }
+
+        private void OnDestroy()
+        {
+            Hide();
         }
 
         public void ForceInit()
@@ -142,7 +159,7 @@ namespace DC2025
             Recenter();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             ForceInit();
         }

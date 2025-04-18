@@ -27,7 +27,7 @@ Transform:
   m_GameObject: {fileID: 5836293561266711361}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.2, z: 2}
+  m_LocalPosition: {x: 0, y: 0.146, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -50,9 +50,14 @@ MonoBehaviour:
   _centerPos: {x: 0, y: 0, z: 0}
   _height: 0
   _hasInited: 0
+  OnPickup:
+    m_PersistentCalls:
+      m_Calls: []
+  OnDrop:
+    m_PersistentCalls:
+      m_Calls: []
   _type: 3
   _rating: 0
-  data: {fileID: 11400000, guid: 4134623b049dbeb48a918f37740d790f, type: 2}
   _mr: {fileID: 4084764493378868111}
 --- !u!65 &3070190465774564083
 BoxCollider:

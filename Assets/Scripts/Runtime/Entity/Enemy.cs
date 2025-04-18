@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using DC2025.Utils;
 using PlazmaGames.Core;
+using UnityEngine.Events;
 
 namespace DC2025
 {
@@ -20,6 +21,7 @@ namespace DC2025
         [SerializeField] private float _attackHintTime = 0.5f;
         [SerializeField] private float _attackAniTime = 0.25f;
         [SerializeField] private float _blockChance = 0.1f;
+        [SerializeField] private MaterialType _materialType = MaterialType.Bronze;
 
         private Transform _healthBar;
         private Transform _healthBarBg;
@@ -29,6 +31,7 @@ namespace DC2025
         private Direction _saveDirection;
         private PathDirector _pathDirector;
         [SerializeField] private int _attackDamage = 20;
+        public UnityEvent OnKilled = new UnityEvent();
 
         public Sword Sword() => _sword;
         public float AttackHintTime() => _attackHintTime;
@@ -40,6 +43,7 @@ namespace DC2025
         protected override void Start()
         {
             base.Start();
+            OnKilled.AddListener(HandleKilled);
             _sword = GetComponentInChildren<Sword>();
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
             _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
@@ -49,6 +53,12 @@ namespace DC2025
             DisableHealthBar();
 
             SetNormalPath();
+        }
+
+        private void HandleKilled()
+        {
+            Transform drop = Instantiate(Resources.Load<GameObject>($"Prefabs/Items/Specfic/Rock{_materialType}")).transform;
+            drop.position = new Vector3(transform.position.x, drop.position.y, transform.position.z);
         }
 
         private void SetNormalPath()
