@@ -1,5 +1,6 @@
 using DC2025.Utils;
 using PlazmaGames.Attribute;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using System.Collections;
@@ -99,10 +100,15 @@ namespace DC2025
 
             if (inventory.GetMouseSlot().HasItem())
             {
-                if (inventory.AddItemToInventory(inventory.GetMouseSlot().Item)) inventory.GetMouseSlot().Clear();
+                if (inventory.AddItemToInventory(inventory.GetMouseSlot().Item))
+                {
+                    GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.uiClickSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
+                    inventory.GetMouseSlot().Clear();
+                }
             }
             else
             {
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.zipperSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
                 ToggleInventory(true, true);
             }
         }
@@ -135,6 +141,7 @@ namespace DC2025
 
             ToggleInventory(false);
             _openInv.onPointerDown.AddListener(OpenInventory);
+            _openInv.ToggleSound(false);
             _backFromInv.onPointerDown.AddListener(() => ToggleInventory(false, true));
             _backFromStation.onPointerDown.AddListener(CloseStation);
 

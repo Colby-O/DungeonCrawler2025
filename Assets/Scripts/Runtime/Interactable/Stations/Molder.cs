@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using PlazmaGames.Attribute;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using Unity.VisualScripting;
@@ -29,6 +30,7 @@ namespace DC2025
 
         public void Lower()
         {
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.dipInWaterSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             _lowering = true;   
             _moldAniTargetY = -0.2f;
         }
@@ -36,6 +38,7 @@ namespace DC2025
         public void Raise()
         {
             if (_done) return;
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.takeOutOfWaterSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             _done = true;
             _doneTime = Time.time;
             _moldAniTargetY = 0;

@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: GameSettings
   m_EditorClassIdentifier: 
   enemyVisionHighlightColor: {r: 6.3715596, g: 0, b: 0, a: 0}
+  distractionHighlightColor: {r: 0, g: 0.4604416, b: 8, a: 0}
   playerAttackStamina: 10
   playerAttackFailStamina: 20
   playerBlockStamina: 10
@@ -24,6 +25,17 @@ MonoBehaviour:
   forgeCookTime: 4
   anvilHammerShowHitTime: 1
   anvilHammerCount: 4
+  durabilityAmmounts:
+    list:
+    - Key: 0
+      Value: 0.05
+    - Key: 1
+      Value: 0.03333334
+    - Key: 2
+      Value: 0.025
+    - Key: 3
+      Value: 0.02
+    keyCollision: 0
   materialColors:
     list:
     - Key: 0
@@ -52,3 +64,37 @@ MonoBehaviour:
   strengthPotionTime: 20
   foresightAmount: 0.5
   foresightPotionTime: 20
+  entityStepSounds:
+  - {fileID: 8300000, guid: 3624df818199c3f42b7e213eec98e8f5, type: 3}
+  - {fileID: 8300000, guid: 1a53727f3bb637a4f8ba89e5b1a2f31f, type: 3}
+  - {fileID: 8300000, guid: dcf19d69c3b64e845962790de14f39d3, type: 3}
+  - {fileID: 8300000, guid: 2cbb32ead5806274e9a513176bfb72f1, type: 3}
+  - {fileID: 8300000, guid: a71a049986695704fbdfeda193572517, type: 3}
+  - {fileID: 8300000, guid: f5391beabab7a6a45b6361fd2f862cdb, type: 3}
+  - {fileID: 8300000, guid: c793c7805423fa44481bd49a80f9cef8, type: 3}
+  - {fileID: 8300000, guid: 275ec236f8652a44e8db499b2def53db, type: 3}
+  - {fileID: 8300000, guid: b4eaeca3dfad7354ba43be2984981d70, type: 3}
+  - {fileID: 8300000, guid: fa44d2722e422104888b5fadd9fe442d, type: 3}
+  - {fileID: 8300000, guid: e068e763d25f2c146bef7680aa7563c4, type: 3}
+  - {fileID: 8300000, guid: e49665f455941124caf9815ed88dfa14, type: 3}
+  - {fileID: 8300000, guid: fd710d9e1b1c7324983c1322503acd98, type: 3}
+  - {fileID: 8300000, guid: 6257f0c607bf82a40bed6900673787b5, type: 3}
+  swordSound: {fileID: 8300000, guid: ae4aaa6a0e5940b44a5425ad7f6ad607, type: 3}
+  blockSound: {fileID: 8300000, guid: 237b62ea13eb0b1498530987a040e85f, type: 3}
+  openDoorSound: {fileID: 8300000, guid: 2a520fccd9040b84e8a1f4ac9b5780cf, type: 3}
+  closeDoorSound: {fileID: 8300000, guid: 0579c5ed3ac430543a8af378a951d558, type: 3}
+  openChestSound: {fileID: 8300000, guid: 3ebd6feb52fbc1645985362945013722, type: 3}
+  closeChestSound: {fileID: 8300000, guid: 4faddef5a1be3634eb920264bf4a4e8d, type: 3}
+  fanFireSound: {fileID: 8300000, guid: 5d82747bef0c87b4f8cb44273676e068, type: 3}
+  dipInWaterSound: {fileID: 8300000, guid: 9c79c3050deeede4b908d5f3f27287cf, type: 3}
+  takeOutOfWaterSound: {fileID: 8300000, guid: e83d0f667e4269146b8e2463a941378b, type: 3}
+  hitSounds:
+  - {fileID: 8300000, guid: 8a1110dfef6fa00488ffb2833f7fc42d, type: 3}
+  - {fileID: 8300000, guid: 92e0a46bfed5342439e0fe9867778c8e, type: 3}
+  - {fileID: 8300000, guid: 8d78c57733c490e47b39efc20391075d, type: 3}
+  craftSound: {fileID: 8300000, guid: 009648e97d57e1d4294b98325a3ef774, type: 3}
+  pickupSound: {fileID: 8300000, guid: eeb5382c58044cf4997c873f2378d1a4, type: 3}
+  dropSound: {fileID: 8300000, guid: 26c88d03fbcb22647aba14de3c8c71c9, type: 3}
+  uiClickSound: {fileID: 8300000, guid: eda40b14efbed3844aa98da310cb873e, type: 3}
+  zipperSound: {fileID: 8300000, guid: 8cbffc0f832cea445b9e3f1dd159d08b, type: 3}
+  potionSound: {fileID: 8300000, guid: 52b1f5f41fcc2df41947a6cac62b9405, type: 3}

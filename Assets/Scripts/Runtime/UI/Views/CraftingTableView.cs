@@ -1,3 +1,4 @@
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using UnityEngine;
@@ -65,6 +66,7 @@ namespace DC2025
         private void Craft()
         {
             if (!CanCraft()) return;
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.craftSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             _chatMs.Send($"You insert the {GetMaterial()} {GetBlade()} blade into the {GetHandle()} handle forming a complete weapon.");
             BladeItem blade = _input.Item as BladeItem;
             WeaponItem weapon = GameManager.GetMonoSystem<ISwordBuilderMonoSystem>().CreateSword(blade.bladeType, HandleType.Balanced, blade.GetMaterial(), blade.GetRating());

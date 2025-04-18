@@ -1,4 +1,5 @@
 using PlazmaGames.Attribute;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using UnityEngine;
@@ -124,6 +125,7 @@ namespace DC2025
 
         public void FanFlame()
         {
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.fanFireSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             _vel = _fanForce;
         }
 

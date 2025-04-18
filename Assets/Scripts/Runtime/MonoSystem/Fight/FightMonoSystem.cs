@@ -1,3 +1,4 @@
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using UnityEngine;
 
@@ -199,6 +200,7 @@ namespace DC2025
         {
             if (_enemyAttackBlocked)
             {
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.blockSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
                 _chatMs.Send("You block the enemy's attack.");
                 _player.Sword().Lower();
             }
@@ -231,6 +233,7 @@ namespace DC2025
             if (_player.IsAttacking() || _enemyAttackBlocked || _player.manager.GetStamina() < _player.Sword().stats.ApplyStamina(DCGameManager.settings.playerAttackStamina)) return;
             if (_enemyBlockCountdown > 0)
             {
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.blockSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
                 _player.manager.UseStamina(_player.Sword().stats.ApplyStamina(DCGameManager.settings.playerAttackFailStamina));
                 _playerAttackBlocked = true;
             }

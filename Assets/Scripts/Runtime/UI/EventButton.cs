@@ -1,4 +1,6 @@
 using PlazmaGames.Attribute;
+using PlazmaGames.Audio;
+using PlazmaGames.Core;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -11,6 +13,7 @@ namespace DC2025
         public UnityEvent onPointerUp = new UnityEvent();
         public UnityEvent onPointerDown = new UnityEvent();
 
+        [SerializeField] private bool _playerSound = true;
         [SerializeField, ReadOnly] private bool _isDisabled = false;
 
         public bool IsDisabled { 
@@ -26,6 +29,8 @@ namespace DC2025
         }
 
         public bool IsPointerUsed { get; set; }
+
+        public void ToggleSound(bool state) => _playerSound = state;
 
         public void ForceHighlightedt(bool state)
         {
@@ -45,6 +50,7 @@ namespace DC2025
         {
             if (IsDisabled) return;
 
+            if (_playerSound) GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.uiClickSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             IsPointerUsed = true;
             base.OnPointerDown(eventData);
             onPointerDown.Invoke();

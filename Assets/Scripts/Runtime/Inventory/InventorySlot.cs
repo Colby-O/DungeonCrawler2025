@@ -1,4 +1,5 @@
 using DC2025.Utils;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using System.Collections.Generic;
 using UnityEngine;
@@ -109,6 +110,7 @@ namespace DC2025
 
         public void UpdateSlot(PickupableItem obj)
         {
+            Debug.Log(transform.name);
             Item = obj;
             Item.Hide();
             Refresh();
@@ -117,6 +119,7 @@ namespace DC2025
 
         public void Clear()
         {
+            Debug.Log("Here!");
             Item = null;
             _icon.sprite = null;
             _icon.color = Color.clear;
@@ -167,6 +170,8 @@ namespace DC2025
             } 
             else if (eventData.button == PointerEventData.InputButton.Left)
             {
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.uiClickSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
+
                 if (_inventory.GetMouseSlot().HasItem())
                 {
                     if (Item == null)

@@ -1,4 +1,5 @@
 using PlazmaGames.Attribute;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.Core.Utils;
 using PlazmaGames.UI;
@@ -27,12 +28,14 @@ namespace DC2025
             IsEnabled = !IsEnabled;
             if (IsEnabled)
             {
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.openChestSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
                 GameManager.GetMonoSystem<IUIMonoSystem>().Show<ChestView>();
                 _view.SetSlots(_slots);
                 _view.SetCurremtChest(this);
             }
             else
             {
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.closeChestSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
                 if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<ChestView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.FetchSlots(ref _slots);
                 _view.SetCurremtChest(null);
@@ -45,6 +48,7 @@ namespace DC2025
             if (IsEnabled)
             {
                 IsEnabled = false;
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.closeChestSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
                 if (GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<ChestView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.FetchSlots(ref _slots);
                 OnClose();
