@@ -1,4 +1,5 @@
 using PlazmaGames.Animation;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using UnityEngine;
@@ -17,6 +18,7 @@ namespace DC2025
         [SerializeField] private ChatWindowMonoSystem _chatSystem;
         [SerializeField] private InventoryMonoSystem _inventorySystem;
         [SerializeField] private SwordBuilderMonoSystem _swordBuilderSystem;
+        [SerializeField] private AudioMonoSystem _audioSystem;
 
         [Header("Databases")]
         [SerializeField] private ItemDatabase _itemDB;
@@ -39,6 +41,7 @@ namespace DC2025
             AddMonoSystem<ChatWindowMonoSystem, IChatWindowMonoSystem>(_chatSystem);
             AddMonoSystem<InventoryMonoSystem, IInventoryMonoSystem>(_inventorySystem);
             AddMonoSystem<SwordBuilderMonoSystem, ISwordBuilderMonoSystem>(_swordBuilderSystem);
+            AddMonoSystem<AudioMonoSystem, IAudioMonoSystem>(_audioSystem);
         }
 
         public override string GetApplicationName()

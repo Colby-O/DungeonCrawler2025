@@ -1,3 +1,4 @@
+using PlazmaGames.Core;
 using PlazmaGames.Core.Debugging;
 using PlazmaGames.UI;
 using System.Collections.Generic;
@@ -42,12 +43,14 @@ namespace DC2025
         {
             base.Show();
             DCGameManager.IsPaused = true;
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().ToggleInventory(true, false);
         }
 
         public override void Hide()
         {
             base.Hide();
             DCGameManager.IsPaused = false;
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().ToggleInventory(false, true);
             if (_currentChest != null && _currentChest.IsEnabled) _currentChest.Interact();
         }
     }

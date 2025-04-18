@@ -33,9 +33,11 @@ namespace DC2025
         [SerializeField] private GameObject _headerSecondary;
         [SerializeField] private EventButton _openInv;
         [SerializeField] private EventButton _backFromInv;
+        [SerializeField] private EventButton _backFromStation;
 
         [Header("Stats")]
         [SerializeField] private GameObject _stats;
+        [SerializeField] private EventButton _pause;
 
         private PlayerManager _playerManager;
 
@@ -105,6 +107,19 @@ namespace DC2025
             }
         }
 
+        private void CloseStation()
+        {
+            if (!GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<GameView>() && !GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<MainMenuView>())
+            {
+                GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
+            }
+        }
+
+        private void Pause()
+        {
+            GameManager.GetMonoSystem<IUIMonoSystem>().Show<PauseMenuView>();
+        }
+
         public override void Init()
         {
             _scrollDown.onPointerDown.AddListener(() => _scrollDir = -1);
@@ -121,6 +136,9 @@ namespace DC2025
             ToggleInventory(false);
             _openInv.onPointerDown.AddListener(OpenInventory);
             _backFromInv.onPointerDown.AddListener(() => ToggleInventory(false, true));
+            _backFromStation.onPointerDown.AddListener(CloseStation);
+
+            _pause.onPointerDown.AddListener(Pause);
 
         }
 
@@ -141,10 +159,7 @@ namespace DC2025
 
             if (Keyboard.current.escapeKey.wasPressedThisFrame)
             {
-                if (!GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<GameView>())
-                {
-                    GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
-                }
+                CloseStation();
             }
         }
     }
