@@ -18,6 +18,7 @@ namespace DC2025
         [SerializeField] private GameObject _durablityContainer;
         [SerializeField] private RectTransform _durablityProgress;
         [SerializeField] private GameObject _cover;
+        [SerializeField] private GameObject _hint;
 
         [Header("Infomaton")]
         [SerializeField] SlotType _type;
@@ -81,6 +82,8 @@ namespace DC2025
             _icon.sprite = Item.GetIcon();
             _icon.color = Item.GetColor();
 
+            if (_hint != null) _hint.SetActive(false);
+
             if (Item is MaterialItem)
             {
                 SetStarSlots((Item as MaterialItem).GetRating());
@@ -117,6 +120,7 @@ namespace DC2025
             Item = null;
             _icon.sprite = null;
             _icon.color = Color.clear;
+            if (_hint != null) _hint.SetActive(true);
             ResetRating();
             SetDurability(0);
             ToggleDurability(false);
