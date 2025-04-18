@@ -1,3 +1,4 @@
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.Runtime.DataStructures;
 using UnityEngine;
@@ -65,6 +66,8 @@ namespace DC2025
 
         public void Use()
         {
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.potionSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
+
             PotionType type = DCGameManager.settings.potionMaterialConverter[_type];
 
             if (type == PotionType.Health)

@@ -4,6 +4,7 @@ using UnityEngine;
 using PlazmaGames.Animation;
 using PlazmaGames.Core;
 using Unity.VisualScripting;
+using PlazmaGames.Audio;
 
 namespace DC2025
 {
@@ -39,6 +40,9 @@ namespace DC2025
         public void Swing()
         {
             if (!HasSword()) return;
+
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.swordSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
+
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                 this,
                 this.stats.speed,
@@ -67,6 +71,7 @@ namespace DC2025
         public void Stumble()
         {
             if (!HasSword()) return;
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.entityStepSounds[Random.Range(0, DCGameManager.settings.entityStepSounds.Count)], PlazmaGames.Audio.AudioType.Sfx, false, true);
             Quaternion startRot = _model.rotation;
             Quaternion endRot = Quaternion.Euler(0, 20, 20) * startRot;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(

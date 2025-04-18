@@ -1,9 +1,11 @@
 using System.Collections.Generic;
 using DC2025.Utils;
+using NUnit.Framework;
 using PlazmaGames.Animation;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace DC2025
 {
@@ -157,6 +159,9 @@ namespace DC2025
 		[SerializeField,] private float _syncInterval;
 		[SerializeField, ReadOnly] private float _timeSinceLastSync;
 
+        [Header("Audio")]
+        [SerializeField] private AudioSource _as;
+
         private IGridMonoSystem _gridMs;
         
         private bool _middleSynced = true;
@@ -261,7 +266,9 @@ namespace DC2025
 			Vector2Int newGridPos = _gridPos + action.GetDirection(_facing).GetGridOffset();
 			Vector3 endPos = _gridMs.GridToWorld(newGridPos).SetY(transform.position.y);
 
-			if (
+            if (_as != null) _as.PlayOneShot(DCGameManager.settings.entityStepSounds[Random.Range(0, DCGameManager.settings.entityStepSounds.Count)]);
+
+            if (
 				!_gridMs.CanMoveTo(_gridPos, action.GetDirection(_facing), this is Player) ||
 				!_gridMs.CanMoveTo(newGridPos, action.GetDirection(_facing).Opposite())
 			)
@@ -274,13 +281,15 @@ namespace DC2025
 				_gridPos = newGridPos;;
 				AnimateMove(startPos, endPos);
 			}
-		}
+        }
 
 		private void ProcessTurn(Action action)
 		{
 			if (!action.IsTurn()) return;
 
-			Quaternion startRot = transform.rotation;
+            if (_as != null) _as.PlayOneShot(DCGameManager.settings.entityStepSounds[Random.Range(0, DCGameManager.settings.entityStepSounds.Count)]);
+
+            Quaternion startRot = transform.rotation;
 
 			_facing = _facing.Turn(action);
 

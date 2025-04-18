@@ -1,4 +1,5 @@
 using PlazmaGames.Runtime.DataStructures;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DC2025
@@ -29,5 +30,24 @@ namespace DC2025
         public float strengthPotionTime = 20f;
         public float foresightAmount = 0.2f;
         public float foresightPotionTime = 20f;
+
+        [Header("Audio Settings")]
+        public List<AudioClip> entityStepSounds;
+        public AudioClip swordSound;
+        public AudioClip blockSound;
+        public AudioClip openDoorSound;
+        public AudioClip closeDoorSound;
+        public AudioClip openChestSound;
+        public AudioClip closeChestSound;
+        public AudioClip fanFireSound;
+        public AudioClip dipInWaterSound;
+        public AudioClip takeOutOfWaterSound;
+        public List<AudioClip> hitSounds;
+        public AudioClip craftSound;
+        public AudioClip pickupSound;
+        public AudioClip dropSound;
+        public AudioClip uiClickSound;
+        public AudioClip zipperSound;
+        public AudioClip potionSound;
     }
 }

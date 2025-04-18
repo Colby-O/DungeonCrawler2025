@@ -1,5 +1,6 @@
 using DC2025.Utils;
 using PlazmaGames.Attribute;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using System.Collections.Generic;
 using System.Linq;
@@ -66,6 +67,7 @@ namespace DC2025
 
         public void Drop()
         {
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.dropSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             gameObject.SetActive(true);
             (Vector2Int, Tile) newGridPos = _grid.FindVaildLocationNearPlayer();
             newGridPos.Item2.AddInteractable(this);
@@ -129,6 +131,7 @@ namespace DC2025
 
         public virtual void OnPressedDown()
         {
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.pickupSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             PickupItem();
         }
 

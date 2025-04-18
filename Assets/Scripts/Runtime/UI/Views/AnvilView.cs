@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Schema;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using UnityEngine;
@@ -107,6 +108,7 @@ namespace DC2025
         private void HitHammer()
         {
             if (_timingBar.IsStopped()) return;
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.hitSounds[Random.Range(0, DCGameManager.settings.hitSounds.Count)], PlazmaGames.Audio.AudioType.Sfx, false, true);
             if (_timingBar.Stop())
             {
                 _progress += 1;

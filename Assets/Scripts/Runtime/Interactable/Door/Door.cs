@@ -1,7 +1,9 @@
 using DC2025.Utils;
 using PlazmaGames.Animation;
 using PlazmaGames.Attribute;
+using PlazmaGames.Audio;
 using PlazmaGames.Core;
+using PlazmaGames.UI;
 using UnityEngine;
 using static UnityEngine.GraphicsBuffer;
 
@@ -24,6 +26,8 @@ namespace DC2025
         public void Open(Transform from)
         {
             if (IsOpen || _inProgress || IsLocked) return;
+
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.openDoorSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
 
             IsOpen = true;
             _inProgress = true;
@@ -58,6 +62,8 @@ namespace DC2025
         public override void Close()
         {
             if (!IsOpen || _inProgress || IsLocked) return;
+
+            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.closeDoorSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
 
             IsOpen = false;
             _inProgress = true;
