@@ -8,7 +8,7 @@ namespace DC2025
         
         public override string GetName()
         {
-            return $"{GetMaterial()} {bladeType} Blade";
+            return $"<color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()} {bladeType} Blade</color>";
         }
 
         public override string GetDescription()

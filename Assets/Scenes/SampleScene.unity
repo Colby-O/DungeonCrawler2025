@@ -6312,6 +6312,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ccb85a9fa7686e546bc6fcc7e01eaa7a, type: 3}
+--- !u!114 &600405390 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6627749359840165871, guid: 2bb38352cef36f34f915a1820613b201, type: 3}
+  m_PrefabInstance: {fileID: 1357524489}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c6e139fae2f12745898c7a8812ecfb6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &601754742
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14243,6 +14254,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1134974637}
     m_Modifications:
+    - target: {fileID: -1244322176923462306, guid: 2bb38352cef36f34f915a1820613b201, type: 3}
+      propertyPath: _blockages.list.Array.data[0].Value
+      value: 
+      objectReference: {fileID: 600405390}
     - target: {fileID: 1177393428980468238, guid: 2bb38352cef36f34f915a1820613b201, type: 3}
       propertyPath: _isLocked
       value: 1
@@ -14290,6 +14305,14 @@ PrefabInstance:
     - target: {fileID: 2562598337573628855, guid: 2bb38352cef36f34f915a1820613b201, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 3986960562000437431, guid: 2bb38352cef36f34f915a1820613b201, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4013580236131825592, guid: 2bb38352cef36f34f915a1820613b201, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -22585,6 +22608,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7905764634186609394, guid: 3b7106ae58377ea48a52a5c00e3807f0, type: 3}
+      propertyPath: 'm_Materials.Array.data[2]'
+      value: 
+      objectReference: {fileID: 2100000, guid: ac64348680a19f64baab5e73ad6d1807, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

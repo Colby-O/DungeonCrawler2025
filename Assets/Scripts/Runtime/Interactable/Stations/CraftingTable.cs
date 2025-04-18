@@ -29,6 +29,7 @@ namespace DC2025
             {
                 GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 //_view.SetCraftingTable(null);
+                OnClose();
             }
         }
 
@@ -39,6 +40,7 @@ namespace DC2025
                 IsEnabled = false;
                 GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 //_view.SetCraftingTable(null);
+                OnClose();
             }
         }
     }

@@ -31,9 +31,9 @@ MonoBehaviour:
     - Key: 1
       Value: {r: 0.7647059, g: 0, b: 0, a: 1}
     - Key: 2
-      Value: {r: 0.23529412, g: 0.23529412, b: 0.23529412, a: 1}
+      Value: {r: 0.38679248, g: 0.38679248, b: 0.38679248, a: 1}
     - Key: 3
-      Value: {r: 0, g: 0.05882353, b: 0.58431375, a: 1}
+      Value: {r: 0.003921554, g: 0.24180207, b: 0.65882355, a: 1}
     keyCollision: 0
   potionMaterialConverter:
     list:

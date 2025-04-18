@@ -8,7 +8,7 @@ namespace DC2025
         Bronze=0,   
         Iron,
         Steel,
-        Cobolt
+        Cobalt
     }
 
     public static class MaterialTypeExt

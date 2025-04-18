@@ -36,6 +36,7 @@ namespace DC2025
             {
                 GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.FetchSlots(ref _slots);
+                OnClose();
             }
         }
 
@@ -46,6 +47,7 @@ namespace DC2025
                 IsEnabled = false;
                 GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.FetchSlots(ref _slots);
+                OnClose();
             }
         }
 

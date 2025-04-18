@@ -71,6 +71,11 @@ namespace DC2025
 
         public virtual void OnPressedDown() => Interact();
 
+        protected virtual void OnClose()
+        {
+            GameManager.GetMonoSystem<IInventoryMonoSystem>().GetPopup().Disable();
+        }
+
         public virtual void OnPlayerAdjancentEnter() 
         {
             DCGameManager.Player.NearbyStation = this;

@@ -20,7 +20,19 @@ namespace DC2025
             if (slot.Data.Item is WeaponItem)
             {
                 WeaponItem blade = slot.Data.Item as WeaponItem;
-                if (blade.GetMaterial() == _type) Unlock();
+                if (blade.GetMaterial() == _type)
+                {
+                    Unlock();
+                    GameManager.GetMonoSystem<IChatWindowMonoSystem>().Send($"You cut down the cob web and are now able to proceed.");
+                }
+                else
+                {
+                    GameManager.GetMonoSystem<IChatWindowMonoSystem>().Send($"You try to enter but are unable to. You need a blade of type <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[_type])}>{_type}</color> to proceed.");
+                }
+            }
+            else
+            {
+                GameManager.GetMonoSystem<IChatWindowMonoSystem>().Send($"You try to enter but are unable to. You need a blade of type <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[_type])}>{_type}</color> to proceed.");
             }
         }
 

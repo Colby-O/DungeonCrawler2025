@@ -30,6 +30,7 @@ namespace DC2025
             {
                 GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.SetAnvil(null);
+                OnClose();
             }
         }
 
@@ -40,6 +41,7 @@ namespace DC2025
                 IsEnabled = false;
                 GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 _view.SetAnvil(null);
+                OnClose();
             }
         }
     }

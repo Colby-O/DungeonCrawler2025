@@ -8,7 +8,7 @@ namespace DC2025
 
         public override string GetName()
         {
-            return $"Molten {GetMaterial()}";
+            return $"<color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>Molten {GetMaterial()}</color>";
         }
 
         public override string GetDescription()

@@ -132,7 +132,7 @@ namespace DC2025
             if (!_disablePopup && !_inventory.GetMouseSlot().HasItem() && Item != null)
             {
                 _inventory.GetPopup().Enable();
-                _inventory.GetPopup().SetText(Item.GetDescription());
+                _inventory.GetPopup().SetText($"<align=center>{Item.GetName()}</align>\n\n<align=left>{Item.GetDescription()}</align>");
             }
         }
 
@@ -185,7 +185,7 @@ namespace DC2025
                     if (!_disablePopup)
                     {
                         _inventory.GetPopup().Enable();
-                        _inventory.GetPopup().SetText(Item.GetDescription());
+                        _inventory.GetPopup().SetText($"<align=center>{Item.GetName()}</align>\n\n<align=left>{Item.GetDescription()}</align>");
                     }
                 }
                 else if (Item != null)

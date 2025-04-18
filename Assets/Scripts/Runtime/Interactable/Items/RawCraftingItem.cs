@@ -8,12 +8,12 @@ namespace DC2025
 
         public override string GetName()
         {
-            return $"{GetMaterial()} Rock";
+            return $"<color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()} Rock</color>";
         }
 
         public override string GetDescription()
         {
-            return $"A rock of {GetMaterial()}, used for crafting weapons. Needs to be smelted in a furnace.";
+            return $"A rock of {GetMaterial()}, used for crafting weapons. Needs to be smelted in a furnace or brewed in a cauldron.";
         }
 
         public override Sprite GetIcon()
