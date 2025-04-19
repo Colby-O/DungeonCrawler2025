@@ -71,6 +71,7 @@ namespace DC2025
             _chatMs.Send($"You start to melt down the {GetMaterial()} into a bucket.");
 			_isStarted = true;
 			_currentRating = 4;
+			foreach (GameObject star in _stars) star.SetActive(true);
 			_start.IsDisabled = true;
 			_input[0].ToogleDisableState(true);
 			_input[1].ToogleDisableState(true);

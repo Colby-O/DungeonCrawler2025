@@ -1,6 +1,8 @@
 using DC2025.Utils;
+using PlazmaGames.Attribute;
 using PlazmaGames.Audio;
 using PlazmaGames.Core;
+using PlazmaGames.DataPersistence;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -11,8 +13,10 @@ using UnityEngine.UIElements.Experimental;
 
 namespace DC2025
 {
-    public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+    public class InventorySlot : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IDataPersistence
     {
+        private static int instanceCount;
+
         [Header("UI")]
         [SerializeField] private Image _icon;
         [SerializeField] private List<GameObject> _stars;
@@ -20,11 +24,15 @@ namespace DC2025
         [SerializeField] private RectTransform _durablityProgress;
         [SerializeField] private GameObject _cover;
         [SerializeField] private GameObject _hint;
+        [SerializeField] private bool _disableLoad = false;
 
         [Header("Infomaton")]
         [SerializeField] SlotType _type;
         [SerializeField] private bool _disabled = false;
         [SerializeField] private bool _disablePopup = false;
+
+        [SerializeField, ReadOnly] private int _id;
+        [SerializeField, ReadOnly] private bool _hasLoaded;
 
         private IInventoryMonoSystem _inventory;
 
@@ -80,6 +88,13 @@ namespace DC2025
 
         public void Refresh()
         {
+            if (Data == null || Item == null)
+            {
+                if (Data == null) Data = new SlotData();
+                Clear();
+                return;
+            }
+
             _icon.sprite = Item.GetIcon();
             _icon.color = Item.GetColor();
 
@@ -106,13 +121,13 @@ namespace DC2025
             }
         }
 
-        public void UpdateSlot(SlotData data) => UpdateSlot(data.Item);
+        public void UpdateSlot(SlotData data) => UpdateSlot((data != null) ? data.Item : null);
 
         public void UpdateSlot(PickupableItem obj)
         {
             Debug.Log(transform.name);
             Item = obj;
-            Item.Hide();
+            Item?.Hide();
             Refresh();
             OnChange.Invoke();
         }
@@ -146,10 +161,19 @@ namespace DC2025
 
         private void Awake()
         {
-            Data = new SlotData();
+            if (!_hasLoaded)
+            {
+                Data = new SlotData();
+                Clear();
+            }
             _inventory = GameManager.GetMonoSystem<IInventoryMonoSystem>();
-            Clear();
             ToogleDisableState(_disabled);
+            _id = InventorySlot.instanceCount++;
+        }
+
+        private void Start()
+        {
+            //LoadData(GameManager.GetMonoSystem<IDataPersistenceMonoSystem>().GetGameData());
         }
 
         public void OnPointerClick(PointerEventData eventData)
@@ -200,6 +224,32 @@ namespace DC2025
                     Clear();
                 }
             }
+        }
+
+        public bool SaveData<TData>(ref TData rawData) where TData : GameData
+        {
+            if (_disableLoad) return false;
+
+            DCGameData data = rawData as DCGameData;
+            if (data.slots.ContainsKey(_id)) data.slots[_id] = Data;
+            else data.slots.Add(_id, Data);
+            return true;
+        }
+
+        public bool LoadData<TData>(TData rawData) where TData : GameData
+        {
+            if (_disableLoad) return false;
+
+                DCGameData data = rawData as DCGameData;
+            if (data.slots.ContainsKey(_id))
+            {
+                Debug.Log("Loaded");
+                Data = data.slots[_id];
+                Data.LoadSlot();
+                Refresh();
+                _hasLoaded = true;
+            }
+            return true;
         }
     }
 }

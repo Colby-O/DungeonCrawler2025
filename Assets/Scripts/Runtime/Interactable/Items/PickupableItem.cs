@@ -8,6 +8,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEditor.Progress;
 
 namespace DC2025
 {
@@ -53,6 +54,8 @@ namespace DC2025
 
         private void MoveItem()
         {
+            if (_player == null) _player = DCGameManager.PlayerController;
+
             if (IsEntered)
             {
                 Vector3 center = _grid.GridToWorld(_grid.WorldToGrid(_centerPos));
@@ -123,7 +126,7 @@ namespace DC2025
             _height = transform.position.y;
             _grid = GameManager.GetMonoSystem<IGridMonoSystem>();
             _inventory = GameManager.GetMonoSystem<IInventoryMonoSystem>();
-            _player = DCGameManager.Player.GetComponent<Player>();
+            if (DCGameManager.Player != null) _player = DCGameManager.PlayerController;
             _centerPos = _grid.GridToWorld(_grid.WorldToGrid(transform.position));
             transform.position = _centerPos.SetY(transform.position.y);
         }
@@ -143,6 +146,55 @@ namespace DC2025
 
         public abstract string GetDescription();
         public abstract string GetName();
+
+        public static PickupableItem InstantiateItemOfType(ItemDataType type, Dictionary<string, object> data)
+        {
+            PickupableItem item = null;
+
+            if (type == ItemDataType.RawCrafting)
+            {
+                item = Instantiate(Resources.Load<RawCraftingItem>("Prefabs/Items/RawCraftingMaterial"));
+                (item as RawCraftingItem).SetMaterial((MaterialType)data["Material"]);
+            }
+            else if (type == ItemDataType.Bucket)
+            {
+                item = Instantiate(Resources.Load<BucketItem>("Prefabs/Items/BucketItem"));
+                (item as BucketItem).SetMaterial((MaterialType)data["Material"]);
+                (item as BucketItem).SetRating((int)data["Rating"]);
+            }
+            else if (type == ItemDataType.Mold)
+            {
+                item = Instantiate(Resources.Load<MoldItem>($"Prefabs/Items/Molds/{(BladeType)data["Blade"]}Mold"));
+                (item as MoldItem).bladeType = (BladeType)data["Blade"];
+            }
+            else if (type == ItemDataType.UnfBlade)
+            {
+                item = GameManager.GetMonoSystem<ISwordBuilderMonoSystem>().CreateUnfBlade((BladeType)data["Blade"], (MaterialType)data["Material"], (int)data["Rating"]);
+            }
+            else if (type == ItemDataType.Blade)
+            {
+                item = GameManager.GetMonoSystem<ISwordBuilderMonoSystem>().CreateBlade((BladeType)data["Blade"], (MaterialType)data["Material"], (int)data["Rating"]);
+            }
+            else if (type == ItemDataType.Weapon)
+            {
+                item = GameManager.GetMonoSystem<ISwordBuilderMonoSystem>().CreateSword((BladeType)data["Blade"], (HandleType)data["Handle"],(MaterialType)data["Material"], (int)data["Rating"]);
+                (item as WeaponItem).SetDurability((float)data["Durability"]);
+            }
+            else if (type == ItemDataType.Potion)
+            {
+                item = Instantiate(Resources.Load<PotionItem>("Prefabs/Items/PotionItem"));
+                (item as PotionItem).SetMaterial((MaterialType)data["Material"]);
+            }
+            else if (type == ItemDataType.Key)
+            {
+                item = Instantiate(Resources.Load<KeyItem>("Prefabs/Items/Key"));
+                (item as KeyItem).SetMaterial((MaterialType)data["Material"]);
+            }
+
+            if (item != null) item.gameObject.SetActive(false);
+
+            return item;
+        }
 
         public virtual Color GetColor() => Color.white;
 
@@ -169,6 +221,11 @@ namespace DC2025
         public virtual void OnPlayerExit()
         {
             Recenter();
+        }
+
+        protected virtual void OnEnable()
+        {
+            if (!_hasInited) ForceInit();
         }
 
         protected virtual void Start()

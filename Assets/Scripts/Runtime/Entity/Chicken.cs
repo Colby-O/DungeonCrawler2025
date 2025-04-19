@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using PlazmaGames.Animation;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using Unity.VisualScripting;
@@ -40,6 +41,8 @@ namespace DC2025
         private void OnRestart()
         {
             if (!_isDead) return;
+
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().StopAllAnimations(this);
 
             if (_enemy) _enemy.OnKilled.RemoveListener(OnEnemyKilled);
             if (_distracting) _gridMs.UnsetTileDistraction(GridPosition());
