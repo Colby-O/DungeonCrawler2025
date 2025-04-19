@@ -17,12 +17,15 @@ namespace DC2025
 		[SerializeField] private List<Transform> _path;
 		[SerializeField] private bool _loop;
         private bool _attacking = false;
-        private Sword _sword;
         [SerializeField] private float _attackHintTime = 0.5f;
         [SerializeField] private float _attackAniTime = 0.25f;
         [SerializeField] private float _blockChance = 0.1f;
+        [SerializeField] private float _attackIntervalLow = 1.5f;
+        [SerializeField] private float _attackIntervalHigh = 3.0f;
         [SerializeField] private MaterialType _materialType = MaterialType.Bronze;
 
+        private Animator _animator;
+        
         private Transform _healthBar;
         private Transform _healthBarBg;
         private float _healthBarFullSize;
@@ -32,8 +35,11 @@ namespace DC2025
         private PathDirector _pathDirector;
         [SerializeField] private int _attackDamage = 20;
         public UnityEvent OnKilled = new UnityEvent();
+        [SerializeField] private SkinnedMeshRenderer _meshRenderer;
 
-        public Sword Sword() => _sword;
+        public float AttackIntervalLow() => _attackIntervalLow;
+        public float AttackIntervalHigh() => _attackIntervalHigh;
+
         public float AttackHintTime() => _attackHintTime;
         public float BlockChance() => _blockChance;
         public bool Attacking() => _attacking;
@@ -43,14 +49,16 @@ namespace DC2025
         protected override void Start()
         {
             base.Start();
+            _animator = transform.GetComponentInChildren<Animator>();
             OnKilled.AddListener(HandleKilled);
-            _sword = GetComponentInChildren<Sword>();
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
             _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
             _healthBar = transform.Find("HealthBar");
             _healthBarBg = transform.Find("HealthBarBg");
             _healthBarFullSize = _healthBar.localScale.y;
             DisableHealthBar();
+
+            _meshRenderer.material.color = DCGameManager.settings.materialColors[_materialType];
 
             SetNormalPath();
         }
@@ -134,10 +142,30 @@ namespace DC2025
             }
         }
 
+        public void EnterBattle()
+        {
+            _animator.SetTrigger("Battle");
+        }
+        
+        public void DoAttackHint()
+        {
+            _animator.SetTrigger("Hint");
+        }
+
+        public void DoBlock()
+        {
+            _animator.SetTrigger("Block");
+        }
+        
+        public void DoUnblock()
+        {
+            _animator.SetTrigger("Unblock");
+        }
+
         public void DoAttackAnimation()
         {
             if (_attacking) return;
-            _sword.Swing();
+            _animator.SetTrigger("Swing");
             _attacking = true;
             Vector3 startPos = transform.position;
             Vector3 endPos = startPos + transform.forward * 0.7f;
@@ -171,5 +199,6 @@ namespace DC2025
                 _pathDirector.JoinPath(path);
             }
         }
+
     }
 }

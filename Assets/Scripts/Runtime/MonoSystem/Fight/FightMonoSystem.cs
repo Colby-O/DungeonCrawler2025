@@ -145,14 +145,14 @@ namespace DC2025
                 {
                     if (_enemyBlockCountdown > 0 && _enemyBlockCountdown - Time.fixedDeltaTime <= 0)
                     {
-                        _enemy.Sword().Lower();
+                        _enemy.DoUnblock();
                     }
                     _enemyBlockCountdown -= Time.fixedDeltaTime;
                     if (_enemyBlockCountdown <= 0)
                     {
                         if (_enemyAttackCountdown >= AttackHintTime() && _enemyAttackCountdown - Time.fixedDeltaTime < AttackHintTime())
                         {
-                            _enemy.Sword().Raise();
+                            _enemy.DoAttackHint();
                         }
                         _enemyAttackCountdown -= Time.fixedDeltaTime;
                         if (_enemyAttackCountdown <= 0)
@@ -167,13 +167,20 @@ namespace DC2025
 
         private void EnemyQueueNextMove()
         {
-            if (UnityEngine.Random.Range(0, 100) < _enemy.BlockChance() * 100)
-            {
-                _enemyBlockCountdown = UnityEngine.Random.Range(1.5f, 2.5f);
-                _enemy.Sword().Block();
-            }
             _enemyAttackBlocked = false;
-            _enemyAttackCountdown = UnityEngine.Random.Range(1.5f, 3.0f);
+            if (_player.Sword().HasSword())
+            {
+                if (UnityEngine.Random.Range(0, 100) < _enemy.BlockChance() * 100)
+                {
+                    _enemyBlockCountdown = UnityEngine.Random.Range(_enemy.AttackIntervalLow(), _enemy.AttackIntervalHigh());
+                    _enemy.DoBlock();
+                }
+                _enemyAttackCountdown = UnityEngine.Random.Range(_enemy.AttackIntervalLow(), _enemy.AttackIntervalHigh());
+            }
+            else
+            {
+                _enemyAttackCountdown = DCGameManager.settings.enemyAttackPlayerNoSwordTime;
+            }
         }
 
         private void EnemyAttack()
@@ -220,6 +227,7 @@ namespace DC2025
             _enemy = enemy;
             _enemyHealth = 100;
             _enemy.SetHealBar(_enemyHealth);
+            _enemy.EnterBattle();
             _fightState = FightState.PlayerCancelMoves;
         }
 

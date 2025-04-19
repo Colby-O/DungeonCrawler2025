@@ -28,6 +28,7 @@ namespace DC2025
                 _item.TakeDurability();
                 if (Durability() <= 0)
                 {
+                    GameManager.GetMonoSystem<IChatWindowMonoSystem>().Send("Your sword shatters into 1000 pieces.");
                     _item.Release();
                     GameManager.GetMonoSystem<IInventoryMonoSystem>().GetHandSlot(SlotType.Left).Clear();
                     SetModel(null);
