@@ -174,6 +174,13 @@ namespace DC2025
             _attacking = false;
         }
 
+        protected override void OnMoveStart()
+        {
+            base.OnMoveStart();
+            DCGameManager.Player.NearbyStation = null;
+            DCGameManager.Player.NearbyBlockage = null;
+        }
+
         protected override void Awake()
         {
             base.Awake();

@@ -125,9 +125,10 @@ namespace DC2025
             return true;
         }
 
-        private void Start()
+        protected override void Awake()
         {
             IsLocked = _keysNeeded != null && _keysNeeded.Count > 0;
+            base.Awake();
         }
     }
 }

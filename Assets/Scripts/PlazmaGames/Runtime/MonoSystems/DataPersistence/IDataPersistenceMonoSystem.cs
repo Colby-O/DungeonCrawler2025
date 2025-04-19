@@ -15,7 +15,7 @@ namespace PlazmaGames.DataPersistence
         /// <summary>
         /// Save the game to an JSON file
         /// </summary>
-        public void LoadGame();
+        public void LoadGame(bool forceNewGameWhenNull = false, bool trigger = true);
 
         /// <summary>
         /// Loads a game from JSON file

@@ -4,6 +4,7 @@ using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.DataPersistence;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -251,6 +252,12 @@ namespace DC2025
                 Data.LoadSlot();
                 Refresh();
                 _hasLoaded = true;
+                OnChange?.Invoke();
+            }
+            else if (_hasLoaded)
+            {
+                Data = new SlotData();
+                Clear();
                 OnChange?.Invoke();
             }
             return true;

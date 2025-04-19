@@ -1,4 +1,5 @@
 using PlazmaGames.Core;
+using PlazmaGames.DataPersistence;
 using PlazmaGames.UI;
 using UnityEngine;
 
@@ -24,6 +25,7 @@ namespace DC2025
 
         public void Quit()
         {
+            GameManager.GetMonoSystem<IDataPersistenceMonoSystem>().SaveGame();
             Application.Quit();
         }
 

@@ -38,13 +38,13 @@ namespace PlazmaGames.DataPersistence
             _gameData = new TData();
         }
 
-        public void LoadGame()
+        public void LoadGame(bool forceNewGameWhenNull = false, bool trigger = true)
         {
             PlazmaDebug.Log($"Attempting to load profile {_currentProfileName}.", "Data Persistence", Color.green, 2);
 
             _gameData = _loader.Load<TData>(_currentProfileName);
 
-            if (_gameData == null && _createNewGameIfNull)
+            if (_gameData == null && (_createNewGameIfNull || forceNewGameWhenNull))
             {
                 NewGame();
             }
@@ -54,7 +54,7 @@ namespace PlazmaGames.DataPersistence
                 return;
             }
 
-            foreach (IDataPersistence obj in _dataPersistencesObjects) obj.LoadData(_gameData);
+            if (trigger) foreach (IDataPersistence obj in _dataPersistencesObjects) obj.LoadData(_gameData);
         }
 
         public void SaveGame()
@@ -73,7 +73,7 @@ namespace PlazmaGames.DataPersistence
         {
             //TODO: Find a way to get all objects with IDataPersistence without using FindObjectsOfType
             //      This is a very expensive operation.
-            return FindObjectsOfType<MonoBehaviour>().OfType<IDataPersistence>().ToList();
+            return FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None).OfType<IDataPersistence>().ToList();
         }
 
         public void DeleteGame(string profileName = "")
