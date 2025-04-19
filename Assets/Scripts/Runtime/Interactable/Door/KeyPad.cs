@@ -13,6 +13,8 @@ namespace DC2025
 
         [SerializeField, ReadOnly] private bool _isLocked;
 
+        [SerializeField, ReadOnly] private bool _lockedState;
+
         public MaterialType GetMaterial() => _type;
 
         [SerializeField, ReadOnly] private int _id;
@@ -37,6 +39,7 @@ namespace DC2025
         private void Awake()
         {
             _isLocked = true;
+            _lockedState = _isLocked;
             _mr.materials[1].color = DCGameManager.settings.materialColors[_type];
             _id = _instanceCount++;
         }
@@ -56,7 +59,7 @@ namespace DC2025
             DCGameData data = rawData as DCGameData;
             if (data == null) return false;
 
-            _isLocked = (data.keypadLockedStates.ContainsKey(_id)) ? data.keypadLockedStates[_id] : _isLocked;
+            _isLocked = (data.keypadLockedStates.ContainsKey(_id)) ? data.keypadLockedStates[_id] : _lockedState;
 
             if (!_isLocked) Unlock();
             else Lock();

@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _filename: TheForge
-  _createNewGameIfNull: 1
+  _createNewGameIfNull: 0
   _useEncryption: 0
   _currentProfileName: Development
 --- !u!1 &2138974116077166966
@@ -230,8 +230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d2ef9ba8a1926f46828eae594a2e24c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _debug: 0
-  _verbose: 0
+  _debug: 1
+  _verbose: 4
   _monoSystemHolder: {fileID: 8546225963435831069}
   _uiSystem: {fileID: 5468754056259771447}
   _animSystem: {fileID: 8017931798619767606}

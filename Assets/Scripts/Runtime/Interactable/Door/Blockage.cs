@@ -35,6 +35,7 @@ namespace DC2025
         private List<Tile> _currentTiles = new List<Tile>();
 
         [SerializeField, ReadOnly] private int _id;
+        [SerializeField, ReadOnly] private bool _lockedState;
 
         public virtual void OnHover() { }
         public virtual void OnPlayerAdjancentEnter() { }
@@ -67,7 +68,7 @@ namespace DC2025
 
         public virtual bool CanOpen()
         {
-            return !IsLocked;
+            return true;
         }
 
         public abstract void Open();
@@ -78,6 +79,7 @@ namespace DC2025
         protected virtual void Awake()
         {
             _id = _instanceCount++;
+            _lockedState = IsLocked;
         }
 
         private void LateUpdate()
@@ -104,6 +106,10 @@ namespace DC2025
             if (data.doorLockedStates.ContainsKey(_id))
             {
                 IsLocked = data.doorLockedStates[_id];
+            }
+            else
+            {
+                IsLocked = _lockedState;
             }
 
             if (!IsLocked) Unlock();

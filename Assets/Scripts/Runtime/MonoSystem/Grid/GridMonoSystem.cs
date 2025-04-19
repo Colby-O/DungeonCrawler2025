@@ -211,7 +211,7 @@ namespace DC2025
 					}
 					else
 					{
-						PlazmaDebug.LogError($"Trying to Instinate {tile.name} at ({tile.transform.position.x}, {tile.transform.position.z}).", "ERROR", 1);
+						PlazmaDebug.LogWarning($"Trying to Instinate {tile.name} at ({tile.transform.position.x}, {tile.transform.position.z}).", "ERROR", 1);
 					}
 				}
 			}
@@ -232,7 +232,7 @@ namespace DC2025
 					}
 					else
 					{
-						PlazmaDebug.LogError($"Trying to Add Interacteable {obj.name} at ({obj.transform.position.x}, {obj.transform.position.z}) But There Is No Tile.", "ERROR", 1);
+						PlazmaDebug.LogWarning($"Trying to Add Interacteable {obj.name} at ({obj.transform.position.x}, {obj.transform.position.z}) But There Is No Tile.", "ERROR", 1);
 					}
 				}
 			}

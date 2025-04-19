@@ -136,12 +136,10 @@ namespace DC2025
             {
                 Release();
 
-                if (data.chestInvs == null) data.chestInvs = new PlazmaGames.Runtime.DataStructures.SerializableDictionary<int, List<SlotData>>();
+                _resetOnAwake = false;
 
                 if (data.chestInvs.ContainsKey(id))
                 {
-                    _resetOnAwake = false;
-
                     List<SlotData> slots = data.chestInvs[id];
 
                     foreach (SlotData slot in slots)
@@ -151,7 +149,10 @@ namespace DC2025
 
                     _slots = new List<SlotData>(slots);
                 }
-                else _resetOnAwake = true;
+                else
+                {
+                    InitSlots();
+                }
 
                 return true;
             }

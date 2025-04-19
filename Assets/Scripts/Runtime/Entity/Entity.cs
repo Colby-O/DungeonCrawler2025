@@ -159,28 +159,28 @@ namespace DC2025
 		[SerializeField,] private float _syncInterval;
 		[SerializeField, ReadOnly] private float _timeSinceLastSync;
 
-        protected IGridMonoSystem _gridMs;
+		protected IGridMonoSystem _gridMs;
 
-        [Header("Audio")]
-        [SerializeField] private AudioSource _as;
+		[Header("Audio")]
+		[SerializeField] private AudioSource _as;
 
-        
-        private bool _middleSynced = true;
-        private Vector3 _moveFrom;
-        private bool _canceling = false;
 
-        public Vector2Int GridPosition() => _gridMs.WorldToGrid(transform.position);
+		private bool _middleSynced = true;
+		private Vector3 _moveFrom;
+		private bool _canceling = false;
 
-        public Action CurrentAction() => _currentActtion;
-        public Direction Facing() => _facing;
+		public Vector2Int GridPosition() => _gridMs.WorldToGrid(transform.position);
+
+		public Action CurrentAction() => _currentActtion;
+		public Direction Facing() => _facing;
 
 		private void MovementStep(float t, Vector3 startPos, Vector3 endPos)
 		{
-            if (t >= 0.51 && !_middleSynced)
-            {
-                Sync();
-                _middleSynced = true;
-            }
+			if (t >= 0.51 && !_middleSynced)
+			{
+				Sync();
+				_middleSynced = true;
+			}
 			transform.position = Vector3.Lerp(startPos, endPos, t);
 		}
 
@@ -197,9 +197,9 @@ namespace DC2025
 		}
 
 		private void AnimateMove(Vector3 startPos, Vector3 endPos)
-        {
-            _moveFrom = startPos;
-            _middleSynced = false;
+		{
+			_moveFrom = startPos;
+			_middleSynced = false;
 			GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
 				this,
 				_moveSpeed,
@@ -207,6 +207,8 @@ namespace DC2025
 				OnMoveComplete
 			);
 		}
+
+		protected virtual void OnMoveStart() { }
 
         public void CancelMove()
         {
@@ -263,6 +265,8 @@ namespace DC2025
 		{
 			if (!action.IsMove()) return;
 
+			OnMoveStart();
+
 			Vector3 startPos = _gridMs.GridToWorld(_gridPos).SetY(transform.position.y);
 			Vector2Int newGridPos = _gridPos + action.GetDirection(_facing).GetGridOffset();
 			Vector3 endPos = _gridMs.GridToWorld(newGridPos).SetY(transform.position.y);
@@ -284,6 +288,8 @@ namespace DC2025
 		private void ProcessTurn(Action action)
 		{
 			if (!action.IsTurn()) return;
+
+			OnMoveStart();
 
             if (_as != null) _as.PlayOneShot(DCGameManager.settings.entityStepSounds[Random.Range(0, DCGameManager.settings.entityStepSounds.Count)]);
 

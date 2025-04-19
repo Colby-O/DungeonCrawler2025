@@ -41,6 +41,7 @@ namespace DC2025
         public override void Lock() 
         {
             IsOpen = false;
+            IsLocked = true;
             gameObject.SetActive(true);
         }
 
@@ -54,8 +55,8 @@ namespace DC2025
 
         protected override void Awake()
         {
-            base.Awake();
             IsLocked = true;
+            base.Awake();
         }
 
         private void Start()
