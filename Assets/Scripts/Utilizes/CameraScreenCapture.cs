@@ -1,3 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
+using PlazmaGames.Utilities;
+using UnityEditor.Embree;
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 
 namespace DC2025
@@ -47,9 +52,50 @@ namespace DC2025
             byte[] bytes = image.EncodeToPNG();
             Destroy(image);
 
-            string path = Application.dataPath + "/Resources/Icons/" + fileName + ".png";
+            string fn = fileName;
+
+            /*
+            Transform items = transform.parent.Find("Items");
+            fn = items.GetComponentsInChildren<Transform>().FirstOrDefault(t => t.gameObject != items.gameObject)?.gameObject.name ?? "";
+            if (fn == "") fn = fileName;
+            */
+
+            string path = Application.dataPath + "/Resources/Icons/" + fn + ".png";
             Debug.Log($"Saving icon to {path}.");
             File.WriteAllBytes(path, bytes);
+        }
+
+        private void Start()
+        {
+            return;
+            List<HandleType> handles = new();
+            handles.Add(HandleType.Balanced);
+            handles.Add(HandleType.Dominant);
+            handles.Add(HandleType.Lightweight);
+            handles.Add(HandleType.Rugged);
+            handles.Add(HandleType.Wise);
+            List<MaterialType> mats = new();
+            mats.Add(MaterialType.Bronze);
+            mats.Add(MaterialType.Iron);
+            mats.Add(MaterialType.Steel);
+            mats.Add(MaterialType.Cobalt);
+
+            Transform b = transform.parent.GetChild(0).GetChild(0);
+            Transform items = transform.parent.Find("Items");
+
+            foreach (HandleType h in handles)
+            {
+                foreach (MaterialType m in mats)
+                {
+                    WeaponItem w = GameManager.GetMonoSystem<ISwordBuilderMonoSystem>().CreateSword(BladeType.Axe, h, m, 4);
+                    w.transform.position = b.position;
+                    w.transform.rotation = b.rotation;
+                    w.gameObject.SetGameLayerRecursive(LayerMask.NameToLayer("Screenshot"));
+                    w.gameObject.name = $"Axe_{h}_{m}";
+                    w.transform.parent = items;
+                }
+                
+            }
         }
     }
 }
