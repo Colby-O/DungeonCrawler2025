@@ -183,7 +183,7 @@ GameObject:
   - component: {fileID: 2001136909109131863}
   - component: {fileID: 1065263496678035084}
   m_Layer: 0
-  m_Name: Skeleton
+  m_Name: Skeleton 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -231,17 +231,11 @@ MonoBehaviour:
   _path:
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   _loop: 1
-  _attackHintTime: 0.5
-  _attackAniTime: 0.25
-  _blockChance: 0.1
-  _attackIntervalLow: 1.5
+  _attackHintTime: 0.8
+  _attackAniTime: 0.3
+  _blockChance: 0.2
+  _attackIntervalLow: 2
   _attackIntervalHigh: 3
   _materialType: 1
   _attackDamage: 20
@@ -406,7 +400,7 @@ PrefabInstance:
     - target: {fileID: 7535832413245566445, guid: 696eb6a41593b0b4a954c6b6950ec94c, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 958bd36bd11a7cbf8ae185e15acade55, type: 2}
+      objectReference: {fileID: 2100000, guid: d73a247a7b9c1f7dba71e3e56e07c519, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: -4706452340541456491, guid: 696eb6a41593b0b4a954c6b6950ec94c, type: 3}

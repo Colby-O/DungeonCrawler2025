@@ -19,6 +19,7 @@ MonoBehaviour:
   playerBlockStamina: 10
   playerBlockFailStamina: 25
   enemyDistractedWaitTime: 5
+  enemyAttackPlayerNoSwordTime: 1
   molderTempDropRate: 2
   molderTimeToWin: 1
   moldMoveSpeed: 20
@@ -50,13 +51,13 @@ MonoBehaviour:
   materialDamage:
     list:
     - Key: 0
-      Value: 10
-    - Key: 1
       Value: 20
-    - Key: 2
+    - Key: 1
       Value: 40
-    - Key: 3
+    - Key: 2
       Value: 80
+    - Key: 3
+      Value: 160
     keyCollision: 0
   ratingDamageScales:
     list:

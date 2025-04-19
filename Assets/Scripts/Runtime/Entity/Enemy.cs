@@ -63,8 +63,6 @@ namespace DC2025
             _healthBarFullSize = _healthBar.localScale.y;
             DisableHealthBar();
 
-            _meshRenderer.material.color = DCGameManager.settings.materialColors[_materialType];
-
             SetNormalPath();
 
             DCGameManager.OnRestart.AddListener(OnRestart);
