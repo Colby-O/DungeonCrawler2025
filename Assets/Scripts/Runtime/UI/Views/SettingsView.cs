@@ -52,6 +52,7 @@ namespace DC2025
         {
             base.Show();
             _menuScene.SetActive(true);
+            if (DCGameManager.Player != null) DCGameManager.Player.GetCamera().gameObject.SetActive(false);
             DCGameManager.IsPaused = true;
         }
 
@@ -59,6 +60,7 @@ namespace DC2025
         {
             base.Hide();
             _menuScene.SetActive(false);
+            if (DCGameManager.Player != null) DCGameManager.Player.GetCamera().gameObject.SetActive(true);
             DCGameManager.IsPaused = false;
         }
     }

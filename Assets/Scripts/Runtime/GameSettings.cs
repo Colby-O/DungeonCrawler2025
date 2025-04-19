@@ -51,5 +51,7 @@ namespace DC2025
         public AudioClip uiClickSound;
         public AudioClip zipperSound;
         public AudioClip potionSound;
+        public AudioClip lockedSound;
+        public AudioClip unlockedSound;
     }
 }
