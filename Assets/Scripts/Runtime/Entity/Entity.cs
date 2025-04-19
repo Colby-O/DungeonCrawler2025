@@ -46,7 +46,7 @@ namespace DC2025
 		}
 	}
 
-	public static class DirectionExtension
+	public static class DirectionExt
     {
         public static Direction FromVector2Int(Vector2Int v)
         {
@@ -269,10 +269,7 @@ namespace DC2025
 
             if (_as != null) _as.PlayOneShot(DCGameManager.settings.entityStepSounds[Random.Range(0, DCGameManager.settings.entityStepSounds.Count)]);
 
-            if (
-				!_gridMs.CanMoveTo(_gridPos, action.GetDirection(_facing), this is Player) ||
-				!_gridMs.CanMoveTo(newGridPos, action.GetDirection(_facing).Opposite())
-			)
+            if (!_gridMs.CanMoveTo(_gridPos, action.GetDirection(_facing), this is Player))
 			{
 				endPos = startPos + action.GetDirection(_facing).ToVector3() * _gridMs.GetTileSize().x / 4.0f;
 				AnimateInvaildMove(startPos, endPos);

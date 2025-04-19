@@ -114,9 +114,15 @@ namespace DC2025
 			return new Vector3(gridPos.x * _tileSize.x, 0, gridPos.y * _tileSize.y);
 		}
 
-		public bool CanMoveTo(Vector2Int gridPos, Direction from, bool forceDoorsOpen = false)
+		public bool CanMoveTo(Vector2Int gridPos, Direction dir, bool forceDoorsOpen = false)
 		{
-			if (_tiles.ContainsKey(gridPos)) return !_tiles[gridPos].HasWallAt(from, false, forceDoorsOpen);
+            if (_tiles.ContainsKey(gridPos))
+            {
+                return (
+                    !_tiles[gridPos].HasWallAt(dir, false, forceDoorsOpen) &&
+                    (_tiles.ContainsKey(gridPos + dir.ToVector2Int()) && !_tiles[gridPos + dir.ToVector2Int()].HasWallAt(dir.Opposite(), false, forceDoorsOpen))
+                );
+            }
 			return false;
 		}
 
@@ -246,7 +252,7 @@ namespace DC2025
 					Entity entity = onTile.FirstOrDefault(e => func(e.entity))?.entity;
 					if (entity) return entity;
 				}
-				DirectionExtension.AllDirections().ForEach(dir =>
+				DirectionExt.AllDirections().ForEach(dir =>
 				{
 					if (!CanMoveTo(v, dir)) return;
 					Vector2Int w = v + dir.ToVector2Int();
@@ -278,7 +284,7 @@ namespace DC2025
 					path.Reverse();
 					return path;
 				}
-				DirectionExtension.AllDirections().ForEach(dir =>
+				DirectionExt.AllDirections().ForEach(dir =>
 				{
 					if (!CanMoveTo(v, dir)) return;
 					Vector2Int w = v + dir.ToVector2Int();
