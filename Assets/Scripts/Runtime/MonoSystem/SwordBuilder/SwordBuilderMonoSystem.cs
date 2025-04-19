@@ -12,7 +12,7 @@ namespace DC2025
         private Dictionary<BladeType, GameObject> _unfBlades = new();
         private Dictionary<HandleType, GameObject> _handles = new();
 
-        private void Start()
+        private void Awake()
         {
             _blades.Add(BladeType.ShortSword, Resources.Load<GameObject>("Prefabs/SwordComponents/ShortSwordBlade"));
             _blades.Add(BladeType.LongSword, Resources.Load<GameObject>("Prefabs/SwordComponents/LongSwordBlade"));
