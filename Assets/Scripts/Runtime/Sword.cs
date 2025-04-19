@@ -147,6 +147,7 @@ namespace DC2025
             this.stats.speed *= DCGameManager.settings.handleSpeedScales[_item.handleType];
             this.stats.staminaMultiplier = DCGameManager.settings.bladeStaminaScales[_item.bladeType];
             this.stats.staminaMultiplier *= DCGameManager.settings.handleStaminaScales[_item.handleType];
+            this.stats.foresight += DCGameManager.settings.handleForesights[_item.handleType];
         }
     }
 }

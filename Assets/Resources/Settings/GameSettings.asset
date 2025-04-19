@@ -29,13 +29,13 @@ MonoBehaviour:
   durabilityAmmounts:
     list:
     - Key: 0
-      Value: 0.05
+      Value: 0.06666667
     - Key: 1
-      Value: 0.03333334
+      Value: 0.05882353
     - Key: 2
-      Value: 0.025
+      Value: 0.05
     - Key: 3
-      Value: 0.02
+      Value: 0.04
     keyCollision: 0
   durabilityRatingScales:
     list:
@@ -53,11 +53,11 @@ MonoBehaviour:
     - Key: 0
       Value: 20
     - Key: 1
-      Value: 40
+      Value: 60
     - Key: 2
-      Value: 80
+      Value: 180
     - Key: 3
-      Value: 160
+      Value: 540
     keyCollision: 0
   ratingDamageScales:
     list:
@@ -73,28 +73,28 @@ MonoBehaviour:
   bladeDamageScales:
     list:
     - Key: 0
-      Value: 0.6
+      Value: 0.7
     - Key: 1
-      Value: 0.8
+      Value: 1.2
     - Key: 2
       Value: 1
     - Key: 3
-      Value: 1.25
+      Value: 1.3
     - Key: 4
-      Value: 1.45
+      Value: 1.6
     keyCollision: 0
   bladeSpeeds:
     list:
     - Key: 0
-      Value: 0.2
+      Value: 0.23
     - Key: 1
       Value: 0.4
     - Key: 2
       Value: 0.3
     - Key: 3
-      Value: 0.6
+      Value: 0.4
     - Key: 4
-      Value: 0.7
+      Value: 0.5
     keyCollision: 0
   bladeStaminaScales:
     list:
@@ -107,14 +107,14 @@ MonoBehaviour:
     - Key: 3
       Value: 1.2
     - Key: 4
-      Value: 1.6
+      Value: 1.65
     keyCollision: 0
   handleDamageScales:
     list:
     - Key: 0
       Value: 1
     - Key: 1
-      Value: 1.5
+      Value: 1.4
     - Key: 2
       Value: 0.7
     - Key: 3
@@ -127,11 +127,11 @@ MonoBehaviour:
     - Key: 0
       Value: 1
     - Key: 1
-      Value: 2
+      Value: 1.5
     - Key: 2
       Value: 0.7
     - Key: 3
-      Value: 1.4
+      Value: 1.25
     - Key: 4
       Value: 1
     keyCollision: 0
@@ -147,6 +147,19 @@ MonoBehaviour:
       Value: 1.4
     - Key: 4
       Value: 1
+    keyCollision: 0
+  handleForesights:
+    list:
+    - Key: 0
+      Value: 0
+    - Key: 1
+      Value: 0
+    - Key: 2
+      Value: 0
+    - Key: 3
+      Value: 0
+    - Key: 4
+      Value: 0.15
     keyCollision: 0
   materialColors:
     list:
@@ -214,3 +227,4 @@ MonoBehaviour:
   potionSound: {fileID: 8300000, guid: 52b1f5f41fcc2df41947a6cac62b9405, type: 3}
   lockedSound: {fileID: 8300000, guid: 68705ba19ec8cee45989382dc14fc31f, type: 3}
   unlockedSound: {fileID: 8300000, guid: f68bcbcf70b91cf45a56581bd15627e2, type: 3}
+  viewDistance: 10

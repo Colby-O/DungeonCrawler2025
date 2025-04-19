@@ -32,6 +32,7 @@ namespace DC2025
         public SerializableDictionary<HandleType, float> handleDamageScales;
         public SerializableDictionary<HandleType, float> handleSpeedScales;
         public SerializableDictionary<HandleType, float> handleStaminaScales;
+        public SerializableDictionary<HandleType, float> handleForesights;
 
         public SerializableDictionary<MaterialType, Color> materialColors;
 
@@ -68,5 +69,6 @@ namespace DC2025
         public AudioClip potionSound;
         public AudioClip lockedSound;
         public AudioClip unlockedSound;
+        public int viewDistance = 10;
     }
 }

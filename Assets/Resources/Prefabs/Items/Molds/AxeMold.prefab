@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 8058700436920180204}
   - component: {fileID: 5586921824415631863}
   m_Layer: 0
-  m_Name: BattleAxe
+  m_Name: AxeMold
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -42,7 +42,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6472243022171168496}
-  m_Mesh: {fileID: -489752488287846591, guid: 7c99275b86c719d87ab24b2239aac715, type: 3}
+  m_Mesh: {fileID: -8287839383430266118, guid: 7c99275b86c719d87ab24b2239aac715, type: 3}
 --- !u!23 &1021946539860206707
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -104,7 +104,7 @@ MonoBehaviour:
   _centerPos: {x: 0, y: 0, z: 0}
   _height: 0
   _hasInited: 0
-  bladeType: 4
+  bladeType: 1
 --- !u!65 &5586921824415631863
 BoxCollider:
   m_ObjectHideFlags: 0

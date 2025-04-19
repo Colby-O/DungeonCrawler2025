@@ -238,6 +238,7 @@ MonoBehaviour:
   _attackIntervalLow: 2
   _attackIntervalHigh: 3
   _materialType: 1
+  _health: 100
   _attackDamage: 20
   OnKilled:
     m_PersistentCalls:

@@ -306,5 +306,22 @@ namespace DC2025
 			RegisterInteractables();
 		}
 
+        private void FixedUpdate()
+        {
+            Vector2Int playerPos = DCGameManager.PlayerController.GridPosition();
+            int maxDist = DCGameManager.settings.viewDistance;
+            foreach (var (pos, tile) in _tiles)
+            {
+                if (Mathf.Abs(playerPos.x - pos.x) + Mathf.Abs(playerPos.y - pos.y) > maxDist)
+                {
+                    tile.gameObject.SetActive(false);
+                }
+                else
+                {
+                    tile.gameObject.SetActive(true);
+                }
+            }
+        }
+
 	}
 }

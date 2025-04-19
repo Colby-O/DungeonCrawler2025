@@ -171,6 +171,7 @@ namespace DC2025
 
         private void OnRestart()
         {
+            if (_fightMs.InFight()) GameManager.GetMonoSystem<IAnimationMonoSystem>().StopAllAnimations(this);
             _attacking = false;
         }
 

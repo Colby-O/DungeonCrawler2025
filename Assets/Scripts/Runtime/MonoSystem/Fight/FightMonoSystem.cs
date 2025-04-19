@@ -213,8 +213,8 @@ namespace DC2025
             Enemy.pause = true;
             Player.stopMovement = true;
             _enemy = enemy;
-            _enemyHealth = 100;
-            _enemy.SetHealBar(_enemyHealth);
+            _enemyHealth = _enemy.Health();
+            _enemy.SetHealBar(_enemyHealth / _enemy.Health());
             _enemy.EnterBattle();
             _fightState = FightState.PlayerCancelMoves;
         }
@@ -252,7 +252,7 @@ namespace DC2025
             {
                 _chatMs.Send($"You strike the enemy dealing {_player.Sword().stats.damage} damage.");
                 _enemyHealth -= _player.Sword().stats.damage * _damageMultiplier;
-                _enemy.SetHealBar(_enemyHealth);
+                _enemy.SetHealBar(_enemyHealth / _enemy.Health());
                 if (_enemyHealth <= 0)
                 {
                     EnemyDie();

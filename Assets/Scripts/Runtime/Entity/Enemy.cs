@@ -23,6 +23,7 @@ namespace DC2025
         [SerializeField] private float _attackIntervalLow = 1.5f;
         [SerializeField] private float _attackIntervalHigh = 3.0f;
         [SerializeField] private MaterialType _materialType = MaterialType.Bronze;
+        [SerializeField] private float _health = 100;
 
         private Animator _animator;
         
@@ -40,6 +41,7 @@ namespace DC2025
         public UnityEvent OnKilled = new UnityEvent();
         [SerializeField] private SkinnedMeshRenderer _meshRenderer;
 
+        public float Health() => _health;
         public float AttackIntervalLow() => _attackIntervalLow;
         public float AttackIntervalHigh() => _attackIntervalHigh;
 
@@ -131,7 +133,6 @@ namespace DC2025
             _healthBar.gameObject.SetActive(true);
             _healthBarBg.gameObject.SetActive(true);
             if (value < 0) value = 0;
-            value /= 100;
             float worldSize = _healthBarFullSize * value;
             _healthBar.localScale = new Vector3(_healthBar.localScale.x, worldSize, _healthBar.localScale.z);
             _healthBar.localPosition = new Vector3((_healthBarFullSize - worldSize) / 2, _healthBar.localPosition.y, _healthBar.localPosition.z);
