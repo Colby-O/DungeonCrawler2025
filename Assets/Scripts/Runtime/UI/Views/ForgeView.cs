@@ -46,7 +46,7 @@ namespace DC2025
 
 		public void RemoveStar(bool tooLow)
 		{
-			if (_currentRating <= 3) return;
+			if (_currentRating < 4) return;
 			_stars[_currentRating - 1].SetActive(false);
 			_currentRating -= 1;
             string level = tooLow ? "low" : "high";

@@ -239,7 +239,7 @@ namespace DC2025
         {
             if (_attacking) return;
             _attacking = true;
-            _sword.Stumble();
+            _sword.Stumble(_stumbleAniSpeed);
             Vector3 startPos = transform.position;
             Vector3 endPos = startPos + transform.right * _stumbleAniMagnitude;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(

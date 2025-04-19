@@ -36,6 +36,117 @@ MonoBehaviour:
     - Key: 3
       Value: 0.02
     keyCollision: 0
+  durabilityRatingScales:
+    list:
+    - Key: 1
+      Value: 2
+    - Key: 2
+      Value: 1.5
+    - Key: 3
+      Value: 1.2
+    - Key: 4
+      Value: 1
+    keyCollision: 0
+  materialDamage:
+    list:
+    - Key: 0
+      Value: 10
+    - Key: 1
+      Value: 20
+    - Key: 2
+      Value: 40
+    - Key: 3
+      Value: 80
+    keyCollision: 0
+  ratingDamageScales:
+    list:
+    - Key: 1
+      Value: 0.5
+    - Key: 2
+      Value: 0.65
+    - Key: 3
+      Value: 0.8
+    - Key: 4
+      Value: 1
+    keyCollision: 0
+  bladeDamageScales:
+    list:
+    - Key: 0
+      Value: 0.6
+    - Key: 1
+      Value: 0.8
+    - Key: 2
+      Value: 1
+    - Key: 3
+      Value: 1.25
+    - Key: 4
+      Value: 1.45
+    keyCollision: 0
+  bladeSpeeds:
+    list:
+    - Key: 0
+      Value: 0.2
+    - Key: 1
+      Value: 0.4
+    - Key: 2
+      Value: 0.3
+    - Key: 3
+      Value: 0.6
+    - Key: 4
+      Value: 0.7
+    keyCollision: 0
+  bladeStaminaScales:
+    list:
+    - Key: 0
+      Value: 0.8
+    - Key: 1
+      Value: 1
+    - Key: 2
+      Value: 1
+    - Key: 3
+      Value: 1.2
+    - Key: 4
+      Value: 1.6
+    keyCollision: 0
+  handleDamageScales:
+    list:
+    - Key: 0
+      Value: 1
+    - Key: 1
+      Value: 1.5
+    - Key: 2
+      Value: 0.7
+    - Key: 3
+      Value: 1.25
+    - Key: 4
+      Value: 0.8
+    keyCollision: 0
+  handleSpeedScales:
+    list:
+    - Key: 0
+      Value: 1
+    - Key: 1
+      Value: 2
+    - Key: 2
+      Value: 0.7
+    - Key: 3
+      Value: 1.4
+    - Key: 4
+      Value: 1
+    keyCollision: 0
+  handleStaminaScales:
+    list:
+    - Key: 0
+      Value: 1
+    - Key: 1
+      Value: 2
+    - Key: 2
+      Value: 0.8
+    - Key: 3
+      Value: 1.4
+    - Key: 4
+      Value: 1
+    keyCollision: 0
   materialColors:
     list:
     - Key: 0

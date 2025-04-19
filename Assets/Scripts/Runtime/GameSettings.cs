@@ -1,6 +1,7 @@
 using PlazmaGames.Runtime.DataStructures;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace DC2025
 {
@@ -21,6 +22,15 @@ namespace DC2025
         public float anvilHammerShowHitTime = 1.0f;
         public int anvilHammerCount = 4;
         public SerializableDictionary<MaterialType, float> durabilityAmmounts;
+        public SerializableDictionary<int, float> durabilityRatingScales;
+        public SerializableDictionary<MaterialType, float> materialDamage;
+        public SerializableDictionary<int, float> ratingDamageScales;
+        public SerializableDictionary<BladeType, float> bladeDamageScales;
+        public SerializableDictionary<BladeType, float> bladeSpeeds;
+        [FormerlySerializedAs("bladeStaminas")]public SerializableDictionary<BladeType, float> bladeStaminaScales;
+        public SerializableDictionary<HandleType, float> handleDamageScales;
+        public SerializableDictionary<HandleType, float> handleSpeedScales;
+        public SerializableDictionary<HandleType, float> handleStaminaScales;
 
         public SerializableDictionary<MaterialType, Color> materialColors;
 

@@ -15,8 +15,10 @@ namespace DC2025
     public enum HandleType
     {
         Balanced=0,
-        Quick,
+        Dominant,
         Lightweight,
+        Rugged,
+        Wise,
     }
 
     public static class HandleTypeExt
@@ -48,12 +50,14 @@ namespace DC2025
 
         public override void SetMaterial(MaterialType material)
         {
-
+            _type = material;
         }
 
         public void TakeDurability()
         {
-            _durability -= DCGameManager.settings.durabilityAmmounts[GetMaterial()];
+            float amm = DCGameManager.settings.durabilityAmmounts[GetMaterial()];
+            amm *= DCGameManager.settings.durabilityRatingScales[GetRating()];
+            _durability -= amm;
             if (_durability <= 0)
             {
                 _durability = 0;
@@ -65,6 +69,11 @@ namespace DC2025
         public float GetDurability()
         {
             return _durability;
+        }
+
+        public void SetDurability(float v)
+        {
+            _durability = v;
         }
     }
 }

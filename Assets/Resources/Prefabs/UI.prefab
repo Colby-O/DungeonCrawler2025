@@ -576,6 +576,8 @@ MonoBehaviour:
   _output: {fileID: 2937595275933901217}
   _nextHandle: {fileID: 2270436305399292634}
   _prevHandle: {fileID: 6900941876294848982}
+  _handleIcon: {fileID: 346095008193620898}
+  _handleIconHover: {fileID: 284696238746678173}
 --- !u!1 &154357072450690085
 GameObject:
   m_ObjectHideFlags: 0
@@ -998,6 +1000,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &333215825516807159
 GameObject:
@@ -1412,6 +1415,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &378909548217873979
 GameObject:
@@ -1766,6 +1770,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &460809685404397095
 GameObject:
@@ -3963,6 +3968,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &1519417917020019046
 GameObject:
@@ -4089,6 +4095,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &1547899746906575505
 GameObject:
@@ -5490,6 +5497,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &2299072333397764987
 GameObject:
@@ -6417,6 +6425,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &2635520273083486241
 GameObject:
@@ -7514,6 +7523,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &3212647693989357731
 GameObject:
@@ -8191,6 +8201,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &3317522532102527798
 GameObject:
@@ -8774,6 +8785,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &3448393447274827179
 GameObject:
@@ -8900,6 +8912,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &3454599155521317520
 GameObject:
@@ -10794,6 +10807,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &4128070364196668544
 GameObject:
@@ -10995,6 +11009,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &4138015873170860086
 GameObject:
@@ -11343,6 +11358,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &4328138984776103481
 GameObject:
@@ -11658,6 +11674,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &4424938184482291804
 GameObject:
@@ -12736,6 +12753,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &5081199996247897186
 GameObject:
@@ -14300,6 +14318,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &5611436025330725840
 GameObject:
@@ -14932,6 +14951,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &5941585009166310114
 GameObject:
@@ -15690,6 +15710,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &6174899443069161595
 GameObject:
@@ -16358,6 +16379,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &6424089308687757292
 GameObject:
@@ -16628,6 +16650,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &6494770131690320846
 GameObject:
@@ -16756,6 +16779,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &6519561192880568305
 GameObject:
@@ -17714,6 +17738,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &6951301482956027719
 GameObject:
@@ -17952,6 +17977,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &7087681122314671806
 GameObject:
@@ -19014,6 +19040,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &7400311397597428045
 GameObject:
@@ -19783,6 +19810,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &7600639187823443168
 GameObject:
@@ -19909,6 +19937,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &7635928032314709198
 GameObject:
@@ -21355,6 +21384,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &8124144819883376606
 GameObject:
@@ -21751,6 +21781,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &8243807686680931624
 GameObject:
@@ -22253,6 +22284,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &8505194396702526405
 GameObject:
@@ -22526,6 +22558,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &8693611093025006067
 GameObject:
@@ -22952,6 +22985,7 @@ MonoBehaviour:
   onPointerDown:
     m_PersistentCalls:
       m_Calls: []
+  _playerSound: 1
   _isDisabled: 0
 --- !u!1 &8930760098424147494
 GameObject:
@@ -24758,16 +24792,51 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedComponents:
+    - {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+    m_RemovedGameObjects:
+    - {fileID: 1444027805559012579, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+    - {fileID: 5774416383910614200, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 284696238746678173}
   m_SourcePrefab: {fileID: 100100000, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+--- !u!114 &346095008193620898 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 868644653262965583, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+  m_PrefabInstance: {fileID: 631515662747082989}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!224 &556818418945538265 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1115115075880228916, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
   m_PrefabInstance: {fileID: 631515662747082989}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2263034124050019284 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+  m_PrefabInstance: {fileID: 631515662747082989}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &284696238746678173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2263034124050019284}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39d38f819c6654323b6f66ab56e30777, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _handle: 0
 --- !u!1001 &944420710379421039
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -23,7 +23,16 @@ namespace DC2025
         public float Durability() => _item ? _item.GetDurability() : 0;
         public void TakeDurability()
         {
-            if (_item) _item.TakeDurability();
+            if (_item)
+            {
+                _item.TakeDurability();
+                if (Durability() <= 0)
+                {
+                    _item.Release();
+                    GameManager.GetMonoSystem<IInventoryMonoSystem>().GetHandSlot(SlotType.Left).Clear();
+                    SetModel(null);
+                }
+            }
         }
 
         public void Raise()
@@ -75,7 +84,7 @@ namespace DC2025
                 );
         }
         
-        public void Stumble()
+        public void Stumble(float aniSpeed)
         {
             if (!HasSword()) return;
             GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.entityStepSounds[Random.Range(0, DCGameManager.settings.entityStepSounds.Count)], PlazmaGames.Audio.AudioType.Sfx, false, true);
@@ -83,7 +92,7 @@ namespace DC2025
             Quaternion endRot = Quaternion.Euler(0, 20, 20) * startRot;
             GameManager.GetMonoSystem<IAnimationMonoSystem>().RequestAnimation(
                 this,
-                this.stats.speed,
+                aniSpeed,
                 (t) =>
                 {
                     if (t < 0.5) _model.rotation = Quaternion.Lerp(startRot, endRot, t * 2);
@@ -122,6 +131,19 @@ namespace DC2025
             if (HasSword()) Destroy(_model.gameObject);
             _model = Instantiate(model.gameObject, _swordObject).transform;
             Lower();
+            CalculateStats();
+        }
+
+        private void CalculateStats()
+        {
+            this.stats.damage = DCGameManager.settings.materialDamage[_item.GetMaterial()];
+            this.stats.damage *= DCGameManager.settings.bladeDamageScales[_item.bladeType];
+            this.stats.damage *= DCGameManager.settings.ratingDamageScales[_item.GetRating()];
+            this.stats.damage *= DCGameManager.settings.handleDamageScales[_item.handleType];
+            this.stats.speed = DCGameManager.settings.bladeSpeeds[_item.bladeType];
+            this.stats.speed *= DCGameManager.settings.handleSpeedScales[_item.handleType];
+            this.stats.staminaMultiplier = DCGameManager.settings.bladeStaminaScales[_item.bladeType];
+            this.stats.staminaMultiplier *= DCGameManager.settings.handleStaminaScales[_item.handleType];
         }
     }
 }

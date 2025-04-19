@@ -27,8 +27,10 @@ namespace DC2025
             _unfBlades.Add(BladeType.Dagger, Resources.Load<GameObject>("Prefabs/SwordComponents/UnfDaggerBlade"));
             
             _handles.Add(HandleType.Balanced, Resources.Load<GameObject>("Prefabs/SwordComponents/BalancedHandle"));
-            _handles.Add(HandleType.Quick, Resources.Load<GameObject>("Prefabs/SwordComponents/QuickHandle"));
+            _handles.Add(HandleType.Dominant, Resources.Load<GameObject>("Prefabs/SwordComponents/DominantHandle"));
             _handles.Add(HandleType.Lightweight, Resources.Load<GameObject>("Prefabs/SwordComponents/LightweightHandle"));
+            _handles.Add(HandleType.Rugged, Resources.Load<GameObject>("Prefabs/SwordComponents/RuggedHandle"));
+            _handles.Add(HandleType.Wise, Resources.Load<GameObject>("Prefabs/SwordComponents/WiseHandle"));
         }
 
         public void BuildSword(Transform parent, BladeType bladeType, HandleType handleType, MaterialType materialType)
@@ -55,6 +57,7 @@ namespace DC2025
             weapon.SetMaterial(materialType);
             weapon.SetRating(rating);
             weapon.handleType = handleType;
+            weapon.SetDurability(1);
             weapon.ForceInit();
             return weapon;
         }
