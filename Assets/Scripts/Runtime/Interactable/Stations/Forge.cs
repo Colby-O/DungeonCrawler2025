@@ -27,6 +27,7 @@ namespace DC2025
         [Header("Debugging")]
         [SerializeField, ReadOnly] private ForgeView _view;
         [SerializeField, ReadOnly] private float _timerOn = 0;
+        private float _fullTime = 0;
         [SerializeField, ReadOnly] private float _maxOutOfRangeTime = 0;
         [SerializeField, ReadOnly] private float _outOfRangeTime = 0;
         [SerializeField, ReadOnly] private bool _isStarted = false;
@@ -73,6 +74,7 @@ namespace DC2025
         {
             _isStarted = true;
             _timerOn = 0;
+            _fullTime = 0;
             _temperture = _startTemperture;
             _maxOutOfRangeTime = DCGameManager.settings.forgeCookTime * _outOfRangeAllowed;
             _outOfRangeTime = 0;
@@ -83,9 +85,11 @@ namespace DC2025
 
         public void ForgetSetp()
         {
+            _fullTime += Time.deltaTime;
+            if (_graceTime > _fullTime) return;
+            
             _timerOn += Time.deltaTime;
 
-            if (_graceTime > _timerOn) return;
 
             _vel -= ((_vel > 0) ? _accelerationWhileUp : _accelerationWhileDown) * Time.deltaTime;
             _temperture += _vel * Time.deltaTime;
@@ -125,6 +129,7 @@ namespace DC2025
 
         public void FanFlame()
         {
+            if (_graceTime > _fullTime) return;
             GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.fanFireSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             _vel = _fanForce;
         }
