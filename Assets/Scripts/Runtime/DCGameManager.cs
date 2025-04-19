@@ -3,6 +3,7 @@ using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
 using UnityEngine;
+using UnityEngine.Events;
 
 namespace DC2025
 {
@@ -29,6 +30,8 @@ namespace DC2025
         public static Interactor Player;
         public static PlayerManager PlayerManager;
         public static Player PlayerController;
+
+        public static UnityEvent OnRestart = new UnityEvent();
 
         public static ItemDatabase ItemDB { get { return ((DCGameManager)GameManager.Instance)._itemDB; } }
 

@@ -335,6 +335,16 @@ namespace DC2025
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
         }
 
+		private void OnRestart()
+		{
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().StopAllAnimations(this);
+            _queuedAction = Action.None;
+            _currentActtion = Action.None;
+            _timeSinceLastSync = 0;
+            _facing = Direction.North.GetFacingDirection(transform.rotation.eulerAngles.y);
+            Sync();
+        }
+
 		protected virtual void Start()
         {
 			_queuedAction = Action.None;
@@ -345,6 +355,8 @@ namespace DC2025
             _facing = Direction.North.GetFacingDirection(transform.rotation.eulerAngles.y);
 
 			Sync();
+
+			DCGameManager.OnRestart.AddListener(OnRestart);
 		}
 
 		protected virtual void Update()

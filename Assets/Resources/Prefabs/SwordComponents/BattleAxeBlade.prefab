@@ -95,6 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3161805517302789862}
+  - component: {fileID: 8343305438942710880}
   m_Layer: 0
   m_Name: BattleAxeBlade
   m_TagString: Untagged
@@ -119,6 +120,20 @@ Transform:
   - {fileID: 140359389291374163}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8343305438942710880
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4507347504689933101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52493edfab6e9134aa7e0bc274f47264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normal: {fileID: 6903328136245907734}
+  _damaged: {fileID: 6099657405210434008}
 --- !u!1 &7270693233845958606
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,5 +242,15 @@ PrefabInstance:
 --- !u!4 &4858943293329808317 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3253742088870857674, guid: 668b2ef3d20a6874783e794244478d6a, type: 3}
+  m_PrefabInstance: {fileID: 7947149230874955895}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6099657405210434008 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4246793332639140271, guid: 668b2ef3d20a6874783e794244478d6a, type: 3}
+  m_PrefabInstance: {fileID: 7947149230874955895}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &6903328136245907734 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3568115635101073761, guid: 668b2ef3d20a6874783e794244478d6a, type: 3}
   m_PrefabInstance: {fileID: 7947149230874955895}
   m_PrefabAsset: {fileID: 0}

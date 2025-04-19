@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4873601444446562226}
+  - component: {fileID: 3052759488890682321}
   m_Layer: 0
   m_Name: DaggerBlade
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   - {fileID: 2435316121975314821}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3052759488890682321
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6928376152031817578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52493edfab6e9134aa7e0bc274f47264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normal: {fileID: 2880194482680660747}
+  _damaged: {fileID: 8322124116244318889}
 --- !u!1 &7459169213658560957
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,8 +152,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6d37f04c21f8d41468e057a9397a1247, type: 3}
+--- !u!1 &2880194482680660747 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3888826630372133089, guid: 6d37f04c21f8d41468e057a9397a1247, type: 3}
+  m_PrefabInstance: {fileID: 1301367291703823338}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5381186141261572077 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6386863900137565191, guid: 6d37f04c21f8d41468e057a9397a1247, type: 3}
+  m_PrefabInstance: {fileID: 1301367291703823338}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &8322124116244318889 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7021531156678295875, guid: 6d37f04c21f8d41468e057a9397a1247, type: 3}
   m_PrefabInstance: {fileID: 1301367291703823338}
   m_PrefabAsset: {fileID: 0}

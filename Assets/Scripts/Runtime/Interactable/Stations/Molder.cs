@@ -63,6 +63,13 @@ namespace DC2025
             return _currentMold.Find("Liquid").gameObject.activeSelf;
         }
 
+        private void SetLiquidColor()
+        {
+            Transform liquid = _currentMold.Find("Liquid");
+            liquid.gameObject.SetActive(true);
+            liquid.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", DCGameManager.settings.materialColors[_view.GetMaterial()]);
+        }
+
         private void MaterialChange()
         {
             if (!_currentMold) return;
@@ -75,9 +82,7 @@ namespace DC2025
             }
             else if (bucket && !HasMaterial())
             {
-                Transform liquid = _currentMold.Find("Liquid");
-                liquid.gameObject.SetActive(true);
-                liquid.GetComponent<MeshRenderer>().material.SetColor("_BaseColor", DCGameManager.settings.materialColors[_view.GetMaterial()]);
+                SetLiquidColor();
             }
         }
 
@@ -93,6 +98,12 @@ namespace DC2025
             {
                 _currentMold = Instantiate(_molds[mold.bladeType], _moldSlot).transform;
                 MaterialChange();
+
+                BucketItem bucket = _view.GetBucket();
+                if (bucket != null)
+                {
+                    SetLiquidColor();
+                }
             }
         }
 

@@ -19,6 +19,8 @@ namespace DC2025
         [SerializeField, ReadOnly] private float _curHealth;
         [SerializeField, ReadOnly] private float _curStamina;
 
+        [SerializeField, ReadOnly] private Vector3 _start;
+
         private float _staminaRefilCountdown = 0;
 
         public float GetHealth() => _curHealth;
@@ -63,7 +65,9 @@ namespace DC2025
 
         public void OnDeath()
         {
-            Debug.Log("The Player Had Died :<");
+            transform.position = _start;
+            DCGameManager.PlayerController.Sync();
+            DCGameManager.OnRestart.Invoke();
         }
 
         private void RefillStamina()
@@ -79,10 +83,24 @@ namespace DC2025
             }
         }
 
+        private void OnRestart()
+        {
+            _curHealth = _maxHealth;
+            _curStamina = _maxStamina;
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().UpdateHealth();
+            GameManager.GetMonoSystem<IUIMonoSystem>().GetView<GenericView>().UpdateStamina();
+        }
+
         private void Awake()
         {
             _curHealth = _maxHealth;
             _curStamina = _maxStamina;
+        }
+
+        private void Start()
+        {
+            _start = transform.position;
+            DCGameManager.OnRestart.AddListener(OnRestart);
         }
 
         private void Update()

@@ -49,6 +49,7 @@ namespace DC2025
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
             _chatMs = GameManager.GetMonoSystem<IChatWindowMonoSystem>();
             _player = FindFirstObjectByType<Player>();
+            DCGameManager.OnRestart.AddListener(EndFight);
         }
 
 
@@ -298,9 +299,15 @@ namespace DC2025
             _gridMs.RemoveEntity(_enemy);
             _enemy.DisableHealthBar();
             _enemy.gameObject.SetActive(false);
+            EndFight();
+        }
+
+        private void EndFight()
+        {
             Enemy.pause = false;
             Player.stopMovement = false;
             _fightState = FightState.None;
+
         }
 
         private bool EntityFaceEntity(Entity facer, Entity facee)

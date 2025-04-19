@@ -13,6 +13,11 @@ namespace DC2025
             OnDrop.AddListener(OnDropChick);
         }
 
+        public void OnRestart()
+        {
+            _placed = false;
+        }
+
         private void OnDropChick()
         {
             transform.GetComponent<Chicken>().CauseDistraction();

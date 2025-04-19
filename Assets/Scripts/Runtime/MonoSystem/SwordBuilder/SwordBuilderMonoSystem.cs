@@ -33,7 +33,7 @@ namespace DC2025
             _handles.Add(HandleType.Wise, Resources.Load<GameObject>("Prefabs/SwordComponents/WiseHandle"));
         }
 
-        public void BuildSword(Transform parent, BladeType bladeType, HandleType handleType, MaterialType materialType)
+        public BladeController BuildSword(Transform parent, BladeType bladeType, HandleType handleType, MaterialType materialType)
         {
             while (parent.childCount > 0) DestroyImmediate(parent.GetChild(0).gameObject);
 
@@ -43,6 +43,8 @@ namespace DC2025
             {
                 mr.material.color = DCGameManager.settings.materialColors[materialType];
             }
+
+            return blade.GetComponent<BladeController>();
         }
 
         public WeaponItem CreateSword(BladeType bladeType, HandleType handleType, MaterialType materialType, int rating)
@@ -50,7 +52,7 @@ namespace DC2025
             GameObject go = new GameObject();
             Transform model = new GameObject("Model").transform;
             model.parent = go.transform;
-            BuildSword(model, bladeType, handleType, materialType);
+            BladeController bc = BuildSword(model, bladeType, handleType, materialType);
             
             WeaponItem weapon = go.AddComponent<WeaponItem>();
             weapon.bladeType = bladeType;
@@ -58,6 +60,8 @@ namespace DC2025
             weapon.SetRating(rating);
             weapon.handleType = handleType;
             weapon.SetDurability(1);
+            bc.SetNormal();
+            weapon.SetBladeController(bc);
             weapon.ForceInit();
             return weapon;
         }

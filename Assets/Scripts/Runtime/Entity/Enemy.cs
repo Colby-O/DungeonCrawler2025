@@ -26,7 +26,10 @@ namespace DC2025
         private Transform _healthBar;
         private Transform _healthBarBg;
         private float _healthBarFullSize;
-        
+
+        private Vector3 start;
+        private Quaternion startRot;
+
         private bool _distracted = false;
         private Direction _saveDirection;
         private PathDirector _pathDirector;
@@ -43,6 +46,8 @@ namespace DC2025
         protected override void Start()
         {
             base.Start();
+            start = transform.position;
+            startRot = transform.rotation;
             OnKilled.AddListener(HandleKilled);
             _sword = GetComponentInChildren<Sword>();
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
@@ -53,6 +58,19 @@ namespace DC2025
             DisableHealthBar();
 
             SetNormalPath();
+
+            DCGameManager.OnRestart.AddListener(OnRestart);
+        }
+
+        private void OnRestart()
+        {
+            gameObject.SetActive(true);
+            transform.position = start;
+            transform.rotation = startRot;
+            _healthBar.gameObject.SetActive(false);
+            _healthBarBg.gameObject.SetActive(false);
+            SetNormalPath();
+            Sync();
         }
 
         private void HandleKilled()

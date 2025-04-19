@@ -69,7 +69,13 @@ namespace DC2025
 
         public virtual void OnPlayerExit() { }
 
-        public virtual void OnPressedDown() => Interact();
+        public virtual void OnPressedDown()
+        {
+            if (!GameManager.GetMonoSystem<IInventoryMonoSystem>().GetMouseSlot().HasItem())
+            {
+                Interact();
+            }
+        }
 
         protected virtual void OnClose()
         {

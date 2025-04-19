@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3161805517302789862}
+  - component: {fileID: 7995688244809460618}
   m_Layer: 0
   m_Name: AxeBlade
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   - {fileID: 140359389291374163}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7995688244809460618
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4507347504689933101}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52493edfab6e9134aa7e0bc274f47264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normal: {fileID: 568532760183267045}
+  _damaged: {fileID: 2849843838013287391}
 --- !u!1 &7270693233845958606
 GameObject:
   m_ObjectHideFlags: 0
@@ -224,6 +239,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b04739241eb02d740b72bc937e4fa629, type: 3}
+--- !u!1 &568532760183267045 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6746013698432545129, guid: b04739241eb02d740b72bc937e4fa629, type: 3}
+  m_PrefabInstance: {fileID: 6520493454657122188}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2849843838013287391 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9075280881102799955, guid: b04739241eb02d740b72bc937e4fa629, type: 3}
+  m_PrefabInstance: {fileID: 6520493454657122188}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3935558452212808814 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7845441732940846050, guid: b04739241eb02d740b72bc937e4fa629, type: 3}
