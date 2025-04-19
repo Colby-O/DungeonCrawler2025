@@ -209,3 +209,5 @@ MonoBehaviour:
   uiClickSound: {fileID: 8300000, guid: eda40b14efbed3844aa98da310cb873e, type: 3}
   zipperSound: {fileID: 8300000, guid: 8cbffc0f832cea445b9e3f1dd159d08b, type: 3}
   potionSound: {fileID: 8300000, guid: 52b1f5f41fcc2df41947a6cac62b9405, type: 3}
+  lockedSound: {fileID: 8300000, guid: 68705ba19ec8cee45989382dc14fc31f, type: 3}
+  unlockedSound: {fileID: 8300000, guid: f68bcbcf70b91cf45a56581bd15627e2, type: 3}

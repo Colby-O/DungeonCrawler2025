@@ -327,7 +327,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 89751599588896888}
-  - component: {fileID: 324873797976942893}
+  - component: {fileID: 4684490848625919538}
   - component: {fileID: 6871699407580184455}
   - component: {fileID: 7438234728356561084}
   - component: {fileID: 4985604030629256021}
@@ -357,7 +357,7 @@ Transform:
   - {fileID: 3059010560989772199}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &324873797976942893
+--- !u!82 &4684490848625919538
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -509,7 +509,7 @@ MonoBehaviour:
   _queuedAction: 0
   _syncInterval: 1
   _timeSinceLastSync: 0
-  _as: {fileID: 324873797976942893}
+  _as: {fileID: 4684490848625919538}
   manager: {fileID: 6871699407580184455}
   _input: {fileID: 3803882672711559437}
   _rawMovement: {x: 0, y: 0}
@@ -872,7 +872,7 @@ GameObject:
   - component: {fileID: 3989401196678390496}
   - component: {fileID: 6800422205465914644}
   - component: {fileID: 7435773388500298943}
-  - component: {fileID: 6878775573387452953}
+  - component: {fileID: 2607903882628122139}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: Untagged
@@ -991,7 +991,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
---- !u!81 &6878775573387452953
+--- !u!81 &2607903882628122139
 AudioListener:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

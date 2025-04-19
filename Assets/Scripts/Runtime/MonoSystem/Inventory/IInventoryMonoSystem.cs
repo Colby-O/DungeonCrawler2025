@@ -10,5 +10,6 @@ namespace DC2025
         public bool AddItemToInventory(PickupableItem item);
         public void RefreshInventory();
         public InventorySlot GetHandSlot(SlotType slot);
+        public bool HasKeyOfType(MaterialType type);
     }
 }

@@ -4,8 +4,8 @@ using PlazmaGames.Attribute;
 using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.UI;
+using System.Collections.Generic;
 using UnityEngine;
-using static UnityEngine.GraphicsBuffer;
 
 namespace DC2025
 {
@@ -17,7 +17,7 @@ namespace DC2025
 
         [Header("Settings")]
         [SerializeField] private float _openSpeed;
-        [SerializeField] private bool _isLocked;
+        [SerializeField] private List<KeyPad> _keysNeeded;
 
         [Header("Debugging")]
         [SerializeField, ReadOnly] private bool _isOpen;
@@ -25,6 +25,7 @@ namespace DC2025
 
         public void Open(Transform from)
         {
+            Unlock();
             if (IsOpen || _inProgress || IsLocked) return;
 
             GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.openDoorSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
@@ -89,12 +90,42 @@ namespace DC2025
 
         public override void Unlock()
         {
-            IsLocked = false;
+            if (!IsLocked) return;
+            bool canUnlock = true;
+
+            foreach (KeyPad pad in _keysNeeded)
+            {
+                if (pad.IsLocked() && GameManager.GetMonoSystem<IInventoryMonoSystem>().HasKeyOfType(pad.GetMaterial())) pad.Unlock();
+            }
+
+            foreach (KeyPad pad in _keysNeeded) canUnlock &= !pad.IsLocked();
+
+            IsLocked = !canUnlock;
+
+            if (IsLocked)
+            {
+                string keysNeeded = string.Empty;
+                foreach (KeyPad pad in _keysNeeded) if (pad.IsLocked()) keysNeeded += $"<color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[pad.GetMaterial()])}>{pad.GetMaterial()}</color> ";
+
+                GameManager.GetMonoSystem<IChatWindowMonoSystem>().Send($"You try to open the door but fail. You need key(s) of type {keysNeeded}to unlock the door.");
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.lockedSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
+            }
+            else
+            {
+                GameManager.GetMonoSystem<IChatWindowMonoSystem>().Send("You successfully unlocked the door and can now proceed.");
+                foreach (KeyPad pad in _keysNeeded) pad.gameObject.SetActive(false);
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.unlockedSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
+            }
         }
 
-        private void Awake()
+        public override bool CanOpen()
         {
-            if (_isLocked) Lock();
+            return true;
+        }
+
+        private void Start()
+        {
+            IsLocked = _keysNeeded != null && _keysNeeded.Count > 0;
         }
     }
 }

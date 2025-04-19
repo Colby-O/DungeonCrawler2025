@@ -1,6 +1,7 @@
 using PlazmaGames.Attribute;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 namespace DC2025
 {
@@ -25,6 +26,26 @@ namespace DC2025
         public CusorPopup GetPopup() => _popup;
 
         public InventorySlot GetHandSlot(SlotType slot) => (slot == SlotType.Left) ? _leftSlot : _rightSlot;
+
+        public bool HasKeyOfType(MaterialType type)
+        {
+            List<InventorySlot> slotsToCheck = new List<InventorySlot>(_slots)
+            {
+                _leftSlot,
+                _rightSlot
+            };
+
+            foreach (InventorySlot slot in slotsToCheck)
+            {
+                Debug.Log(slot);
+                if (slot.Item != null && slot.Item is KeyItem)
+                {
+                    if ((slot.Item as KeyItem).GetMaterial() == type) return true;
+                }
+            }
+
+            return false;
+        }
 
         public bool AddItemToInventory(PickupableItem item)
         {

@@ -24225,6 +24225,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventorySlot
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _hint
       value: 
@@ -24527,6 +24531,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _disablePopup
       value: 1
@@ -24719,6 +24727,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _disablePopup
@@ -25588,6 +25600,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventorySlot (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6316279529826192701, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -25764,6 +25780,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot (6)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6316279529826192701, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -26207,6 +26227,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 2200801015903909442, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -26407,6 +26431,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventorySlot (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6316279529826192701, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -26583,6 +26611,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6316279529826192701, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -26945,6 +26977,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventorySlot (7)
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6316279529826192701, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -27302,6 +27338,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _hint
@@ -27823,6 +27863,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _disablePopup
       value: 1
@@ -28256,6 +28300,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2610971879304755027, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_IsActive
@@ -28989,6 +29037,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventorySlot (4)
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6316279529826192701, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -29343,6 +29395,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _hint
@@ -29739,6 +29795,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_IsActive
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _disablePopup
@@ -30531,6 +30591,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: InventorySlot (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 6316279529826192701, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -30724,6 +30788,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _disablePopup
       value: 1
@@ -30904,6 +30972,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 6316279529826192701, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_AnchorMax.y
@@ -31156,6 +31228,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 2610971879304755027, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_IsActive
@@ -31458,6 +31534,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _hint
@@ -31910,6 +31990,10 @@ PrefabInstance:
     - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: m_Name
       value: InventorySlot (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1703611549223228217, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
       objectReference: {fileID: 0}
     - target: {fileID: 5325398738291913773, guid: 1a7cb4ddeb3deeb49a39dcecd55b4f2c, type: 3}
       propertyPath: _hint

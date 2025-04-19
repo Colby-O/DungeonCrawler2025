@@ -55,6 +55,11 @@ namespace DC2025
             else Close();
         }
 
+        public virtual bool CanOpen()
+        {
+            return !IsLocked;
+        }
+
         public abstract void Open();
         public abstract void Close();
         public abstract void Lock();
