@@ -141,6 +141,11 @@ namespace DC2025
             }
         }
 
+        public bool HasInteractableOfType<TInteractable>() where TInteractable : IInteractable
+        {
+            return _interactables != null && _interactables.OfType<TInteractable>().Any();
+        }
+
         public SerializableDictionary<Direction, Blockage> GetBlockages()
         {
             return _blockages;

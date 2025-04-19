@@ -2,6 +2,8 @@ using UnityEngine;
 
 namespace DC2025
 {
+    using PlazmaGames.Core;
+    using System;
     using System.IO;
     using UnityEngine;
     using UnityEngine.Experimental.Rendering;
@@ -10,6 +12,8 @@ namespace DC2025
     {
         public string fileName;
         public KeyCode screenshotKey;
+        public Transform _itemParent;
+
         private Camera Camera
         {
             get
@@ -25,10 +29,7 @@ namespace DC2025
 
         private void LateUpdate()
         {
-            if (Input.GetKeyDown(screenshotKey))
-            {
-                Capture();
-            }
+            if (Input.GetKeyDown(screenshotKey)) Capture();
         }
 
         public void Capture()

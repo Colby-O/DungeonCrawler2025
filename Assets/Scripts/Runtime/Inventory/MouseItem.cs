@@ -55,9 +55,10 @@ namespace DC2025
         private void Drop()
         {
             if (GameManager.GetMonoSystem<IFightMonoSystem>().InFight()) return;
-            Debug.Log("Dropping Itewm");
-            Item.Drop();
-            Clear();
+            if (Item.Drop())
+            {
+                Clear();
+            }
         }
 
         private void FollowCurosr()

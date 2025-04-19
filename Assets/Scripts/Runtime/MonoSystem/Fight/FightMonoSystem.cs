@@ -186,7 +186,11 @@ namespace DC2025
 
         private void EnemyAttack()
         {
-            if (!_enemy.Attacking()) _enemy.DoAttackAnimation();
+            if (!_enemy.Attacking())
+            {
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.swordSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
+                _enemy.DoAttackAnimation();
+            }
         }
 
         public void AddDamageBoost(float mul, float duration)

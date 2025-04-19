@@ -25,6 +25,7 @@ namespace DC2025
 
         public void Open(Transform from)
         {
+            if (GameManager.GetMonoSystem<IFightMonoSystem>().InFight()) return;
             Unlock();
             if (IsOpen || _inProgress || IsLocked) return;
 
@@ -62,6 +63,7 @@ namespace DC2025
 
         public override void Close()
         {
+            if (GameManager.GetMonoSystem<IFightMonoSystem>().InFight()) return;
             if (!IsOpen || _inProgress || IsLocked) return;
 
             GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.closeDoorSound, PlazmaGames.Audio.AudioType.Sfx, false, true);

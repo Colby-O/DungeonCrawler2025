@@ -46,6 +46,11 @@ namespace DC2025
         public UnityEvent OnPickup = new UnityEvent();
         public UnityEvent OnDrop = new UnityEvent();
 
+        protected virtual float RotationOffset()
+        {
+            return 0f;
+        }
+
         private void MoveItem()
         {
             if (IsEntered)
@@ -56,6 +61,7 @@ namespace DC2025
                 transform.position = center + new Vector3(tileSize.x / 2.0f * _player.Facing().ToVector3().x, transform.position.y, tileSize.y / 2.0f * _player.Facing().ToVector3().z);
                 transform.position = transform.position.SetY(_height);
             }
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.SetY(DCGameManager.PlayerController.Facing().GetFacing() + RotationOffset()));
         }
 
         protected virtual bool CanPickup() => true;
@@ -75,26 +81,28 @@ namespace DC2025
             transform.position = _centerPos.SetY(_height);
         }
 
-        public void Drop()
+        public bool Drop()
         {
-            GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.dropSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
-            gameObject.SetActive(true);
-            (Vector2Int, Tile) newGridPos = _grid.FindVaildLocationNearPlayer();
-            newGridPos.Item2.AddInteractable(this);
-            _centerPos = _grid.GridToWorld(newGridPos.Item1);
             Vector2Int playerPos = _grid.WorldToGrid(DCGameManager.Player.transform.position);
-
-            if (playerPos == newGridPos.Item1)
+            Tile playerTile = _grid.GetTileAt(playerPos);
+            bool isTileFree = playerTile != null && !playerTile.HasInteractableOfType<PickupableItem>();
+            if (isTileFree)
             {
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.dropSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
+                gameObject.SetActive(true);
+                playerTile.AddInteractable(this);
+                _centerPos = _grid.GridToWorld(playerPos);
                 IsEntered = true;
+                MoveItem();
+                OnDrop.Invoke();
             }
             else
             {
-                IsEntered = false;
-                Recenter();
+                GameManager.GetMonoSystem<IChatWindowMonoSystem>().Send($"You try and place a {GetName()} but find that there is not enough room.");
+                GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.uiClickSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             }
-            MoveItem();
-            OnDrop.Invoke();
+
+            return isTileFree;
         }
 
         public void Hide()
@@ -148,7 +156,7 @@ namespace DC2025
 
         public virtual void OnPressedDown()
         {
-            if (GameManager.GetMonoSystem<IFightMonoSystem>().InFight()) return;
+            if (GameManager.GetMonoSystem<IFightMonoSystem>().InFight() || GameManager.GetMonoSystem<IInventoryMonoSystem>().GetMouseSlot().HasItem()) return;
             GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.pickupSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
             PickupItem();
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace DC2025
 {
-    public class TestItem : MonoBehaviour, IInteractable
+    public class RestartTrigger : MonoBehaviour, IInteractable
     {
         public bool IsAdjancent { get; set; }
         public bool IsEntered { get; set; }
@@ -25,39 +25,22 @@ namespace DC2025
 
         public bool HasCollider { get { return false; } }
 
-        [SerializeField, ReadOnly] bool _isEntered;
-        [SerializeField, ReadOnly] bool _isAdjancent;
-
         private List<Tile> _currentTiles;
 
-        public void OnPlayerAdjancentEnter()
-        {
-            Debug.Log("On Adjancent Enter");
-        }
+        public void OnPlayerAdjancentEnter() { }
 
-        public void OnPlayerAdjancentExit()
-        {
-            Debug.Log("On Adjancent Exit");
-        }
+        public void OnPlayerAdjancentExit() { }
 
-        public void OnPlayerEnter()
-        {
-            Debug.Log("On Enter");
-        }
-
-        public void OnPlayerExit()
-        {
-            Debug.Log("On Exit");
-        }
+        public void OnPlayerExit() { }
 
         public void OnPressedDown() { }
         public void OnPressedUp() { }
         public void OnHover() { }
 
-        private void FixedUpdate()
+        public void OnPlayerEnter() 
         {
-            _isEntered = IsEntered;
-            _isAdjancent = IsAdjancent;
+            Debug.Log("Restart");
+            DCGameManager.OnRestart.Invoke();
         }
 
         private void LateUpdate()

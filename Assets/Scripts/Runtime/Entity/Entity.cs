@@ -337,7 +337,7 @@ namespace DC2025
 
 		private void OnRestart()
 		{
-            GameManager.GetMonoSystem<IAnimationMonoSystem>().StopAllAnimations(this);
+            if (this is not Player) GameManager.GetMonoSystem<IAnimationMonoSystem>().StopAllAnimations(this);
             _queuedAction = Action.None;
             _currentActtion = Action.None;
             _timeSinceLastSync = 0;

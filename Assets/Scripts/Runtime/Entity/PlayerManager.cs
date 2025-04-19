@@ -1,3 +1,4 @@
+using PlazmaGames.Animation;
 using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using PlazmaGames.Runtime.DataStructures;
@@ -65,6 +66,7 @@ namespace DC2025
 
         public void OnDeath()
         {
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().StopAllAnimations(this);
             transform.position = _start;
             DCGameManager.PlayerController.Sync();
             DCGameManager.OnRestart.Invoke();

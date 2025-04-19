@@ -47,7 +47,7 @@ namespace DC2025
 
         public override Sprite GetIcon()
         {
-            return null;
+            return Resources.Load<Sprite>($"Icons/Weapons/{bladeType}_{handleType}_{GetMaterial()}");
         }
 
         public override void SetMaterial(MaterialType material)
@@ -82,6 +82,11 @@ namespace DC2025
             }
 
             GameManager.GetMonoSystem<IInventoryMonoSystem>().GetHandSlot(SlotType.Left).Refresh();
+        }
+
+        protected override float RotationOffset()
+        {
+            return 90.0f;
         }
 
         public float GetDurability()

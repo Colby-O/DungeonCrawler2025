@@ -169,6 +169,11 @@ namespace DC2025
             }
         }
 
+        private void OnRestart()
+        {
+            _attacking = false;
+        }
+
         protected override void Awake()
         {
             base.Awake();
@@ -197,6 +202,7 @@ namespace DC2025
             Debug.Log(_invMs.GetHandSlot(SlotType.Left));
             Debug.Log(_invMs.GetHandSlot(SlotType.Left).OnChange);
             _invMs.GetHandSlot(SlotType.Left).OnChange.AddListener(HandleSwordSlotChange);
+            DCGameManager.OnRestart.AddListener(OnRestart);
         }
 
         private void HandleSwordSlotChange()
