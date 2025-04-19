@@ -35,6 +35,10 @@ namespace DC2025
 
         public SerializableDictionary<MaterialType, Color> materialColors;
 
+        [Header("UI")]
+        public Texture2D curosrNormal;
+        public Texture2D curosrCanClick;
+
         [Header("Potion Settings")]
         public SerializableDictionary<MaterialType, PotionType> potionMaterialConverter;
         public int healthPotionHealAmount = 100;

@@ -203,6 +203,7 @@ namespace DC2025
             Debug.Log(_invMs.GetHandSlot(SlotType.Left).OnChange);
             _invMs.GetHandSlot(SlotType.Left).OnChange.AddListener(HandleSwordSlotChange);
             DCGameManager.OnRestart.AddListener(OnRestart);
+            HandleSwordSlotChange();
         }
 
         private void HandleSwordSlotChange()

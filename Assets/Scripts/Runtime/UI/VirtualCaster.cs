@@ -28,6 +28,7 @@ namespace DC2025
                             ) <= DCGameManager.Player.GetClickDistance()
                         )
                         {
+                            DCGameManager.isHovering = true;
                             if (Mouse.current.leftButton.wasPressedThisFrame) interactable.OnPressedDown();
                             else if (Mouse.current.leftButton.wasReleasedThisFrame) interactable.OnPressedUp();
                             else interactable.OnHover();

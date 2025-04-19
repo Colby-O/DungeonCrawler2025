@@ -80,6 +80,13 @@ namespace DC2025
         {
             FollowCurosr();
             _wasUpdatedThisFrame = false;
+
+            if (HasItem())
+            {
+                Debug.Log("HasItem");
+                DCGameManager.isHovering = true;
+            }
+            
         }
     }
 }

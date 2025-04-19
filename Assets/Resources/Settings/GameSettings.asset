@@ -19,6 +19,7 @@ MonoBehaviour:
   playerBlockStamina: 10
   playerBlockFailStamina: 25
   enemyDistractedWaitTime: 5
+  enemyAttackPlayerNoSwordTime: 1
   molderTempDropRate: 2
   molderTimeToWin: 1
   moldMoveSpeed: 20
@@ -158,6 +159,8 @@ MonoBehaviour:
     - Key: 3
       Value: {r: 0.003921554, g: 0.24180207, b: 0.65882355, a: 1}
     keyCollision: 0
+  curosrNormal: {fileID: 2800000, guid: b56e652f9202d8b8cad1ccac807ef1be, type: 3}
+  curosrCanClick: {fileID: 2800000, guid: 50966dc0219688e0a8636bfc2d5776f8, type: 3}
   potionMaterialConverter:
     list:
     - Key: 0

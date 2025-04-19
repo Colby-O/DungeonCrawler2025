@@ -113,8 +113,11 @@ namespace DC2025
         public bool SaveData<TData>(ref TData rawData) where TData : GameData
         {
             DCGameData data = rawData as DCGameData;
+            if (data == null) return false;
+
             if (!_resetOnRestart)
             {
+                if (IsEnabled) GameManager.GetMonoSystem<IUIMonoSystem>().GetView<ChestView>().FetchSlots(ref _slots);
                 if (data.chestInvs == null) data.chestInvs = new PlazmaGames.Runtime.DataStructures.SerializableDictionary<int, List<SlotData>>();
 
                 if (data.chestInvs.ContainsKey(id)) data.chestInvs[id] = new List<SlotData>(_slots);
@@ -127,6 +130,8 @@ namespace DC2025
         public bool LoadData<TData>(TData rawData) where TData : GameData
         {
             DCGameData data = rawData as DCGameData;
+            if (data == null) return false; 
+
             if (!_resetOnRestart)
             {
                 Release();

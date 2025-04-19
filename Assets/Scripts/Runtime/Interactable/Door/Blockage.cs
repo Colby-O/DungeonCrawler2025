@@ -1,11 +1,15 @@
+using PlazmaGames.Attribute;
 using PlazmaGames.Core;
+using PlazmaGames.DataPersistence;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace DC2025
 {
-    public abstract class Blockage : MonoBehaviour, IInteractable
+    public abstract class Blockage : MonoBehaviour, IInteractable, IDataPersistence
     {
+        private static int _instanceCount;
+
         public List<Tile> CurrentTile
         {
             get
@@ -29,6 +33,8 @@ namespace DC2025
         public bool IsLocked { get; set; }
 
         private List<Tile> _currentTiles = new List<Tile>();
+
+        [SerializeField, ReadOnly] private int _id;
 
         public virtual void OnHover() { }
         public virtual void OnPlayerAdjancentEnter() { }
@@ -69,10 +75,41 @@ namespace DC2025
         public abstract void Lock();
         public abstract void Unlock();
 
+        protected virtual void Awake()
+        {
+            _id = _instanceCount++;
+        }
+
         private void LateUpdate()
         {
             WasStateEnterChangedThisFrame = false;
             WasStateAdjancentChangedThisFrame = false;
+        }
+
+        public bool SaveData<TData>(ref TData rawData) where TData : GameData
+        {
+            DCGameData data = rawData as DCGameData;
+            if (data == null) return false;
+
+            if (data.doorLockedStates.ContainsKey(_id)) data.doorLockedStates[_id] = IsLocked;
+            else data.doorLockedStates.Add(_id, IsLocked);
+            return true;
+        }
+
+        public bool LoadData<TData>(TData rawData) where TData : GameData
+        {
+            DCGameData data = rawData as DCGameData;
+            if (data == null) return false;
+
+            if (data.doorLockedStates.ContainsKey(_id))
+            {
+                IsLocked = data.doorLockedStates[_id];
+            }
+
+            if (!IsLocked) Unlock();
+            else Lock();
+
+            return false;
         }
     }
 }

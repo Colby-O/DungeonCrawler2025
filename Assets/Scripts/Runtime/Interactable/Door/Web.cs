@@ -47,12 +47,20 @@ namespace DC2025
         public override void Unlock() 
         {
             IsOpen = true;
+            IsLocked = false;
             gameObject.SetActive(false);
-            _player.Sword().Swing();
+            if (_player != null) _player.Sword().Swing();
+        }
+
+        protected override void Awake()
+        {
+            base.Awake();
+            IsLocked = true;
         }
 
         private void Start()
         {
+            if (!IsLocked) Unlock();
             _player = DCGameManager.Player.GetComponent<Player>();
             _mr.material.color = DCGameManager.settings.materialColors[_type];
         }

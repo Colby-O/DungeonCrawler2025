@@ -1,10 +1,12 @@
 using PlazmaGames.Animation;
+using PlazmaGames.Attribute;
 using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using PlazmaGames.DataPersistence;
 using PlazmaGames.UI;
 using UnityEngine;
 using UnityEngine.Events;
+using static UnityEngine.InputSystem.UI.VirtualMouseInput;
 
 namespace DC2025
 {
@@ -23,7 +25,6 @@ namespace DC2025
         [SerializeField] private AudioMonoSystem _audioSystem;
         [SerializeField] private SaveMonoSystem _saveSystem;
 
-
         [Header("Databases")]
         [SerializeField] private ItemDatabase _itemDB;
 
@@ -35,6 +36,8 @@ namespace DC2025
         public static Player PlayerController;
 
         public static UnityEvent OnRestart = new UnityEvent();
+
+        public static bool isHovering = false;
 
         public static ItemDatabase ItemDB { get { return ((DCGameManager)GameManager.Instance)._itemDB; } }
 
@@ -68,9 +71,15 @@ namespace DC2025
             _monoSystemHolder.SetActive(true);
         }
 
+        public static void ResetCurosr(bool canClick)
+        {
+            Cursor.SetCursor(canClick ? settings.curosrCanClick : settings.curosrNormal, Vector2.zero, UnityEngine.CursorMode.Auto);
+        }
+
         private void Awake()
         {
             DCGameManager.settings = Resources.Load<GameSettings>("Settings/GameSettings");
+            ResetCurosr(false);
         }
 
         private void Start()
@@ -78,6 +87,12 @@ namespace DC2025
             Player = FindAnyObjectByType<Interactor>();
             PlayerManager = Player.GetComponent<PlayerManager>();
             PlayerController = Player.GetComponent<Player>();
+        }
+
+        private void LateUpdate()
+        {
+            DCGameManager.ResetCurosr(isHovering);
+            DCGameManager.isHovering = false;
         }
     }
 }
