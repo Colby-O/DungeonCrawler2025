@@ -14,6 +14,7 @@ namespace DC2025
         [Header("Chest Settings")]
         [SerializeField] private List<PickupableItem> _itemsPrefab;
         [SerializeField] private int _numSlots = 8;
+        [SerializeField] private bool _resetOnRestart = true;
 
         [SerializeField, ReadOnly] private List<SlotData> _slots;
         private ChestView _view;
@@ -55,7 +56,15 @@ namespace DC2025
             }
         }
 
-        private void Start()
+        private void Release()
+        {
+            foreach (SlotData slot in _slots)
+            {
+                if (slot != null && slot.Item != null) slot.Item.Release();
+            }
+        }
+
+        private void Init()
         {
             _view = GameManager.GetMonoSystem<IUIMonoSystem>().GetView<ChestView>();
 
@@ -74,6 +83,19 @@ namespace DC2025
                 item.Hide();
                 slotsRandomOrder[i].Item = item;
             }
+        }
+
+        private void OnRestart()
+        {
+            if (!_resetOnRestart) return;
+            Release();
+            Init();
+        }
+
+        private void Start()
+        {
+            Init();
+            DCGameManager.OnRestart.AddListener(OnRestart);
         }
     }
 }

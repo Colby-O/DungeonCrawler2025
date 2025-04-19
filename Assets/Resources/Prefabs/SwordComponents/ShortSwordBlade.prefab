@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4873601444446562226}
+  - component: {fileID: 123574156573310913}
   m_Layer: 0
   m_Name: ShortSwordBlade
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   - {fileID: 2435316121975314821}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &123574156573310913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6928376152031817578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52493edfab6e9134aa7e0bc274f47264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normal: {fileID: 4720184939335109017}
+  _damaged: {fileID: 7653909773058303698}
 --- !u!1 &7459169213658560957
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,8 +152,18 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 08733897bf11b1d4f8156584a1a17dc6, type: 3}
+--- !u!1 &4720184939335109017 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1349221594922550298, guid: 08733897bf11b1d4f8156584a1a17dc6, type: 3}
+  m_PrefabInstance: {fileID: 5996563614034742659}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &6473878569519822256 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 788064615596357683, guid: 08733897bf11b1d4f8156584a1a17dc6, type: 3}
+  m_PrefabInstance: {fileID: 5996563614034742659}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7653909773058303698 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4107340821174758225, guid: 08733897bf11b1d4f8156584a1a17dc6, type: 3}
   m_PrefabInstance: {fileID: 5996563614034742659}
   m_PrefabAsset: {fileID: 0}

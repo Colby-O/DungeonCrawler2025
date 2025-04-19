@@ -1,3 +1,4 @@
+using PlazmaGames.Core;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -46,7 +47,10 @@ namespace DC2025
 
         public virtual void OnPressedDown()
         {
-            Interact();
+            if (!GameManager.GetMonoSystem<IInventoryMonoSystem>().GetMouseSlot().HasItem())
+            {
+                Interact();
+            }
         }
 
         public virtual void Interact()

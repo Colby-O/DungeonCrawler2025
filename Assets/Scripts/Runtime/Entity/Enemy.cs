@@ -29,7 +29,10 @@ namespace DC2025
         private Transform _healthBar;
         private Transform _healthBarBg;
         private float _healthBarFullSize;
-        
+
+        private Vector3 start;
+        private Quaternion startRot;
+
         private bool _distracted = false;
         private Direction _saveDirection;
         private PathDirector _pathDirector;
@@ -50,6 +53,8 @@ namespace DC2025
         {
             base.Start();
             _animator = transform.GetComponentInChildren<Animator>();
+            start = transform.position;
+            startRot = transform.rotation;
             OnKilled.AddListener(HandleKilled);
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
             _fightMs = GameManager.GetMonoSystem<IFightMonoSystem>();
@@ -61,6 +66,20 @@ namespace DC2025
             _meshRenderer.material.color = DCGameManager.settings.materialColors[_materialType];
 
             SetNormalPath();
+
+            DCGameManager.OnRestart.AddListener(OnRestart);
+        }
+
+        private void OnRestart()
+        {
+            _animator.SetTrigger("Reset");
+            gameObject.SetActive(true);
+            transform.position = start;
+            transform.rotation = startRot;
+            _healthBar.gameObject.SetActive(false);
+            _healthBarBg.gameObject.SetActive(false);
+            SetNormalPath();
+            Sync();
         }
 
         private void HandleKilled()

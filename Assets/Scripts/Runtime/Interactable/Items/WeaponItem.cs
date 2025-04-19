@@ -33,6 +33,8 @@ namespace DC2025
         public BladeType bladeType;
         public HandleType handleType;
 
+        private BladeController _bc;
+
         public override string GetName()
         {
             return $"<color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()} {handleType} {bladeType}</color>";
@@ -53,11 +55,27 @@ namespace DC2025
             _type = material;
         }
 
+        public void SetBladeController(BladeController bc)
+        {
+            _bc = bc;
+        }
+
         public void TakeDurability()
         {
             float amm = DCGameManager.settings.durabilityAmmounts[GetMaterial()];
             amm *= DCGameManager.settings.durabilityRatingScales[GetRating()];
             _durability -= amm;
+
+            if (_bc != null && !_bc.IsDamged() && _durability < 0.5f)
+            {
+                _bc.SetDamaged();
+                if (GameManager.GetMonoSystem<IInventoryMonoSystem>().GetHandSlot(SlotType.Left).Item == this)
+                {
+                    BladeController bc = DCGameManager.PlayerController.Sword().GetBladeController();
+                    bc.SetDamaged();
+                }
+            }
+
             if (_durability <= 0)
             {
                 _durability = 0;

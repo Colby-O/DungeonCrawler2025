@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4873601444446562226}
+  - component: {fileID: 3727568180075317889}
   m_Layer: 0
   m_Name: LongSwordBlade
   m_TagString: Untagged
@@ -32,6 +33,20 @@ Transform:
   - {fileID: 2435316121975314821}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3727568180075317889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6928376152031817578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52493edfab6e9134aa7e0bc274f47264, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _normal: {fileID: 3212001609688513970}
+  _damaged: {fileID: 3350373245712354262}
 --- !u!1 &7459169213658560957
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,5 +155,15 @@ PrefabInstance:
 --- !u!4 &246216236933171311 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 775720437834245497, guid: ddc9624a4e5274c4c8c507a32c369cef, type: 3}
+  m_PrefabInstance: {fileID: 696182159203577110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3212001609688513970 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2682464834674249892, guid: ddc9624a4e5274c4c8c507a32c369cef, type: 3}
+  m_PrefabInstance: {fileID: 696182159203577110}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &3350373245712354262 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2870973618427487936, guid: ddc9624a4e5274c4c8c507a32c369cef, type: 3}
   m_PrefabInstance: {fileID: 696182159203577110}
   m_PrefabAsset: {fileID: 0}

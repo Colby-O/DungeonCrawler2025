@@ -20,6 +20,8 @@ namespace DC2025
 
         public bool HasSword() => _model;
 
+        public BladeController GetBladeController() => _model.GetChild(0).GetComponent<BladeController>();
+
         public float Durability() => _item ? _item.GetDurability() : 0;
         public void TakeDurability()
         {

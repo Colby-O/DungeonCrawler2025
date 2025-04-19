@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using PlazmaGames.Attribute;
 using PlazmaGames.Core;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -10,18 +11,53 @@ namespace DC2025
     {
 		[SerializeField] private List<Transform> _path;
 		[SerializeField] private bool _loop;
-        private bool _running = true;
-        private PathDirector _pathDirector;
-        private bool _deferDistraction = false;
-        private bool _distracting = false;
-        private bool _enemyKilled = false;
-        private Enemy _enemy = null;
+        [SerializeField, ReadOnly] private bool _running = true;
+        [SerializeField, ReadOnly] private PathDirector _pathDirector;
+        [SerializeField, ReadOnly] private bool _deferDistraction = false;
+        [SerializeField, ReadOnly] private bool _distracting = false;
+        [SerializeField, ReadOnly] private bool _enemyKilled = false;
+        [SerializeField, ReadOnly] private Enemy _enemy = null;
+
+        private Vector3 start;
+        private Quaternion startRot;
+        private bool _isDead = false;
 
         protected override void Start()
         {
             base.Start();
+            start = transform.position;
+            startRot = transform.rotation;
             _gridMs = GameManager.GetMonoSystem<IGridMonoSystem>();
+            SetPath();
+            DCGameManager.OnRestart.AddListener(OnRestart);
+        }
+
+        private void SetPath()
+        {
             _pathDirector = new PathDirector(this, _path.Select(p => _gridMs.WorldToGrid(p.position)).ToList(), _loop ? PathDirector.LoopMode.Circle : PathDirector.LoopMode.BackAndForth);
+        }
+
+        private void OnRestart()
+        {
+            if (!_isDead) return;
+
+            if (_enemy) _enemy.OnKilled.RemoveListener(OnEnemyKilled);
+            if (_distracting) _gridMs.UnsetTileDistraction(GridPosition());
+
+            transform.position = start;
+            transform.rotation = startRot;
+            gameObject.SetActive(true);
+
+            GetComponent<ChickenItem>().OnRestart();
+
+             _running = true;
+            _deferDistraction = false;
+            _distracting = false;
+            _enemyKilled = false;
+            _enemy = null;
+            _isDead = false;
+            SetPath();
+            Sync();
         }
 
         private void FixedUpdate()
@@ -51,11 +87,15 @@ namespace DC2025
                     _gridMs.UnsetTileDistraction(GridPosition());
                     _distracting = false;
                     _gridMs.RemoveEntity(this);
-                    Destroy(gameObject);
+                    _isDead = true;
+                    gameObject.SetActive(false);
                 }
             }
-            
-            if (_running) _pathDirector.Travel();
+
+            if (_running)
+            {
+                _pathDirector.Travel();
+            }
         }
 
         private void OnEnemyKilled() => _enemyKilled = true;
@@ -69,6 +109,7 @@ namespace DC2025
         public void CauseDistraction()
         {
             _deferDistraction = true;
+            _isDead = true;
         }
     }
 }
