@@ -134,7 +134,6 @@ namespace DC2025
 
         public void Clear()
         {
-            Debug.Log("Here!");
             Item = null;
             _icon.sprite = null;
             _icon.color = Color.clear;
@@ -200,7 +199,7 @@ namespace DC2025
                 {
                     if (Item == null)
                     {
-                        UpdateSlot(_inventory.GetMouseSlot().Item); ;
+                        UpdateSlot(_inventory.GetMouseSlot().Item);
                         _inventory.GetMouseSlot().Clear();
                     }
                     else
@@ -231,6 +230,8 @@ namespace DC2025
             if (_disableLoad) return false;
 
             DCGameData data = rawData as DCGameData;
+            if (data == null) return false;
+
             if (data.slots.ContainsKey(_id)) data.slots[_id] = Data;
             else data.slots.Add(_id, Data);
             return true;
@@ -240,7 +241,9 @@ namespace DC2025
         {
             if (_disableLoad) return false;
 
-                DCGameData data = rawData as DCGameData;
+            DCGameData data = rawData as DCGameData;
+            if (data == null) return false;
+
             if (data.slots.ContainsKey(_id))
             {
                 Debug.Log("Loaded");
@@ -248,6 +251,7 @@ namespace DC2025
                 Data.LoadSlot();
                 Refresh();
                 _hasLoaded = true;
+                OnChange?.Invoke();
             }
             return true;
         }

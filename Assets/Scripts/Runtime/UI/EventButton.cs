@@ -16,6 +16,8 @@ namespace DC2025
         [SerializeField] private bool _playerSound = true;
         [SerializeField, ReadOnly] private bool _isDisabled = false;
 
+        private bool _isHovering = false;
+
         public bool IsDisabled { 
             get 
             { 

@@ -104,7 +104,7 @@ namespace DC2025
             );
         }
 
-        private void Start()
+        private void Awake()
         {
             _swordObject = transform.GetChild(0);
             _model = _swordObject.Find("Model");
