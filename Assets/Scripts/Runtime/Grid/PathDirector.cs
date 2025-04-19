@@ -56,7 +56,7 @@ namespace DC2025
             Vector2Int cur = _entity.GridPosition();
             Vector2Int next = NextPosition();
             if (next == cur) return;
-            Direction dir = DirectionExtension.FromVector2Int(next - cur);
+            Direction dir = DirectionExt.FromVector2Int(next - cur);
             if (dir != _entity.Facing())
             {
                 if (((int)_entity.Facing() - (int)dir + 4) % 4 > 2) _entity.RequestAction(Action.TurnRight);

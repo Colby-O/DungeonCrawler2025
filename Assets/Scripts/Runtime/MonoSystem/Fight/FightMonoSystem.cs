@@ -1,6 +1,9 @@
+using System.Collections.Generic;
+using System.Linq;
 using PlazmaGames.Audio;
 using PlazmaGames.Core;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace DC2025
 {
@@ -29,6 +32,7 @@ namespace DC2025
         private bool _playerAttackBlocked = false;
         
         private Enemy _enemy;
+        private PathDirector _enemyPathDirector;
         private float _enemyHealth = 0;
         private bool _enemyAttackBlocked = false;
 
@@ -75,51 +79,30 @@ namespace DC2025
                     if (_player.CurrentAction() != Action.None) break;
                     if (EntityFaceEntity(_player, _enemy))
                     {
+                        List<Direction> dirs = DirectionExt.AllDirections().OrderBy(d =>
+                            Vector2Int.Distance(_enemy.GridPosition(), (_player.GridPosition() + d.ToVector2Int()))).ToList();
+                        foreach (Direction dir in dirs)
+                        {
+                            List<Vector2Int> path = _gridMs.PathFind(_enemy.GridPosition(), _player.GridPosition() + dir.ToVector2Int());
+                            if (path.Count > 0)
+                            {
+                                _enemyPathDirector = new PathDirector(_enemy, path, PathDirector.LoopMode.Once);
+                                break;
+                            }
+                        }
                         _fightState = FightState.EnemyMoveToPlayer;
                     }
                     break;
                 }
                 case FightState.EnemyMoveToPlayer:
                 {
-                    if (_enemy.CurrentAction() != Action.None) break;
-                    Vector2Int playerPos = _gridMs.WorldToGrid(_player.transform.position);
-                    Vector2Int enemyPos = _gridMs.WorldToGrid(_enemy.transform.position);
-                    Vector2Int dir = playerPos - enemyPos;
-                    if ((dir.x == 0 || dir.y == 0) && (Mathf.Abs(dir.x) == 1 || Mathf.Abs(dir.y) == 1))
+                    if (_enemyPathDirector.IsDone())
                     {
                         _fightState = FightState.EnemyTurnToPlayer;
-                        break;
-                    }
-
-                    dir.x = dir.x switch { > 0 => 1, < 0 => -1, _ => 0 };
-                    dir.y = dir.y switch { > 0 => 1, < 0 => -1, _ => 0 };
-                    if (_enemy.Facing() == Direction.North || _enemy.Facing() == Direction.South)
-                    {
-                        if (dir.y == 0) dir.y = _enemy.Facing() == Direction.North ? -1 : 1;
-                        if (enemyPos.y + dir.y != playerPos.y)
-                        {
-                            Direction dirdir = dir.y > 0 ? Direction.North : Direction.South;
-                            _enemy.RequestAction(dirdir.GetMovement(_enemy.Facing()));
-                        }
-                        else if (enemyPos.x != playerPos.x)
-                        {
-                            Direction dirdir = dir.x > 0 ? Direction.East: Direction.West;
-                            _enemy.RequestAction(dirdir.GetMovement(_enemy.Facing()));
-                        }
                     }
                     else
                     {
-                        if (dir.x == 0) dir.x = _enemy.Facing() == Direction.East ? -1 : 1;
-                        if (enemyPos.x + dir.x != playerPos.x)
-                        {
-                            Direction dirdir = dir.x > 0 ? Direction.East: Direction.West;
-                            _enemy.RequestAction(dirdir.GetMovement(_enemy.Facing()));
-                        }
-                        else if (enemyPos.y != playerPos.y)
-                        {
-                            Direction dirdir = dir.y > 0 ? Direction.North : Direction.South;
-                            _enemy.RequestAction(dirdir.GetMovement(_enemy.Facing()));
-                        }
+                        _enemyPathDirector.Travel();
                     }
                     break;
                 }
