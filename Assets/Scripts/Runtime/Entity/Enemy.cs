@@ -148,8 +148,8 @@ namespace DC2025
             if (_gridMs.CanMoveTo(pos, Facing()))
             {
                 vision.Add(pos + 1 * forward + 0 * right);
-                if (_gridMs.CanMoveTo(pos, Facing().Right())) vision.Add(pos + 1 * forward + 1 * right);
-                if (_gridMs.CanMoveTo(pos, Facing().Left())) vision.Add(pos + 1 * forward - 1 * right);
+                if (_gridMs.CanMoveTo(pos, Facing().Right()) && _gridMs.CanMoveTo(pos + Facing().ToVector2Int(), Facing().Right())) vision.Add(pos + 1 * forward + 1 * right);
+                if (_gridMs.CanMoveTo(pos, Facing().Left()) && _gridMs.CanMoveTo(pos + Facing().ToVector2Int(), Facing().Left())) vision.Add(pos + 1 * forward - 1 * right);
             }
             
             vision.ForEach(p => _gridMs.SetTileEnemySeen(p));
