@@ -103,10 +103,14 @@ namespace DC2025
             Init();
         }
 
+        private void Awake()
+        {
+            id = Chest.instanaceCount++;
+        }
+
         private void Start()
         {
             Init();
-            if (_resetOnRestart) id = Chest.instanaceCount++;
             DCGameManager.OnRestart.AddListener(OnRestart);
         }
 
