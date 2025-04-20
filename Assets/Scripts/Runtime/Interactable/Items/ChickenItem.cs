@@ -6,7 +6,6 @@ namespace DC2025
     {
         private bool _placed = false;
         protected override bool CanPickup() => !_placed;
-        protected override bool DoNotRotate() => true;
         protected override void Start()
         {
             base.Start();

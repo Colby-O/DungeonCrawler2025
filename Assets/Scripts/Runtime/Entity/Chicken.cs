@@ -63,6 +63,8 @@ namespace DC2025
             Sync();
         }
 
+        private Vector2Int _savePos;
+
         private void FixedUpdate()
         {
             if (Enemy.pause) return;
@@ -70,20 +72,20 @@ namespace DC2025
             if (_deferDistraction)
             {
                 _deferDistraction = false;
-                Entity entity = _gridMs.GetClosestEntity(GridPosition(), e => e is Enemy && !(e as Enemy).IsDistracted());
+                Entity entity = _gridMs.GetClosestEntity(_savePos, e => e is Enemy && !(e as Enemy).IsDistracted());
                 Debug.Log(entity);
                 if (!entity) return;
                 Enemy enemy = entity as Enemy;
-                enemy.Distraction(GridPosition());
+                enemy.Distraction(_savePos);
                 enemy.OnKilled.AddListener(OnEnemyKilled);
                 _enemy = enemy;
-                _gridMs.SetTileDistraction(GridPosition());
+                _gridMs.SetTileDistraction(_savePos);
                 _distracting = true;
             }
 
             if (_distracting)
             {
-                if (_enemyKilled || _gridMs.GetEntitesOnTile(GridPosition()).Any(e => e.entity is Enemy))
+                if (_enemyKilled || _gridMs.GetEntitesOnTile(_savePos).Any(e => e.entity is Enemy))
                 {
                     if (_enemy && !_enemyKilled) _enemy.OnKilled.RemoveListener(OnEnemyKilled);
                     OnRestart();
@@ -108,6 +110,7 @@ namespace DC2025
         public void CauseDistraction()
         {
             _deferDistraction = true;
+            _savePos = DCGameManager.PlayerController.GridPosition();
             _isDead = true;
         }
     }
