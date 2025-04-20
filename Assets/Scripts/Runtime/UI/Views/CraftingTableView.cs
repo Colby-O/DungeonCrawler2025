@@ -83,7 +83,7 @@ namespace DC2025
         {
             if (!CanCraft()) return;
             GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.craftSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
-            _chatMs.Send($"You insert the {GetMaterial()} {GetBlade()} blade into the {GetHandle()} handle forming a complete weapon.");
+            _chatMs.Send($"You insert the <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()} {GetBlade()}</color> blade into the {GetHandle()} handle forming a complete weapon.");
             BladeItem blade = _input.Item as BladeItem;
             Debug.Log($"blade mat: {blade.GetMaterial()}");
             WeaponItem weapon = GameManager.GetMonoSystem<ISwordBuilderMonoSystem>().CreateSword(blade.bladeType, (HandleType)_selectedHandle, blade.GetMaterial(), blade.GetRating());

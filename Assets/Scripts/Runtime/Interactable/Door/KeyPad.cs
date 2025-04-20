@@ -51,8 +51,8 @@ namespace DC2025
             DCGameData data = rawData as DCGameData;
             if (data == null) return false;
 
-            if (data.keypadLockedStates.ContainsKey(_id)) data.keypadLockedStates[_id] = _isLocked;
-            else data.keypadLockedStates.Add(_id, _isLocked);
+            if (data.keypadLockedStates.ContainsKey(UID.GetID(transform))) data.keypadLockedStates[UID.GetID(transform)] = _isLocked;
+            else data.keypadLockedStates.Add(UID.GetID(transform), _isLocked);
             return true;
         }
 
@@ -61,7 +61,7 @@ namespace DC2025
             DCGameData data = rawData as DCGameData;
             if (data == null) return false;
 
-            _isLocked = (data.keypadLockedStates.ContainsKey(_id)) ? data.keypadLockedStates[_id] : _lockedState;
+            _isLocked = (data.keypadLockedStates.ContainsKey(UID.GetID(transform))) ? data.keypadLockedStates[UID.GetID(transform)] : _lockedState;
 
             if (!_isLocked) Unlock();
             else Lock();

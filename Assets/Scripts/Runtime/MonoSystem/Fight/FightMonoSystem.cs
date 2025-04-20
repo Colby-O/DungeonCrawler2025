@@ -197,12 +197,12 @@ namespace DC2025
             if (_enemyAttackBlocked)
             {
                 GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.blockSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
-                _chatMs.Send("You block the enemy's attack.");
+                _chatMs.Send($"You block the <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[_enemy.GetMaterial()])}>{_enemy.GetMaterial()} Skeleton's</color> attack.");
                 _player.Sword().Lower();
             }
             else
             {
-                _chatMs.Send($"The enemy strikes you dealing {_enemy.AttackDamage()} damage.");
+                _chatMs.Send($"The <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[_enemy.GetMaterial()])}>{_enemy.GetMaterial()} Skeleton</color> strikes you dealing {_enemy.AttackDamage()} damage.");
                 _player.manager.Damage(_enemy.AttackDamage());
             }
             EnemyQueueNextMove();
@@ -210,7 +210,7 @@ namespace DC2025
         
         public void StartFight(Enemy enemy)
         {
-            _chatMs.Send("You encounter an enemy!");
+            _chatMs.Send($"You encounter an <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[enemy.GetMaterial()])}>{enemy.GetMaterial()} Skeleton</color>!");
             Enemy.pause = true;
             Player.stopMovement = true;
             _enemy = enemy;
@@ -247,11 +247,11 @@ namespace DC2025
         {
             if (_playerAttackBlocked)
             {
-                _chatMs.Send("The enemy blocked your attack.");
+                _chatMs.Send($"The <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[_enemy.GetMaterial()])}>{_enemy.GetMaterial()} Skeleton</color> blocked your attack.");
             }
             else
             {
-                _chatMs.Send($"You strike the enemy dealing {_player.Sword().stats.damage} damage.");
+                _chatMs.Send($"You strike the <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[_enemy.GetMaterial()])}>{_enemy.GetMaterial()} Skeleton</color> dealing {_player.Sword().stats.damage} damage.");
                 _enemyHealth -= _player.Sword().stats.damage * _damageMultiplier;
                 _enemy.SetHealBar(_enemyHealth / _enemy.Health());
                 if (_enemyHealth <= 0)
@@ -280,7 +280,7 @@ namespace DC2025
             else
             {
                 _enemyAttackBlocked = false;
-                _chatMs.Send("You try to block the enemy but stumble.");
+                _chatMs.Send($"You try to block the <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[_enemy.GetMaterial()])}>{_enemy.GetMaterial()} Skeleton</color> but stumble.");
                 _player.manager.UseStamina(_player.Sword().stats.ApplyStamina(DCGameManager.settings.playerBlockFailStamina));
                 _player.Stumble();
             }
@@ -291,14 +291,18 @@ namespace DC2025
         private void EnemyDie()
         {
             _enemy.OnKilled.Invoke();
-            _chatMs.Send("The enemy died!");
+            MaterialType enemyMat = _enemy.GetMaterial();
             _gridMs.RemoveEntity(_enemy);
             _enemy.DisableHealthBar();
             _enemy.gameObject.SetActive(false);
 
             if (_enemy.CompareTag("FinalBoss"))
             {
-                
+                _chatMs.Send("You have completed your quest and defeated the final boss! Feel free to keep exploring the dungeon and forging new weapons.", Color.green);
+            }
+            else
+            {
+                _chatMs.Send($"The <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[enemyMat])}>{enemyMat} Skeleton</color> has died!");
             }
 
             EndFight();

@@ -22,6 +22,7 @@ namespace DC2025
 
             if (IsEnabled)
             {
+                if (!GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<GameView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 GameManager.GetMonoSystem<IUIMonoSystem>().Show<CraftingTableView>();
                 _view.SetTable(this);
             }

@@ -93,8 +93,8 @@ namespace DC2025
             DCGameData data = rawData as DCGameData;
             if (data == null) return false;
 
-            if (data.doorLockedStates.ContainsKey(_id)) data.doorLockedStates[_id] = IsLocked;
-            else data.doorLockedStates.Add(_id, IsLocked);
+            if (data.doorLockedStates.ContainsKey(UID.GetID(transform))) data.doorLockedStates[UID.GetID(transform)] = IsLocked;
+            else data.doorLockedStates.Add(UID.GetID(transform), IsLocked);
             return true;
         }
 
@@ -103,9 +103,9 @@ namespace DC2025
             DCGameData data = rawData as DCGameData;
             if (data == null) return false;
 
-            if (data.doorLockedStates.ContainsKey(_id))
+            if (data.doorLockedStates.ContainsKey(UID.GetID(transform)))
             {
-                IsLocked = data.doorLockedStates[_id];
+                IsLocked = data.doorLockedStates[UID.GetID(transform)];
             }
             else
             {

@@ -4955,7 +4955,7 @@ MonoBehaviour:
   _normalLife: 0.4
   _fanSpawnRate: 200
   _fanLife: 0.6
-  _graceTime: 2
+  _graceTime: 1
   _startTemperture: 0.69
   _accelerationWhileDown: 0.3
   _accelerationWhileUp: 0.08

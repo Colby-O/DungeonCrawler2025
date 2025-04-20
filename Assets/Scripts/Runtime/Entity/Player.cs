@@ -18,7 +18,8 @@ namespace DC2025
         private Sword _sword;
 
         public PlayerManager manager;
-        
+
+        [SerializeField] private PlayerSettings settings;
         [Header("Input System")]
         [SerializeField] private PlayerInput _input;
         [SerializeField, ReadOnly] private Vector2 _rawMovement;
@@ -212,6 +213,13 @@ namespace DC2025
             _invMs.GetHandSlot(SlotType.Left).OnChange.AddListener(HandleSwordSlotChange);
             DCGameManager.OnRestart.AddListener(OnRestart);
             HandleSwordSlotChange();
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+            _moveSpeed = settings.moveSpeed;
+            _turnSpeed = settings.turnSpeed;
         }
 
         private void HandleSwordSlotChange()

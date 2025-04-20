@@ -13,7 +13,7 @@ namespace DC2025
 
         public override string GetDescription()
         {
-            return $"A {GetMaterial()} {bladeType} blade. Needs a handle before use.";
+            return $"A {GetMaterial()} {bladeType} blade. Needs a handle from the crafting bench before use.";
         }
 
         public override Sprite GetIcon()
@@ -28,6 +28,16 @@ namespace DC2025
             {
                 mr.material.color = DCGameManager.settings.materialColors[_type];
             }
+        }
+
+        protected override float RotationOffset()
+        {
+            return 90.0f;
+        }
+
+        protected override float VerticalOffset()
+        {
+            return 0.25f;
         }
 
         public override Color GetColor()

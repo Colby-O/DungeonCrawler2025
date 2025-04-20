@@ -53,7 +53,7 @@ namespace DC2025
             Transform model = new GameObject("Model").transform;
             model.parent = go.transform;
             BladeController bc = BuildSword(model, bladeType, handleType, materialType);
-            
+            go.AddComponent<BoxCollider>();
             WeaponItem weapon = go.AddComponent<WeaponItem>();
             weapon.bladeType = bladeType;
             weapon.SetMaterial(materialType);
@@ -73,6 +73,7 @@ namespace DC2025
             {
                 mr.material.color = DCGameManager.settings.materialColors[materialType];
             }
+            go.AddComponent<BoxCollider>();
             BladeItem blade = go.AddComponent<BladeItem>();
             blade.bladeType = bladeType;
             blade.SetMaterial(materialType);

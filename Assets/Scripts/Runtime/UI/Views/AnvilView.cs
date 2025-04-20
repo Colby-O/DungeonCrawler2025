@@ -57,7 +57,7 @@ namespace DC2025
 
         private void StartAnvil()
         {
-            _chatMs.Send($"You place the unfinished {GetMaterial()} {GetBlade()} blade onto to anvil and ready your hammer.");
+            _chatMs.Send($"You place the unfinished <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()} {GetBlade()}</color> blade onto to anvil and ready your hammer.");
             _progress = 0;
             _tookStar = false;
             _isStarted = true;
@@ -129,7 +129,7 @@ namespace DC2025
 
         private void Finish()
         {
-            _chatMs.Send($"The {GetMaterial()} {GetBlade()} blade is now fully formed.");
+            _chatMs.Send($"The <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()} {GetBlade()}</color> blade is now fully formed.");
             _isStarted = false;
 
             CreateBlade();

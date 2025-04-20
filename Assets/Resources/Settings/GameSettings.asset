@@ -23,7 +23,7 @@ MonoBehaviour:
   molderTempDropRate: 2
   molderTimeToWin: 1
   moldMoveSpeed: 20
-  forgeCookTime: 4
+  forgeCookTime: 10
   anvilHammerShowHitTime: 1
   anvilHammerCount: 4
   durabilityAmmounts:

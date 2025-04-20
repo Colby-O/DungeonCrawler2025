@@ -55,6 +55,11 @@ namespace DC2025
             return 0f;
         }
 
+        protected virtual float VerticalOffset()
+        {
+            return 0f;
+        }
+
         private void MoveItem()
         {
             if (_player == null) _player = DCGameManager.PlayerController;
@@ -126,7 +131,7 @@ namespace DC2025
         {
             if (_hasInited) return;
             _hasInited = true;
-            _height = transform.position.y;
+            _height = transform.position.y + VerticalOffset();
             _grid = GameManager.GetMonoSystem<IGridMonoSystem>();
             _inventory = GameManager.GetMonoSystem<IInventoryMonoSystem>();
             if (DCGameManager.Player != null) _player = DCGameManager.PlayerController;

@@ -265,8 +265,6 @@ namespace DC2025
 		{
 			if (!action.IsMove()) return;
 
-			OnMoveStart();
-
 			Vector3 startPos = _gridMs.GridToWorld(_gridPos).SetY(transform.position.y);
 			Vector2Int newGridPos = _gridPos + action.GetDirection(_facing).GetGridOffset();
 			Vector3 endPos = _gridMs.GridToWorld(newGridPos).SetY(transform.position.y);
@@ -280,7 +278,8 @@ namespace DC2025
 			}
 			else
 			{
-				_gridPos = newGridPos;;
+                OnMoveStart();
+                _gridPos = newGridPos;;
 				AnimateMove(startPos, endPos);
 			}
         }

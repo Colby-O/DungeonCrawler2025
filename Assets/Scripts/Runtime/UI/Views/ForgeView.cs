@@ -68,7 +68,7 @@ namespace DC2025
 
 		public void StartForge()
 		{
-            _chatMs.Send($"You start to melt down the {GetMaterial()} into a bucket.");
+            _chatMs.Send($"You start to melt down the <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()}</color> into a bucket.");
 			_isStarted = true;
 			_currentRating = 4;
 			foreach (GameObject star in _stars) star.SetActive(true);
@@ -89,7 +89,7 @@ namespace DC2025
 		{
 			_isStarted = false;
             
-            _chatMs.Send($"The {GetMaterial()} finished melting.");
+            _chatMs.Send($"The <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()}</color> finished melting.");
 
 			CreateBucket();
 			ClearInputSlots();

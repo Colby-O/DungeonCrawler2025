@@ -184,7 +184,7 @@ GameObject:
   - component: {fileID: 1065263496678035084}
   m_Layer: 0
   m_Name: Skeleton 5
-  m_TagString: Untagged
+  m_TagString: FinalBoss
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -238,7 +238,7 @@ MonoBehaviour:
   _attackIntervalLow: 1
   _attackIntervalHigh: 1.4
   _materialType: 3
-  _health: 3800
+  _health: 9000
   _attackDamage: 35
   OnKilled:
     m_PersistentCalls:

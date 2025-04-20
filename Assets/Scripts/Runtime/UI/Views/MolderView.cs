@@ -46,7 +46,7 @@ namespace DC2025
             _tookStar = true;
             _stars[--_currentRating].SetActive(false);
             string cause = tooLow ? "cooled too much" : "is still too hot";
-            _chatMs.Send($"The molten {GetMaterial()} {cause}.");
+            _chatMs.Send($"The molten <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()}</color> {cause}.");
         }
 
         public MaterialType GetMaterial()
@@ -106,7 +106,7 @@ namespace DC2025
         
         private void StartMolder()
         {
-            _chatMs.Send($"You prepare to dip the {GetMoldType()} mold with the molten {GetMaterial()} into water.");
+            _chatMs.Send($"You prepare to dip the {GetMoldType()} mold with the molten <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()}</color> into water.");
             _tookStar = false;
             _isStarted = true;
             _currentRating = (_input[0].Item as BucketItem).GetRating();
@@ -132,7 +132,7 @@ namespace DC2025
 
         public void StopMolder()
         {
-            _chatMs.Send($"You peel the unfinished {GetMaterial()} {GetMoldType()} blade from the mold.");
+            _chatMs.Send($"You peel the unfinished <color=#{ColorUtility.ToHtmlStringRGBA(DCGameManager.settings.materialColors[GetMaterial()])}>{GetMaterial()} {GetMoldType()}</color> blade from the mold.");
             _isStarted = false;
 
             CreateBlade();

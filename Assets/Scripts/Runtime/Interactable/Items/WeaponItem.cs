@@ -90,6 +90,12 @@ namespace DC2025
             return 90.0f;
         }
 
+        protected override float VerticalOffset()
+        {
+            return 0.25f;
+        }
+
+
         public float GetDurability()
         {
             return _durability;

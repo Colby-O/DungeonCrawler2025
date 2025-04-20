@@ -51,6 +51,8 @@ namespace DC2025
 
         public int AttackDamage() => _attackDamage;
 
+        public MaterialType GetMaterial() => _materialType;
+
         protected override void Start()
         {
             base.Start();

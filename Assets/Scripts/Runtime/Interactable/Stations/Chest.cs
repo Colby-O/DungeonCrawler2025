@@ -6,6 +6,7 @@ using PlazmaGames.DataPersistence;
 using PlazmaGames.UI;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 using UnityEngine;
 
 namespace DC2025
@@ -34,6 +35,7 @@ namespace DC2025
             IsEnabled = !IsEnabled;
             if (IsEnabled)
             {
+                if (!GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<GameView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 GameManager.GetMonoSystem<IAudioMonoSystem>().PlayAudio(DCGameManager.settings.openChestSound, PlazmaGames.Audio.AudioType.Sfx, false, true);
                 GameManager.GetMonoSystem<IUIMonoSystem>().Show<ChestView>();
                 _view.SetSlots(_slots);
@@ -124,8 +126,8 @@ namespace DC2025
                 if (IsEnabled) GameManager.GetMonoSystem<IUIMonoSystem>().GetView<ChestView>().FetchSlots(ref _slots);
                 if (data.chestInvs == null) data.chestInvs = new PlazmaGames.Runtime.DataStructures.SerializableDictionary<int, List<SlotData>>();
 
-                if (data.chestInvs.ContainsKey(id)) data.chestInvs[id] = new List<SlotData>(_slots);
-                else data.chestInvs.Add(id, new List<SlotData>(_slots));
+                if (data.chestInvs.ContainsKey(UID.GetID(transform))) data.chestInvs[UID.GetID(transform)] = new List<SlotData>(_slots);
+                else data.chestInvs.Add(UID.GetID(transform), new List<SlotData>(_slots));
                 return true;
             }
             return false;
@@ -142,9 +144,9 @@ namespace DC2025
 
                 _resetOnAwake = false;
 
-                if (data.chestInvs.ContainsKey(id))
+                if (data.chestInvs.ContainsKey(UID.GetID(transform)))
                 {
-                    List<SlotData> slots = data.chestInvs[id];
+                    List<SlotData> slots = data.chestInvs[UID.GetID(transform)];
 
                     foreach (SlotData slot in slots)
                     {

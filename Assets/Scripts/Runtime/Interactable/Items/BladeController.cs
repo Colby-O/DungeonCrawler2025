@@ -17,8 +17,9 @@ namespace DC2025
 
         public void SetDamaged()
         {
-            _normal.SetActive(false);
             _damaged.SetActive(true);
+            _damaged.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = _normal.transform.GetChild(0).GetComponent<MeshRenderer>().material.color;
+            _normal.SetActive(false);
         } 
     }
 }

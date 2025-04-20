@@ -14,6 +14,8 @@ namespace DC2025
         [SerializeField] private Slider _sfx;
         [SerializeField] private Slider _music;
         [SerializeField] private EventButton _back;
+        [SerializeField] private Toggle _toggle;
+        [SerializeField] private PlayerSettings _playerSettings;
 
         private void Back()
         {
@@ -35,6 +37,21 @@ namespace DC2025
             GameManager.GetMonoSystem<IAudioMonoSystem>().SetMusicVolume(val);
         }
 
+        private void SetInstantMovement(bool state)
+        {
+            if (!state)
+            {
+                _playerSettings.moveSpeed = _playerSettings.moveSpeedSetting;
+                _playerSettings.turnSpeed = _playerSettings.turnSpeedSetting;
+            }
+            else
+            {
+                _playerSettings.moveSpeed = 0;
+                _playerSettings.turnSpeed = 0;
+            }
+
+        }
+
         public override void Init()
         {
             _back.onPointerDown.AddListener(Back);
@@ -42,10 +59,14 @@ namespace DC2025
             _overall.onValueChanged.AddListener(SetOverallVolume);
             _music.onValueChanged.AddListener(SetMusicVolume);
             _sfx.onValueChanged.AddListener(SetSfXVolume);
+            _toggle.onValueChanged.AddListener(SetInstantMovement);
 
             _overall.value = GameManager.GetMonoSystem<IAudioMonoSystem>().GetOverallVolume();
             _sfx.value = GameManager.GetMonoSystem<IAudioMonoSystem>().GetSfXVolume();
             _music.value = GameManager.GetMonoSystem<IAudioMonoSystem>().GetMusicVolume();
+            _toggle.isOn = false;
+            _playerSettings.moveSpeed = _playerSettings.moveSpeedSetting;
+            _playerSettings.turnSpeed = _playerSettings.turnSpeedSetting;
         }
 
         public override void Show()

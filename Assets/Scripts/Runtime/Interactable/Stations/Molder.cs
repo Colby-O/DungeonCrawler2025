@@ -146,6 +146,7 @@ namespace DC2025
             StartTransition();
             if (IsEnabled)
             {
+                if (!GameManager.GetMonoSystem<IUIMonoSystem>().GetCurrentViewIs<GameView>()) GameManager.GetMonoSystem<IUIMonoSystem>().ShowLast();
                 GameManager.GetMonoSystem<IUIMonoSystem>().Show<MolderView>();
                 _view.SetMolder(this);
             }

@@ -233,8 +233,8 @@ namespace DC2025
             DCGameData data = rawData as DCGameData;
             if (data == null) return false;
 
-            if (data.slots.ContainsKey(_id)) data.slots[_id] = Data;
-            else data.slots.Add(_id, Data);
+            if (data.slots.ContainsKey(UID.GetID(transform))) data.slots[UID.GetID(transform)] = Data;
+            else data.slots.Add(UID.GetID(transform), Data);
             return true;
         }
 
@@ -245,10 +245,9 @@ namespace DC2025
             DCGameData data = rawData as DCGameData;
             if (data == null) return false;
 
-            if (data.slots.ContainsKey(_id))
+            if (data.slots.ContainsKey(UID.GetID(transform)))
             {
-                Debug.Log("Loaded");
-                Data = data.slots[_id];
+                Data = data.slots[UID.GetID(transform)];
                 Data.LoadSlot();
                 Refresh();
                 _hasLoaded = true;
