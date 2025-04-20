@@ -16,6 +16,8 @@ namespace DC2025
         [SerializeField, ReadOnly] private Vector3 _globalPosition;
         [SerializeField, ReadOnly] private Direction _doorFacing;
 
+        public int distanceToPlayer = 0;
+
         private MeshRenderer _highlight;
 
         private float _enemySeenTimer;
@@ -44,14 +46,14 @@ namespace DC2025
             return hasCollider;
         }
 
-        public bool HasWallAt(Direction dir, bool ignoreColliders = false, bool forceDoorOpen = false)
+        public bool HasWallAt(Direction dir, bool ignoreColliders = false, bool forceDoorOpen = false, bool ignoreDoors = false)
 		{
             if (HasItemWithCollider() && !ignoreColliders) return true;
 
 			dir = dir.GetFacingDirection(-transform.rotation.eulerAngles.y);
-            if ((_walls.ContainsKey(dir) && _walls[dir]) || (_blockages.ContainsKey(dir) && _blockages[dir] != null && !_blockages[dir].IsOpen))
+            if ((_walls.ContainsKey(dir) && _walls[dir]) || (_blockages.ContainsKey(dir) && _blockages[dir] != null && !ignoreDoors && !_blockages[dir].IsOpen))
             {
-                if (forceDoorOpen && _blockages.ContainsKey(dir) && _blockages[dir] != null && _blockages[dir].CanOpen())
+                if (!ignoreDoors && forceDoorOpen && _blockages.ContainsKey(dir) && _blockages[dir] != null && _blockages[dir].CanOpen())
                 {
                     _blockages[dir].Open();
                 }

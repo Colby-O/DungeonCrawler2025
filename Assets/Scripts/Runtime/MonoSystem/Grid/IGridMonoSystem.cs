@@ -12,7 +12,7 @@ namespace DC2025
         public Vector3 GridToWorld(Vector2Int gridPos);
         public Tile GetTileAt(Vector2Int gridPos);
         public Tile GetTileAt(int x, int y);
-        public bool CanMoveTo(Vector2Int gridPos, Direction from, bool forceDoorsOpen = false);
+        public bool CanMoveTo(Vector2Int gridPos, Direction dir, bool forceDoorsOpen = false, bool ignoreDoors = false);
         public void Sync(Entity entity, Vector2Int loc);
         public List<EntityData> GetEntitesOnTile(Vector2Int pos);
         public void SetTileEnemySeen(Vector2Int pos);

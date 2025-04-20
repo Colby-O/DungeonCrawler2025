@@ -83,7 +83,7 @@ namespace DC2025
                             Vector2Int.Distance(_enemy.GridPosition(), (_player.GridPosition() + d.ToVector2Int()))).ToList();
                         foreach (Direction dir in dirs)
                         {
-                            if (!_gridMs.CanMoveTo(_player.GridPosition() - dir.ToVector2Int(), dir)) continue;
+                            if (!_gridMs.CanMoveTo(_player.GridPosition() + dir.ToVector2Int(), dir.Opposite())) continue;
                             List<Vector2Int> path = _gridMs.PathFind(_enemy.GridPosition(), _player.GridPosition() + dir.ToVector2Int());
                             if (path.Count > 0)
                             {

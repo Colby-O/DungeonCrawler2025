@@ -3,8 +3,11 @@ using PlazmaGames.Runtime.DataStructures;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using PlazmaGames.Core;
+using PlazmaGames.Core.Utils;
 using UnityEngine;
 using Unity.Collections;
+using UnityEngine.UIElements;
 
 namespace DC2025
 {
@@ -21,8 +24,9 @@ namespace DC2025
 		[SerializeField] private SerializableDictionary<Vector2Int, Tile> _tiles;
 
 		public List<EntityData> _entities;
+        private Vector2Int _lastPlayerPos = new Vector2Int(-100000, -100000);
 
-		public Vector2 GetTileSize() => _tileSize;
+        public Vector2 GetTileSize() => _tileSize;
 
 		public Tile GetTileAt(int x, int y) => GetTileAt(new Vector2Int(x, y));
 
@@ -114,13 +118,13 @@ namespace DC2025
 			return new Vector3(gridPos.x * _tileSize.x, 0, gridPos.y * _tileSize.y);
 		}
 
-		public bool CanMoveTo(Vector2Int gridPos, Direction dir, bool forceDoorsOpen = false)
+		public bool CanMoveTo(Vector2Int gridPos, Direction dir, bool forceDoorsOpen = false, bool ignoreDoors = false)
 		{
             if (_tiles.ContainsKey(gridPos))
             {
                 return (
-                    !_tiles[gridPos].HasWallAt(dir, false, forceDoorsOpen) &&
-                    (_tiles.ContainsKey(gridPos + dir.ToVector2Int()) && !_tiles[gridPos + dir.ToVector2Int()].HasWallAt(dir.Opposite(), false, forceDoorsOpen))
+                    !_tiles[gridPos].HasWallAt(dir, ignoreDoors, forceDoorsOpen, ignoreDoors) &&
+                    (_tiles.ContainsKey(gridPos + dir.ToVector2Int()) && !_tiles[gridPos + dir.ToVector2Int()].HasWallAt(dir.Opposite(), ignoreDoors, forceDoorsOpen, ignoreDoors))
                 );
             }
 			return false;
@@ -304,24 +308,88 @@ namespace DC2025
 		{
 			RegisterTiles();
 			RegisterInteractables();
+            foreach (GameObject go in GameObject.FindGameObjectsWithTag("Torch"))
+            {
+                Transform t = go.transform;
+                Vector2Int pos = WorldToGrid(t.position);
+                if (_tiles.TryGetValue(pos, out var tile)) t.parent = tile.transform;
+                else
+                {
+                    foreach (Direction dir in DirectionExt.AllDirections())
+                    {
+                        if (_tiles.TryGetValue(pos + dir.ToVector2Int(), out tile))
+                        {
+                            t.parent = tile.transform;
+                            break;
+                        }
+                        else if (_tiles.TryGetValue(pos + dir.ToVector2Int() + dir.Right().ToVector2Int(), out tile))
+                        {
+                            t.parent = tile.transform;
+                            break;
+                        }
+                    }
+                }
+            }
 		}
 
         private void FixedUpdate()
         {
             Vector2Int playerPos = DCGameManager.PlayerController.GridPosition();
+            if (_lastPlayerPos == playerPos) return;
+            _lastPlayerPos = playerPos;
             int maxDist = DCGameManager.settings.viewDistance;
+            _tiles.ForEach(t => t.Value.distanceToPlayer = 10000000);
+            CalcTilePlayerDist();
             foreach (var (pos, tile) in _tiles)
             {
-                if (Mathf.Abs(playerPos.x - pos.x) + Mathf.Abs(playerPos.y - pos.y) > maxDist)
+                if (tile.distanceToPlayer <= DCGameManager.settings.viewDistance)
                 {
-                    tile.gameObject.SetActive(false);
+                    tile.gameObject.SetActive(true);
                 }
                 else
                 {
-                    tile.gameObject.SetActive(true);
+                    bool t = false;
+                    foreach (Direction dir in DirectionExt.AllDirections())
+                    {
+                        Vector2Int np = pos + dir.ToVector2Int();
+                        if (_tiles.ContainsKey(np) && _tiles[np].distanceToPlayer <= DCGameManager.settings.viewDistance)
+                        {
+                            tile.gameObject.SetActive(true);
+                            t = true;
+                        }
+                    }
+                    if (!t) tile.gameObject.SetActive(false);
                 }
             }
         }
 
-	}
+        private void CalcTilePlayerDist()
+        {
+            Vector2Int pos = DCGameManager.PlayerController.GridPosition();
+			Dictionary<Vector2Int, int> visited = new() { { pos, 0 } };
+			Queue<Vector2Int> nodes = new();
+			nodes.Enqueue(pos);
+			while (nodes.Count > 0)
+			{
+				Vector2Int v = nodes.Dequeue();
+                int dist = visited[v];
+				if (dist > DCGameManager.settings.viewDistance)
+                {
+                    break;
+                }
+				DirectionExt.AllDirections().ForEach(dir =>
+				{
+					if (!CanMoveTo(v, dir, false, true)) return;
+					Vector2Int w = v + dir.ToVector2Int();
+                    if (!visited.TryAdd(w, dist + 1))
+                    {
+                        if (visited[w] > dist + 1) visited[w] = dist + 1;
+                        return;
+                    }
+					nodes.Enqueue(w);
+				});
+			}
+            visited.ForEach(v => _tiles[v.Key].distanceToPlayer = v.Value);
+        }
+    }
 }
