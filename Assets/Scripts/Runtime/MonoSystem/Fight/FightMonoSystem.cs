@@ -295,6 +295,12 @@ namespace DC2025
             _gridMs.RemoveEntity(_enemy);
             _enemy.DisableHealthBar();
             _enemy.gameObject.SetActive(false);
+
+            if (_enemy.CompareTag("FinalBoss"))
+            {
+                
+            }
+
             EndFight();
         }
 

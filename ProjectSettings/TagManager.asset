@@ -9,6 +9,8 @@ TagManager:
   - LeftSlot
   - RightSlot
   - Slot
+  - Torch
+  - FinalBoss
   layers:
   - Default
   - TransparentFX

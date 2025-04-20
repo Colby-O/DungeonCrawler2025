@@ -56,13 +56,18 @@ MonoBehaviour:
   _queuedAction: 0
   _syncInterval: 0
   _timeSinceLastSync: 0
-  _as: {fileID: 0}
+  _as: {fileID: 6951560297876659214}
   _path:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   _loop: 1
+  _running: 1
+  _deferDistraction: 0
+  _distracting: 0
+  _enemyKilled: 0
+  _enemy: {fileID: 0}
 --- !u!65 &7580836242035937402
 BoxCollider:
   m_ObjectHideFlags: 0

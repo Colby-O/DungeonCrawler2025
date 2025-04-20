@@ -50,7 +50,7 @@ namespace DC2025
             IsOpen = true;
             IsLocked = false;
             gameObject.SetActive(false);
-            if (_player != null) _player.Sword().Swing();
+            if (_player != null && _player.Sword().HasSword() && DCGameManager.hasStarted) _player.Sword().Swing();
         }
 
         protected override void Awake()
@@ -64,6 +64,11 @@ namespace DC2025
             if (!IsLocked) Unlock();
             _player = DCGameManager.Player.GetComponent<Player>();
             _mr.material.color = DCGameManager.settings.materialColors[_type];
+        }
+
+        private void Update()
+        {
+            if (IsOpen) gameObject.SetActive(false);
         }
     }
 }
