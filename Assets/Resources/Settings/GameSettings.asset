@@ -240,4 +240,4 @@ MonoBehaviour:
   potionSound: {fileID: 8300000, guid: 52b1f5f41fcc2df41947a6cac62b9405, type: 3}
   lockedSound: {fileID: 8300000, guid: 68705ba19ec8cee45989382dc14fc31f, type: 3}
   unlockedSound: {fileID: 8300000, guid: f68bcbcf70b91cf45a56581bd15627e2, type: 3}
-  viewDistance: 10000
+  viewDistance: 12
