@@ -100,6 +100,7 @@ namespace DC2025
 
         public void RemoveSelf()
         {
+            GameManager.GetMonoSystem<IAnimationMonoSystem>().StopAllAnimations(this);
             _gridMs.RemoveEntity(this);
             _running = false;
         }

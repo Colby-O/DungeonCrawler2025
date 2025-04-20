@@ -10,6 +10,7 @@ namespace DC2025
 
         [SerializeField] private MaterialType _type;
         [SerializeField] private MeshRenderer _mr;
+        [SerializeField] private MeshRenderer _mr2;
 
         [SerializeField, ReadOnly] private bool _isLocked;
 
@@ -41,6 +42,7 @@ namespace DC2025
             _isLocked = true;
             _lockedState = _isLocked;
             _mr.materials[1].color = DCGameManager.settings.materialColors[_type];
+            _mr2.materials[1].color = DCGameManager.settings.materialColors[_type];
             _id = _instanceCount++;
         }
 
