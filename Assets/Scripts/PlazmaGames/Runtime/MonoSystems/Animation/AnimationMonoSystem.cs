@@ -52,7 +52,8 @@ namespace PlazmaGames.Animation
 		/// <param name="request">An animation request.</param>
 		private void StartAnimationCoroutine(AnimationRequest request)
 		{
-			request.hasStarted = true;
+			if (request.value == null) return;
+            request.hasStarted = true;
 			request.hasCompleted = false;
 			request.coroutine = request.value.StartCoroutine(GenrticAnimationCoroutine(request));
 		}

@@ -238,7 +238,7 @@ MonoBehaviour:
   _blockChance: 0.2
   _attackIntervalLow: 2
   _attackIntervalHigh: 3
-  _materialType: 1
+  _materialType: 0
   _health: 100
   _attackDamage: 20
   OnKilled:

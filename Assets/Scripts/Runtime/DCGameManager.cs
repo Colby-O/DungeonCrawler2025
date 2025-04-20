@@ -35,6 +35,8 @@ namespace DC2025
         public static PlayerManager PlayerManager;
         public static Player PlayerController;
 
+        public static bool hasStarted = false;
+
         public static UnityEvent OnRestart = new UnityEvent();
 
         public static bool isHovering = false;

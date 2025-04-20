@@ -19,12 +19,14 @@ namespace DC2025
             GameManager.GetMonoSystem<IDataPersistenceMonoSystem>().DeleteGame();
             GameManager.GetMonoSystem<IDataPersistenceMonoSystem>().NewGame();
             GameManager.GetMonoSystem<IDataPersistenceMonoSystem>().LoadGame(true);
+            DCGameManager.hasStarted = true;
             GameManager.GetMonoSystem<IUIMonoSystem>().Show<GameView>(false);
         }
 
         public void Continue()
         {
             GameManager.GetMonoSystem<IDataPersistenceMonoSystem>().LoadGame();
+            DCGameManager.hasStarted = true;
             GameManager.GetMonoSystem<IUIMonoSystem>().Show<GameView>(false);
         }
 
