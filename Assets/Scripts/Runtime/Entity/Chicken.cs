@@ -69,7 +69,6 @@ namespace DC2025
 
             if (_deferDistraction)
             {
-                Debug.Log(GridPosition());
                 _deferDistraction = false;
                 Entity entity = _gridMs.GetClosestEntity(GridPosition(), e => e is Enemy);
                 Debug.Log(entity);
@@ -87,11 +86,7 @@ namespace DC2025
                 if (_enemyKilled || _gridMs.GetEntitesOnTile(GridPosition()).Any(e => e.entity is Enemy))
                 {
                     if (_enemy && !_enemyKilled) _enemy.OnKilled.RemoveListener(OnEnemyKilled);
-                    _gridMs.UnsetTileDistraction(GridPosition());
-                    _distracting = false;
-                    _gridMs.RemoveEntity(this);
-                    _isDead = true;
-                    gameObject.SetActive(false);
+                    OnRestart();
                 }
             }
 

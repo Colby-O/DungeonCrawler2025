@@ -26,6 +26,7 @@ namespace DC2025
         public SerializableDictionary<int, float> durabilityRatingScales;
         public SerializableDictionary<MaterialType, float> materialDamage;
         public SerializableDictionary<int, float> ratingDamageScales;
+        public SerializableDictionary<BladeType, float> bladeDurabilityScales;
         public SerializableDictionary<BladeType, float> bladeDamageScales;
         public SerializableDictionary<BladeType, float> bladeSpeeds;
         [FormerlySerializedAs("bladeStaminas")]public SerializableDictionary<BladeType, float> bladeStaminaScales;

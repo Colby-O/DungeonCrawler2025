@@ -64,6 +64,7 @@ namespace DC2025
         {
             float amm = DCGameManager.settings.durabilityAmmounts[GetMaterial()];
             amm *= DCGameManager.settings.durabilityRatingScales[GetRating()];
+            amm *= DCGameManager.settings.bladeDurabilityScales[this.bladeType];
             _durability -= amm;
 
             if (_bc != null && !_bc.IsDamged() && _durability < 0.5f)
