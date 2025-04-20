@@ -18,6 +18,9 @@ namespace DC2025
         public bool IsEntered { get; set; }
         public bool WasStateEnterChangedThisFrame { get; set; }
         public bool WasStateAdjancentChangedThisFrame { get; set; }
+
+        protected virtual bool DoNotRotate() => false;
+        
         public List<Tile> CurrentTile
         {
             get
@@ -56,7 +59,7 @@ namespace DC2025
         {
             if (_player == null) _player = DCGameManager.PlayerController;
 
-            if (IsEntered)
+            if (IsEntered && !DoNotRotate())
             {
                 Vector3 center = _grid.GridToWorld(_grid.WorldToGrid(_centerPos));
                 Vector2 tileSize = _grid.GetTileSize();

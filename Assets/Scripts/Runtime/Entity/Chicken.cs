@@ -70,7 +70,7 @@ namespace DC2025
             if (_deferDistraction)
             {
                 _deferDistraction = false;
-                Entity entity = _gridMs.GetClosestEntity(GridPosition(), e => e is Enemy);
+                Entity entity = _gridMs.GetClosestEntity(GridPosition(), e => e is Enemy && !(e as Enemy).IsDistracted());
                 Debug.Log(entity);
                 if (!entity) return;
                 Enemy enemy = entity as Enemy;
@@ -83,7 +83,7 @@ namespace DC2025
 
             if (_distracting)
             {
-                if (_enemyKilled || _gridMs.GetEntitesOnTile(GridPosition()).Any(e => e.entity is Enemy && !(e.entity as Enemy).IsDistracted()))
+                if (_enemyKilled || _gridMs.GetEntitesOnTile(GridPosition()).Any(e => e.entity is Enemy))
                 {
                     if (_enemy && !_enemyKilled) _enemy.OnKilled.RemoveListener(OnEnemyKilled);
                     OnRestart();
