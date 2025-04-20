@@ -218,5 +218,9 @@ namespace DC2025
             }
         }
 
+        public bool IsDistracted()
+        {
+            return _distracted;
+        }
     }
 }

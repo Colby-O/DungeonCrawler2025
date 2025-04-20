@@ -83,7 +83,7 @@ namespace DC2025
 
             if (_distracting)
             {
-                if (_enemyKilled || _gridMs.GetEntitesOnTile(GridPosition()).Any(e => e.entity is Enemy))
+                if (_enemyKilled || _gridMs.GetEntitesOnTile(GridPosition()).Any(e => e.entity is Enemy && !(e as Enemy).IsDistracted()))
                 {
                     if (_enemy && !_enemyKilled) _enemy.OnKilled.RemoveListener(OnEnemyKilled);
                     OnRestart();
